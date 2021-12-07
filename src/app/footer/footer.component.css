@@ -1,0 +1,10 @@
+.customFooter {
+  background-color: rgb(93, 93, 165);
+  color: white;
+  text-align: center;
+  height: 150px;
+}
+
+a {
+  color: white;
+}

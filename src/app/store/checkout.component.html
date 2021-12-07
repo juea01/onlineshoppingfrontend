@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col bg-dark text-white">
+      <a class="navbar-brand">JEWELLERY STORE</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="orderSent" class="m-2 text-center">
+  <h2>Thanks!</h2>
+  <p>We will ship your goods as soon as possible.</p>
+  <button class="btn btn-primary" routerLink="/store"> Return to Store</button>
+</div>
+<form *ngIf="!orderSent" #form="ngForm" novalidate (ngSubmit) = "submitOrder(form)" class="m-2">
+  <div class="bg-danger text-white p-2 mb-2" *ngIf="submitted && form.invalid">
+    There are problems with the form.
+  </div>
+
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control" #name="ngModel" name="name" [(ngModel)]="order.name" required minlength="2"/>
+    <ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
+      <li *ngIf="name.errors.required"> Please enter a name</li>
+      <li *ngIf="name.errors.minlength"> Name must be at least {{name.errors.minlength.requiredLength}}</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>Address</label>
+    <input class="form-control" #address="ngModel" name="address" [(ngModel)]="order.address" required minlength="5"/>
+    <ul class="text-danger list-unstyled" *ngIf="address.dirty && address.invalid">
+      <li *ngIf="address.errors.required"> Please enter an address</li>
+      <li *ngIf="address.errors.minlength">Address must be at least {{address.errors.minlength.requiredLength}}</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>City</label>
+    <input class="form-control" #city="ngModel" name="city" [(ngModel)]="order.city" required minlength="3"/>
+    <ul class="text-danger list-unstyled" *ngIf="city.dirty && city.invalid">
+      <li *ngIf="city.errors.required"> Please enter a city name</li>
+      <li *ngIf="city.errors.minlength">City must be at least {{city.errors.minlength.requiredLength}}</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>State</label>
+    <input class="form-control" #state="ngModel" name="state" [(ngModel)]="order.state" required minlength="3"/>
+    <ul class="text-danger list-unstyled" *ngIf="state.dirty && state.invalid">
+      <li *ngIf="state.errors.required"> Please enter a state name</li>
+      <li *ngIf="state.errors.minlength">State must be at least {{state.errors.minlength.requiredLength}}</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>Zip/Postal Code</label>
+    <input class="form-control" #zip="ngModel" name="zip" [(ngModel)]="order.zip" required pattern="^[0-9]+$"/>
+    <ul class="text-danger list-unstyled" *ngIf="zip.dirty && zip.invalid">
+      <li *ngIf="zip.errors.required"> Please enter a zip code</li>
+      <li *ngIf="zip.errors.pattern">Zip code can only contain number</li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>Country</label>
+    <input class="form-control" #country="ngModel" name="country" [(ngModel)]="order.country" required minlength="4"/>
+    <ul class="text-danger list-unstyled" *ngIf="country.dirty && country.invalid">
+      <li *ngIf="country.errors.required"> Please enter a country name</li>
+      <li *ngIf="country.errors.minlength">Country must be at least {{country.errors.minlength.requiredLength}}</li>
+    </ul>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-secondary m-1" routerLink="/cart">Back</button>
+    <button class="btn btn-primary m-1" type="submit">Complete Order</button>
+  </div>
+
+
+
+</form>

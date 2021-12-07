@@ -1,0 +1,22 @@
+.moveRight {
+  float: right;
+}
+
+/* @media only screen and  (max-height: 400px){
+  #main-container {
+    height: 500px;
+}
+}
+
+@media only screen and  (min-height: 700px){
+  #main-container {
+    height: calc(100vh);
+  }
+}
+
+@media only screen and  (min-height: 500px){
+  #main-container {
+    height: calc(100vh - 200px);
+  }
+} */
+
