@@ -12,6 +12,7 @@ import {StoreFirstGuard} from "./storeFirst.guard";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { ThreeDimensionViewComponent } from './3dview/3dview.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { environment } from '../environments/environment';
       {path: "store", component: StoreComponent, canActivate: [StoreFirstGuard]},
       {path: "cart", component: CartDetailComponent, canActivate: [StoreFirstGuard]},
       {path: "checkout", component: CheckoutComponent, canActivate: [StoreFirstGuard]},
+      {path: "threedview", component: ThreeDimensionViewComponent},
       {path: "admin", loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule), canActivate: [StoreFirstGuard]},
       {path: "**", redirectTo: "/store"},
     ]),
