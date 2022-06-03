@@ -8,9 +8,10 @@ import { Prediction } from "./prediction.model";
 import {map } from "rxjs/operators"
 import { HttpHeaders } from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
+import { User } from 'src/app/model/user.model';
 
 const PROTOCOL = "http";
-const PORT = 3000;
+const PORT = 8080;
 const MLPORT = 5000;
 
 @Injectable()
@@ -22,12 +23,12 @@ export class RestDataSource{
 
   constructor(private http: HttpClient, private socket: Socket) {
     this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
-    this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
+  //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
     //this.baseUrl = "/api/";
   }
 
   //SocketIO
-  updatedJob = this.socket.fromEvent<Order>('updatedJob');
+ // updatedJob = this.socket.fromEvent<Order>('updatedJob');
 
   getProducts():Observable<Product[]> {
     console.log(this.baseUrl+"baseURL");
@@ -45,6 +46,13 @@ export class RestDataSource{
         this.auth_token = response.success ? response.token : null;
         return response.success;
     }));
+  }
+
+  //this is for communicating with spring backend (currently authenticate() above is for node backend)
+  authenticateUser(user: User){
+
+    window.sessionStorage.setItem("userdetails",JSON.stringify(user));
+    return this.http.get(this.baseUrl + "user",{ observe: 'response',withCredentials: true });
   }
 
   saveProduct(product: Product): Observable<Product> {

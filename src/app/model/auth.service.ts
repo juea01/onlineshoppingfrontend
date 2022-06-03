@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import { Observable} from "rxjs";
 import { RestDataSource } from "./rest.datasource";
+import { User } from 'src/app/model/user.model';
 
 @Injectable()
 export class AuthService {
@@ -11,12 +12,18 @@ export class AuthService {
     return this.datasource.authenticate(username, password);
   }
 
+  authenticateUser(user: User) {
+    return this.datasource.authenticateUser(user);
+  }
+
   get authenticated(): boolean {
     return this.datasource.auth_token != null;
   }
 
   clear() {
     this.datasource.auth_token = null;
+    window.sessionStorage.setItem('XSRF-TOKEN', null);
+    window.sessionStorage.setItem("userdetails", null);
   }
 
 }

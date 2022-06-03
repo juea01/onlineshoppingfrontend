@@ -15,9 +15,9 @@ export class OrderRepository {
     this.dataSource.getOrders().subscribe(orders => this.orders = orders);
   }
 
-  getUpdatedJob() {
-    return this.dataSource.updatedJob;
-  }
+  // getUpdatedJob() {
+  //   return this.dataSource.updatedJob;
+  // }
 
   getOrders(): Order[] {
     if (!this.loaded) {

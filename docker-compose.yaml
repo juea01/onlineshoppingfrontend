@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    image: rabbitmq
+    mem_limit: 600m
+    ports:
+      - "5672:5672"
+    networks:
+      - onlinestore-network
+
+  eworldtrade-express:
+    image: eworldtrade-express
+    mem_limit: 600m
+    ports:
+      - "3000:3000"
+    networks:
+      - onlinestore-network
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+
+  eworldtrade-express-consumer:
+    image: eworldtrade-express-consumer
+    mem_limit: 600m
+    ports:
+      - "1923:1923"
+    networks:
+      - onlinestore-network
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+
+  customer-order-fulfillment:
+    image: shoppingdistrict/customer-order-fulfillment-service:0.0.1-SNAPSHOT
+    mem_limit: 900m
+    ports:
+      - "8000:8000"
+    networks:
+      - onlinestore-network
+    depends_on:
+      - rabbitmq
+
+  jewellerystore:
+    image: jewellerystore
+    mem_limit: 600m
+    ports:
+      - "80:80"
+    networks:
+      - onlinestore-network
+    depends_on:
+      - rabbitmq
+      - eworldtrade-express-consumer
+      - eworldtrade-express
+
+networks:
+  onlinestore-network:
