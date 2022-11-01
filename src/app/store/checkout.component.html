@@ -1,80 +1,179 @@
+
 <div class="container-fluid">
-  <div class="row">
-    <div class="col bg-dark text-white">
-      <a class="navbar-brand">JEWELLERY STORE</a>
+
+  <div class="row bg-dark">
+    <div class="container">
+      <app-nav-bar></app-nav-bar>
     </div>
   </div>
+
+  <div *ngIf="isLoggedIn && !orderSent" class="m-2 text-center">
+    <h2>Shipping Address Same as primary address?</h2>
+    <div class="form-group">
+      <div class="form-check">
+        <input type="checkbox" id="sameAsPrimaryAddress" name="sameAsPrimaryAddress"   [(ngModel)]="sameAsPrimaryAddress" />
+        <label for="sameAsPrimaryAddress"> Same as primary address</label>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoggedIn && !orderSent" class="m-2 text-center">
+    <h2>Checking out as guest user</h2>
+  </div>
+
+  <div *ngIf="orderSent" class="m-2 text-center" id="height-control-container">
+    <h2>Thanks!</h2>
+    <p>We will ship your goods as soon as possible.</p>
+    <button class="btn btn-primary" routerLink="/store"> Return to Store</button>
+  </div>
+
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+          Error: {{errorMessage}}
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+
+
+
+
+
+    <div class="row">
+      <div class="col-sm-2"></div>
+
+      <div class="col-sm-8">
+        <div  *ngIf="!orderSent" class="container-sm my-3 p-2 bg-success text-white border rounded">
+          <form *ngIf="!orderSent" novalidate #form="ngForm" (ngSubmit)="submitOrder(form)">
+
+            <div *ngIf="isLoggedIn && sameAsPrimaryAddress">
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label for="username">First Name</label>
+                  <input class="form-control" id="username" name="username" [(ngModel)]="getLoggedInUserDetail().firstname" readonly />
+                </div>
+                 <!--TODO: Password Re-enter field-->
+                <div class="form-group col-sm-6">
+                  <label for="password">Last Name</label>
+                  <input class="form-control" id="password" name="password" [(ngModel)]="getLoggedInUserDetail().lastname" readonly />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label for="email">Email</label>
+                  <input class="form-control" id="email" name="email" [(ngModel)]="getLoggedInUserDetail().email" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="phone">Phone</label>
+                  <input class="form-control" id="phone" name="phone" [(ngModel)]="getLoggedInUserDetail().phone" readonly/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input class="form-control" id="address" name="address" [(ngModel)]="getLoggedInUserDetail().address" readonly />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-sm-3">
+                  <label for="city">City</label>
+                  <input class="form-control" id="city"  name="city" [(ngModel)]="getLoggedInUserDetail().city" readonly/>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="state">State</label>
+                  <input class="form-control" id="state" name="state" [(ngModel)]="getLoggedInUserDetail().state" readonly/>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="country">Country</label>
+                  <input class="form-control" id="country" name="country" [(ngModel)]="getLoggedInUserDetail().country"  readonly/>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="postalCode">Post Code</label>
+                  <input class="form-control" id="postalCode" name="postalCode" [(ngModel)]="getLoggedInUserDetail().postalCode" readonly/>
+                </div>
+
+              </div>
+            </div>
+
+            <div  *ngIf="!isLoggedIn || !sameAsPrimaryAddress">
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                <label for="username">First Name</label>
+                <input class="form-control" id="username" name="username" [(ngModel)]="order.firstname" required />
+              </div>
+               <!--TODO: Password Re-enter field-->
+              <div class="form-group col-sm-6">
+                <label for="password">Last Name</label>
+                <input class="form-control" id="password" name="password" [(ngModel)]="order.lastname" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                <label for="email">Email</label>
+                <input class="form-control" id="email" name="email" [(ngModel)]="order.email" required />
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="phone">Phone</label>
+                <input class="form-control" id="phone" name="phone" [(ngModel)]="order.phone" required/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input class="form-control" id="address" name="address" [(ngModel)]="order.address" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-sm-3">
+                <label for="city">City</label>
+                <input class="form-control" id="city"  name="city" [(ngModel)]="order.city" />
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="state">State</label>
+                <input class="form-control" id="state" name="state" [(ngModel)]="order.state" />
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="country">Country</label>
+                <input class="form-control" id="country" name="country" [(ngModel)]="order.country"  readonly/>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="postalCode">Post Code</label>
+                <input class="form-control" id="postalCode" name="postalCode" [(ngModel)]="order.postalCode" />
+              </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+              <div class="form-check">
+                <input type="checkbox" id="emailPromCheck" name="emailPromCheck" [(ngModel)]="order.emailPromotion" />
+                <label for="emailPromCheck"> Get Email Promotion </label>
+              </div>
+            </div>
+
+          </div>
+
+
+
+            <div class="text-center">
+              <button class="btn btn-primary m-1" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-sm-2"></div>
+    </div>
+
+
+<div class="row">
+  <div class="container-fluid">
+    <app-footer></app-footer>
+  </div>
 </div>
 
-<div *ngIf="orderSent" class="m-2 text-center">
-  <h2>Thanks!</h2>
-  <p>We will ship your goods as soon as possible.</p>
-  <button class="btn btn-primary" routerLink="/store"> Return to Store</button>
 </div>
-<form *ngIf="!orderSent" #form="ngForm" novalidate (ngSubmit) = "submitOrder(form)" class="m-2">
-  <div class="bg-danger text-white p-2 mb-2" *ngIf="submitted && form.invalid">
-    There are problems with the form.
-  </div>
-
-  <div class="form-group">
-    <label>Name</label>
-    <input class="form-control" #name="ngModel" name="name" [(ngModel)]="order.name" required minlength="2"/>
-    <ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
-      <li *ngIf="name.errors.required"> Please enter a name</li>
-      <li *ngIf="name.errors.minlength"> Name must be at least {{name.errors.minlength.requiredLength}}</li>
-    </ul>
-  </div>
-
-  <div class="form-group">
-    <label>Address</label>
-    <input class="form-control" #address="ngModel" name="address" [(ngModel)]="order.address" required minlength="5"/>
-    <ul class="text-danger list-unstyled" *ngIf="address.dirty && address.invalid">
-      <li *ngIf="address.errors.required"> Please enter an address</li>
-      <li *ngIf="address.errors.minlength">Address must be at least {{address.errors.minlength.requiredLength}}</li>
-    </ul>
-  </div>
-
-  <div class="form-group">
-    <label>City</label>
-    <input class="form-control" #city="ngModel" name="city" [(ngModel)]="order.city" required minlength="3"/>
-    <ul class="text-danger list-unstyled" *ngIf="city.dirty && city.invalid">
-      <li *ngIf="city.errors.required"> Please enter a city name</li>
-      <li *ngIf="city.errors.minlength">City must be at least {{city.errors.minlength.requiredLength}}</li>
-    </ul>
-  </div>
-
-  <div class="form-group">
-    <label>State</label>
-    <input class="form-control" #state="ngModel" name="state" [(ngModel)]="order.state" required minlength="3"/>
-    <ul class="text-danger list-unstyled" *ngIf="state.dirty && state.invalid">
-      <li *ngIf="state.errors.required"> Please enter a state name</li>
-      <li *ngIf="state.errors.minlength">State must be at least {{state.errors.minlength.requiredLength}}</li>
-    </ul>
-  </div>
-
-  <div class="form-group">
-    <label>Zip/Postal Code</label>
-    <input class="form-control" #zip="ngModel" name="zip" [(ngModel)]="order.zip" required pattern="^[0-9]+$"/>
-    <ul class="text-danger list-unstyled" *ngIf="zip.dirty && zip.invalid">
-      <li *ngIf="zip.errors.required"> Please enter a zip code</li>
-      <li *ngIf="zip.errors.pattern">Zip code can only contain number</li>
-    </ul>
-  </div>
-
-  <div class="form-group">
-    <label>Country</label>
-    <input class="form-control" #country="ngModel" name="country" [(ngModel)]="order.country" required minlength="4"/>
-    <ul class="text-danger list-unstyled" *ngIf="country.dirty && country.invalid">
-      <li *ngIf="country.errors.required"> Please enter a country name</li>
-      <li *ngIf="country.errors.minlength">Country must be at least {{country.errors.minlength.requiredLength}}</li>
-    </ul>
-  </div>
-
-  <div class="text-center">
-    <button class="btn btn-secondary m-1" routerLink="/cart">Back</button>
-    <button class="btn btn-primary m-1" type="submit">Complete Order</button>
-  </div>
-
-
-
-</form>

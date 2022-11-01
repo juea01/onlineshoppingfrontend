@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <table class="table table-sm">
+        <thead>
+          <tr><th>User Details</th> <th>  <button class="btn btn-sm btn-warning m-1" [routerLink]="['/myaccount/main/userdetails/edit',getUserDetails().id]">
+            Edit
+          </button></th></tr>
+        </thead>
+        <tbody>
+
+            <tr>
+              <td>
+                User Name: <br>
+                User Phone: <br>
+                User Email: <br>
+              </td>
+
+              <td>
+                {{getUserDetails().username }} <br>
+                {{getUserDetails().phone}} <br>
+                {{getUserDetails().email }} <br>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>

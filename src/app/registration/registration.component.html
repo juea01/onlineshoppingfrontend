@@ -1,0 +1,108 @@
+<div class="container-fluid">
+
+    <div class="row bg-dark">
+      <div class="container">
+        <app-nav-bar></app-nav-bar>
+      </div>
+    </div>
+
+
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+            Error: {{errorMessage}}
+          </div>
+        </div>
+        <div class="col-sm-2"></div>
+      </div>
+
+
+
+
+
+
+      <div class="row">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-8">
+          <div class="container-sm my-3 p-2 bg-success text-white border rounded">
+            <form novalidate #form="ngForm" (ngSubmit)="authenticate(form)">
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label for="username">User Name</label>
+                  <input class="form-control" id="username" name="username" [(ngModel)]="user.username" required />
+                </div>
+                 <!--TODO: Password Re-enter field-->
+                <div class="form-group col-sm-6">
+                  <label for="password">Password</label>
+                  <input class="form-control" id="password" name="password" [(ngModel)]="user.password" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label for="email">Email</label>
+                  <input class="form-control" id="email" name="email" [(ngModel)]="user.email" required />
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="phone">Phone</label>
+                  <input class="form-control" id="phone" name="phone" [(ngModel)]="user.phone" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input class="form-control" id="address" name="address" [(ngModel)]="user.address" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-sm-3">
+                  <label for="city">City</label>
+                  <input class="form-control" id="city"  name="city" [(ngModel)]="user.city" />
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="state">State</label>
+                  <input class="form-control" id="state" name="state" [(ngModel)]="user.state" />
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="country">Country</label>
+                  <input class="form-control" id="country" name="country" [(ngModel)]="user.country"  readonly/>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="postalCode">Post Code</label>
+                  <input class="form-control" id="postalCode" name="postalCode" [(ngModel)]="user.postalCode" />
+                </div>
+
+              </div>
+
+
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input type="checkbox" id="emailPromCheck" name="emailPromCheck" [(ngModel)]="user.emailPromotion" />
+                  <label for="emailPromCheck"> Get Email Promotion </label>
+                </div>
+              </div>
+
+
+
+
+              <div class="text-center">
+                <button class="btn btn-primary m-1" type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-sm-2"></div>
+      </div>
+
+
+  <div class="row">
+    <div class="container-fluid">
+      <app-footer></app-footer>
+    </div>
+  </div>
+
+</div>
+

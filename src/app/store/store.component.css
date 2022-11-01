@@ -2,10 +2,27 @@
   float: right;
 }
 
-/* @media only screen and  (max-height: 400px){
-  #main-container {
-    height: 500px;
+
+.card img {
+  height: 200px;
 }
+
+
+.card:hover {
+
+  cursor: pointer;
+}
+
+
+.main-product .card:hover {
+  box-shadow: .25em .25em .5em .5em rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+/*
+  @media only screen and  (max-height: 700px){
+    #main-container {
+      height: 700px;
+  }
 }
 
 @media only screen and  (min-height: 700px){

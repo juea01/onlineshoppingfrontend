@@ -1,29 +1,30 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
-      <a class="navbar-brand">JEWELLERY STORE</a>
+      <a class="navbar-brand">Shopping District</a>
       <button class="navbar-toggler" type="button" (click)="toogleNavbar()">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="#">About Us</a>
-          <a class="nav-link" routerLink="/myaccount">My Account</a>
+          <a class="nav-link active" aria-current="page" routerLink="/store">Home</a>
+          <a class="nav-link" href="#">AboutUs</a>
+          <a class="nav-link" routerLink="/myaccount">MyAccount</a>
+          <a class="nav-link" routerLink="/registration">Registration</a>
         </div>
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <form class="d-flex">
-          <input #searchValue class="form-control me-2" type="search" placeholder="try Stadium" aria-label="Search">
+          <input #searchValue class="form-control me-2" type="search" placeholder="Watch" aria-label="Search">
           <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
         </form>
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-        <cart-summary></cart-summary>
       </div>
+      <cart-summary></cart-summary>
     </div>
 
   </nav>

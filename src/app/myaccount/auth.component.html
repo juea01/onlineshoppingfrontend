@@ -1,36 +1,33 @@
-<div class="bg-info p-2 text-center text-white">
-  <h3>JEWELLERY Store Customer Login</h3>
-</div>
-<!-- <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
-  {{errorMessage}}
-</div> -->
-
 <div class="container-fluid">
-  <!-- We don't need this code block any more with KeyCloak login
-    <div class="row justify-content-center">
-    <div class="col-12 col-sm-6 col-md-3">
-      <div class="p-2">
-        <form class="form-container" novalidate #form="ngForm" (ngSubmit)="authenticate(form)">
-          <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" name="username" [(ngModel)]="model.name" required />
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input class="form-control" type="password" name="password" [(ngModel)]="model.password" required />
-          </div>
-          <div class="text-center">
-            <button class="btn btn-secondary m-1 btn-block" routerLink="/">Go back</button>
-            <button class="btn btn-primary m-1 btn-block" type="submit">Log In</button>
-          </div>
-        </form>
+  <div class="row">
+    <div class="col bg-dark text-white">
+      <a class="navbar-brand"> Shopping District Customer Login</a>
+    </div>
+  </div>
+  <!-- <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+    {{errorMessage}}
+  </div> -->
+  <div class="row">
+    <div class="bg-success mt-2 p-2 text-center text-white" *ngIf="userCreationSuccess===true">
+      Your account has been successfully created. Please login to your account or continue shopping.
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-8 col-sm-12">
+      <div class="text-center mt-5 border border-info bg-success text-white border rounded p-5 border-shadow">
+        <h3> Please continue to login page, to access your details.</h3>
+        <button class="btn btn-secondary m-2" routerLink="/">Go back</button>
+        <button class="btn btn-primary m-2" (click)="login()">Log In</button>
       </div>
     </div>
-  </div> -->
+    <div class="col-md-2">
 
-  <nav class="hright dnav">
-    <ul>
-      <li routerLinkActive="active"><a (click)="login()">Login</a></li>
-    </ul>
-  </nav>
+    </div>
+
+  </div>
+
+
 </div>

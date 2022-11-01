@@ -11,6 +11,10 @@ import {StoreModule} from "./store/store.module";
 import {StoreComponent } from "./store/store.component";
 import {CheckoutComponent } from "./store/checkout.component";
 import {CartDetailComponent } from "./store/cartDetail.component";
+import { RegistrationComponent } from './registration/registration.component';
+import { ProductDetailComponent } from './store/productDetail.component';
+
+
 import {RouterModule } from "@angular/router";
 import {StoreFirstGuard} from "./storeFirst.guard";
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -20,17 +24,22 @@ import { XhrInterceptor } from './interceptors/app.request.interceptor';
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
+/**
+ *
+ * if loadUserProfileAtStartUp option is true mean, user will be redirected to login page once application is started
+ */
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:8080',
+        url: `http://${location.hostname}:8080`,
         realm: 'shoppingdistrictdev',
         clientId: 'shoppingdistrictpublicclient'
       },
       initOptions: {
         pkceMethod: 'S256',
-        redirectUri: 'http://localhost:4200/myaccount/main'
+        redirectUri: `http://${location.hostname}:80/myaccount/main`
       }, loadUserProfileAtStartUp: false
     });
 }
@@ -38,7 +47,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule, StoreModule,
@@ -49,23 +59,27 @@ function initializeKeycloak(keycloak: KeycloakService) {
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
     }),
+    /**StoreFirstGuard is here so that user can only navigate through UI (not like pasting the specific page link in browser) */
     RouterModule.forRoot([
       {path: "store", component: StoreComponent, canActivate: [StoreFirstGuard]},
       {path: "cart", component: CartDetailComponent, canActivate: [StoreFirstGuard]},
-      {path: "checkout", component: CheckoutComponent, canActivate: [StoreFirstGuard]},
-      {path: "admin", loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule), canActivate: [StoreFirstGuard]},
-      {path: "myaccount", loadChildren: () => import("./myaccount/myaccount.module").then(m => m.MyaccountModule), canActivate: [StoreFirstGuard]},
+      {path: "checkout", component: CheckoutComponent},
+      {path: "productDetail/:id", component: ProductDetailComponent},
+      {path: "productDetail", component: ProductDetailComponent},
+      {path: "registration", component: RegistrationComponent, canActivate: [StoreFirstGuard]},
+      {path: "admin", loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule)},
+      {path: "myaccount", loadChildren: () => import("./myaccount/myaccount.module").then(m => m.MyaccountModule)},
       {path: "**", redirectTo: "/store"},
     ]),
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    {
-      provide : HTTP_INTERCEPTORS,
-      useClass: XhrInterceptor,
-      multi : true
-    },
+    // {
+    //   provide : HTTP_INTERCEPTORS,
+    //   useClass: XhrInterceptor,
+    //   multi : true
+    // },
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,

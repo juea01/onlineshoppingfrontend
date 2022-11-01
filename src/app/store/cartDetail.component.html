@@ -2,11 +2,13 @@
 
   <div class="row">
     <div class="col bg-dark text-white">
-      <a class="navbar-brand"> JEWELLERY STORE</a>
+      <a class="navbar-brand"> Shopping District</a>
     </div>
   </div>
   <div class="row">
-    <div class="col mt-2">
+    <div class="col-md-1 mt-2">
+    </div>
+    <div class="col-md-10 mt-2">
       <h2 class="text-center">Your Cart</h2>
       <table class="table table-bordered table-striped p-2">
         <thead>
@@ -25,7 +27,7 @@
           </tr>
           <tr *ngFor="let line of cart.lines">
             <td>
-              <input type="number" class="form-control-sm" style="width:5em" [value]="line.quantity"
+              <input type="number" class="form-control-sm" style="width:5em" [value]="line.itemCount"
               (change)="cart.updateQuantity(line.product, $event.target.value)"/>
             </td>
             <td>
@@ -50,20 +52,23 @@
               {{cart.cartPrice | currency:"USD":"symbol":"2.2-2"}}
             </td>
           </tr>
+          <tr>
+            <td colspan="4" class="text-center">
+              <button class="btn btn-primary m-1" routerLink="/store">
+                Continue Shopping
+              </button>
+              <button class="btn btn-success m-1" routerLink="/checkout" [disabled]="cart.lines.length == 0 || !connected">
+                {{ connected ? 'Checkout As Guest User' : 'Offline' }}
+              </button>
+              <button class="btn btn-success m-1" (click)="navigateToLogin()" [disabled]="cart.lines.length == 0 || !connected">
+                {{ connected ? 'Logged In and Checkout' : 'Offline' }}
+              </button>
+            </td>
+          </tr>
         </tfoot>
       </table>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="text-center">
-        <button class="btn btn-primary m-1" routerLink="/store">
-          Continue Shopping
-        </button>
-        <button class="btn btn-secondary m-1" routerLink="/checkout" [disabled]="cart.lines.length == 0 || !connected">
-          {{ connected ? 'Checkout' : 'Offline' }}
-        </button>
-      </div>
+    <div class="col-md-1 mt-2">
     </div>
   </div>
 

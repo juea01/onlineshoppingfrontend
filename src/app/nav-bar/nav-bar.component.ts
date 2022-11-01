@@ -43,4 +43,8 @@ export class NavBarComponent implements OnInit {
 
   }
 
+  navigateToHome() {
+    this.router.navigate(['store']);
+  }
+
 }

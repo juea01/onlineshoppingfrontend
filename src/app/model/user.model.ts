@@ -2,27 +2,41 @@
 export class User{
 
   public id: number;
-  public name: string;
-  public mobileNumber: string;
+  public firstname: string;
+  public lastname: string;
+  public username: string;
+  public phone: string;
   public email : string;
   public password: string;
   public role : string;
-  public statusCd: string;
-  public statusMsg : string;
   public authStatus : string;
+  public emailPromotion: boolean;
+
+  public address: string;
+  public city: string;
+  public state: string;
+  public country: string;
+  public postalCode: number;
 
 
-  constructor(id?: number,name?: string, mobileNumber?: string, email?: string,  password?: string,role?: string,
-      statusCd?:string,statusMsg?:string, authStatus?:string){
+  constructor(id?: number,firstname?: string, lastname?: string, name?: string, mobileNumber?: string, email?: string,  password?: string,role?: string,
+       authStatus?:string, emailPromotion?:boolean, address?: string, city?: string, state?: string, country?: string, postalCode?: number){
         this.id = id;
-        this.name = name;
-        this.mobileNumber = mobileNumber;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = name;
+        this.phone = mobileNumber;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.statusCd = statusCd;
-        this.statusMsg = statusMsg;
         this.authStatus = authStatus;
+        this.emailPromotion = emailPromotion;
+
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.postalCode = postalCode;
   }
 
 }

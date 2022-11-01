@@ -1,0 +1,77 @@
+<div class="container-fluid">
+
+  <div class="row bg-dark">
+    <div class="container">
+      <app-nav-bar></app-nav-bar>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-white">
+    <div class="row">
+      <div class="col-sm-5">
+       <app-gallery></app-gallery>
+      </div>
+      <div class="col-sm-7">
+        <div class="row">
+          <div class="col-sm-6"><h1>{{product.name}}   </h1></div>
+          <div class="col-sm-2 text-left"></div>
+          <div class="col-sm-5"> </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>
+              {{product.price | currency:"USD":"symbol":"2.2-2"}}
+            </h2>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <p>{{product.description}} </p>
+          </div>
+        </div>
+        <div *ngIf="getWindowInnerWidth() > 780px" class="row">
+          <div class="col-sm-3 col-md-2">
+            <a routerLink="/store" class="btn btn-primary">Go Back</a>
+
+          </div>
+          <div class="col-sm-3 col-md-2">
+            <button class="btn btn-success" (click)="addProductToCart(product)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="col-sm-6 col-md-8">
+
+          </div>
+        </div>
+        <div *ngIf="getWindowInnerWidth() < 780px" class="row">
+          <div class="col-sm-2">
+            <a routerLink="/store" class="btn btn-primary">Go Back</a>
+            <button  class="btn btn-success m-1" (click)="addProductToCart(product)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="col-sm-2">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p>*Please note that once purchased you may not be able to return some of the items due to hygiene, health and safety reasons.
+              Please read our return policy here.
+            </p>
+          </div>
+        </div>
+
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid">
+       <app-footer></app-footer>
+    </div>
+  </div>
+
+</div>
+

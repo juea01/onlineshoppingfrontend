@@ -1,22 +1,23 @@
-<div class="bg-info p-2 text-center text-white">
-  <h3>JEWELLERY Store Admin</h3>
-</div>
-<div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
- {{errorMessage}}
-</div>
-<div class="p-2">
-  <form novalidate #form="ngForm" (ngSubmit)="authenticate(form)">
-    <div class="form-group">
-      <label>Name</label>
-      <input class="form-control" name="username" [(ngModel)]="username" required />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col bg-dark text-white">
+      <a class="navbar-brand"> Shopping District Admin Login</a>
     </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input class="form-control" type="password"  name="password" [(ngModel)]="password" required />
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+
     </div>
-    <div class="text-center">
-      <button class="btn btn-secondary m-1" routerLink="/">Go back</button>
-      <button class="btn btn-primary m-1" type="submit">Log In</button>
+    <div class="col-md-8 col-sm-12">
+      <div class="text-center mt-5 border border-info bg-success text-white border rounded p-5 border-shadow">
+        <h3> Please continue to login page, to access admin panel.</h3>
+        <button class="btn btn-secondary m-2" routerLink="/">Go back</button>
+        <button class="btn btn-primary m-2" (click)="login()">Log In</button>
+      </div>
     </div>
-  </form>
+    <div class="col-md-2">
+
+    </div>
+
+  </div>
 </div>

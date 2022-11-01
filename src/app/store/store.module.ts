@@ -11,11 +11,15 @@ import { RouterModule} from "@angular/router";
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { PredictionComponent } from '../prediction/prediction.component';
+import { ProductDetailComponent } from './productDetail.component';
+
+import { GalleryComponent } from "../imageGallery/gallery.component";
+import { GalleryDirective } from "../imageGallery/gallery.directive";
 
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule],
   declarations: [StoreComponent, CounterDirective, CartSummaryComponent,
-  CartDetailComponent, CheckoutComponent, NavBarComponent,FooterComponent,PredictionComponent],
-  exports: [StoreComponent, CartDetailComponent, CheckoutComponent]
+  CartDetailComponent, CheckoutComponent, NavBarComponent,FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective ],
+  exports: [StoreComponent, CartDetailComponent, CheckoutComponent, NavBarComponent, FooterComponent, ProductDetailComponent]
 })
 export class StoreModule {}

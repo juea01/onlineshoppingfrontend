@@ -10,9 +10,10 @@ export class Cart {
   addLine(product: Product, quantity: number = 1) {
     let line = this.lines.find(line => line.product.id == product.id);
     if (line != undefined) {
-      line.quantity += quantity;
+      line.itemCount += quantity;
+      line.linePrice = (+(product.price * quantity).toFixed(2));
     } else {
-      this.lines.push(new CartLine(product,quantity));
+      this.lines.push(new CartLine(product,quantity,+(product.price * quantity).toFixed(2)));
     }
     this.recalculate();
   }
@@ -20,9 +21,10 @@ export class Cart {
   updateQuantity(product: Product, quantity: number) {
     let line = this.lines.find(line => line.product.id == product.id);
     if (line != undefined) {
-      line.quantity = Number(quantity);
+      line.itemCount = Number(quantity);
+      line.linePrice = (+(product.price * quantity).toFixed(2));
     } else {
-      this.lines.push(new CartLine(product,quantity));
+      this.lines.push(new CartLine(product,quantity, (+(product.price * quantity).toFixed(2))));
     }
     this.recalculate();
   }
@@ -44,18 +46,24 @@ export class Cart {
     console.log("cart price recalculate");
     this.itemCount = 0;
     this.cartPrice = 0;
+    let price: number = 0;
     this.lines.forEach(l => {
-      this.itemCount += l.quantity;
-      this.cartPrice += (l.quantity * l.product.price);
+      this.itemCount += l.itemCount;
+
+      price = (+(l.itemCount * l.product.price).toFixed(2));
+      console.log("Price"+price);
+      console.log("Cart Price Before"+this.cartPrice);
+      this.cartPrice = +(this.cartPrice +price).toFixed(2);
+      console.log("Cart Price After"+this.cartPrice);
     })
   }
 
 }
 
 export class CartLine {
-  constructor(public product: Product, public quantity: number) {}
+  constructor(public product: Product, public itemCount: number, public linePrice: number) {}
 
   get lineTotal() {
-    return this.quantity * this.product.price;
+    return this.linePrice;
   }
 }

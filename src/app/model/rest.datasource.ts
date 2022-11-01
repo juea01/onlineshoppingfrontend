@@ -1,17 +1,17 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of, throwError} from "rxjs";
 import {Product} from "./product.model";
 import {Cart} from "./cart.model";
 import {Order} from "./order.model";
 import { Prediction } from "./prediction.model";
-import {map } from "rxjs/operators"
+import {catchError, map } from "rxjs/operators"
 import { HttpHeaders } from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
 import { User } from 'src/app/model/user.model';
 
 const PROTOCOL = "http";
-const PORT = 8080;
+const PORT = 8765;
 const MLPORT = 5000;
 
 @Injectable()
@@ -21,7 +21,8 @@ export class RestDataSource{
 
   mlPredictionUrl: string;
 
-  constructor(private http: HttpClient, private socket: Socket) {
+  //constructor(private http: HttpClient, private socket: Socket) {
+  constructor(private http: HttpClient) {
     this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
   //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
     //this.baseUrl = "/api/";
@@ -31,12 +32,11 @@ export class RestDataSource{
  // updatedJob = this.socket.fromEvent<Order>('updatedJob');
 
   getProducts():Observable<Product[]> {
-    console.log(this.baseUrl+"baseURL");
-    return this.http.get<Product[]>(this.baseUrl + "product");
+    return this.sendRequest<Product[]>("GET",`${this.baseUrl}product-listing-service/products`);
   }
 
   saveOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.baseUrl + "orders",order);
+    return this.sendRequest<Order>("POST",`${this.baseUrl}customer-order-fulfillment-service/orders/`,null, null, order);
   }
 
   authenticate(user: string, pass: string): Observable<boolean> {
@@ -56,11 +56,11 @@ export class RestDataSource{
   }
 
   saveProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.baseUrl + "product", product, this.getOptions());
+    return this.sendRequest<Product>("POST",`${this.baseUrl}product-listing-service/products/`,null, product);
   }
 
   updateProduct(product): Observable<Product> {
-    return this.http.put<Product>(`${this.baseUrl}product/${product.id}`, product, this.getOptions());
+    return this.sendRequest<Product>("PUT",`${this.baseUrl}product-listing-service/products/${product.id}`, null, product);
   }
 
   deleteProduct(id: number): Observable<Product> {
@@ -68,7 +68,11 @@ export class RestDataSource{
   }
 
   getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.baseUrl +  "orders", this.getOptions());
+    return this.sendRequest<Order[]>("GET",`${this.baseUrl}customer-order-fulfillment-service/orders/`);
+  }
+
+  getOrdersByLoggedInUserName(username: string): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.baseUrl}user-service/customers/${username}/orders`,{ withCredentials: true });
   }
 
   deleteOrder(id: number): Observable<Order> {
@@ -76,8 +80,34 @@ export class RestDataSource{
   }
 
   updateOrder(order: Order): Observable<Order> {
-    return this.http.put<Order>(`${this.baseUrl}orders/${order.id}`, order, this.getOptions());
+    return this.sendRequest<Order>("PUT",`${this.baseUrl}customer-order-fulfillment-service/orders/${order.id}`,null, null, order);
   }
+
+
+  getUserByName(username: string): Observable<User> {
+   // return this.http.get<User>(this.baseUrl + "user-service/customers/"+username, {withCredentials: true});
+    return this.sendRequest<User>("GET",`${this.baseUrl}user-service/customers/${username}`);
+  }
+
+  saveUser(user: User): Observable<User> {
+    //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);
+    return this.sendRequest<User>("POST",`${this.baseUrl}user-service/customers/`, user);
+  }
+
+  updateUser(user: User): Observable<User> {
+  //  return this.http.put<User>(`${this.baseUrl}user-service/customers/${user.id}`, user, {withCredentials: true});
+
+    return this.sendRequest<User>("PUT",`${this.baseUrl}user-service/customers/${user.id}`, user);
+  }
+
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, orderBody?: Order): Observable<T> {
+
+    let body = userBody ? userBody : productBody ? productBody : orderBody? orderBody: null;
+    return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
+      (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
+    ));
+  }
+
 
   private getOptions() {
     return {

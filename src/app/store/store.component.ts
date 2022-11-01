@@ -18,10 +18,14 @@ export class StoreComponent {
   constructor(private repository: ProductRepository, private cart: Cart, private router: Router, private searchString: Search) {}
 
   get products(): Product[] {
-    console.log("I am products()");
+
     let pageIndex = (this.selectedPage -1) * this.productsPerPage;
     this.selectedCategory = this.searchString.category;
     return this.repository.getProducts(this.selectedCategory).slice(pageIndex, pageIndex + this.productsPerPage);
+  }
+
+  getProductSize(): number {
+    return this.repository.getProductSize();
   }
 
   get categories(): string[] {
@@ -70,14 +74,14 @@ export class StoreComponent {
   getOptimalMainContainerHeight():string {
     if (this.getMainContainerHeight() >= this.getWindowInnerHeight()) {
       let pixel = this.getMainContainerHeight();
-      console.log(`height to set to main container as it is bigger than window height ${pixel}`);
+     console.log(`height to set to main container as it is bigger than window height ${pixel}, ${this.getWindowInnerHeight()}`);
       return pixel+"px";
     } else {
       //footer is 200px and nav is around 50px
       let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();
-      console.log(`height to set to main container as it is smaller than window height ${pixel}`);
+     console.log(`height to set to main container as it is smaller than window height ${pixel} , ${this.getWindowInnerHeight()}`);
 
-      return pixel+100+"px";
+      return this.getWindowInnerHeight()+200+"px";
     }
   }
 }

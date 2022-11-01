@@ -13,8 +13,8 @@ export class XhrInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let httpHeaders = new HttpHeaders();
     this.user = JSON.parse(sessionStorage.getItem('userdetails'));
-    if(this.user && this.user.password && this.user.name){
-      httpHeaders = httpHeaders.append('Authorization', 'Basic ' + btoa(this.user.name + ':' + this.user.password));
+    if(this.user && this.user.password && this.user.username){
+      httpHeaders = httpHeaders.append('Authorization', 'Basic ' + btoa(this.user.username + ':' + this.user.password));
     }
 
     //this block is related to csrf and if used JWT token then not needed
