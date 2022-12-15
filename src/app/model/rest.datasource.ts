@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, of, throwError} from "rxjs";
 import {Product} from "./product.model";
 import {Cart} from "./cart.model";
+import {Article} from "./article.model";
 import {Order} from "./order.model";
 import { Prediction } from "./prediction.model";
 import {catchError, map } from "rxjs/operators"
@@ -98,6 +99,14 @@ export class RestDataSource{
   //  return this.http.put<User>(`${this.baseUrl}user-service/customers/${user.id}`, user, {withCredentials: true});
 
     return this.sendRequest<User>("PUT",`${this.baseUrl}user-service/customers/${user.id}`, user);
+  }
+
+  getArticles(): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/`);
+  }
+
+  getArticle(articleId: number): Observable<Article> {
+    return this.sendRequest<Article>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}`);
   }
 
   private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, orderBody?: Order): Observable<T> {

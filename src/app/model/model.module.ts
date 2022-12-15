@@ -5,6 +5,7 @@ import {Cart} from "./cart.model";
 import {Order} from "./order.model";
 import {OrderRepository} from "./order.repository";
 import { UserRepository } from "./user.repository";
+import { ArticleRepository } from "./article.repository";
 import { RestDataSource } from "./rest.datasource";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthService} from "./auth.service";
@@ -20,7 +21,7 @@ import { PredictionRepository } from "./prediction.repository";
 @NgModule({
   //imports: [HttpClientModule,SocketIoModule.forRoot(config)],
   imports: [HttpClientModule],
-  providers: [ProductRepository, Cart, Order, OrderRepository, PredictionRepository, UserRepository,
+  providers: [ProductRepository, Cart, Order, OrderRepository, PredictionRepository, UserRepository, ArticleRepository,
   {provide: StaticDataSource, useClass: RestDataSource}, RestDataSource, AuthService, ConnectionService, Search, Images]
 })
 export class ModelModule{}
