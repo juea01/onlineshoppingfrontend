@@ -5,6 +5,7 @@ import { ActivatedRoute} from "@angular/router";
 import { UserRepository } from "../model/user.repository";
 import { User} from "../model/user.model";
 
+
 @Component({
   templateUrl: "registration.component.html",
   styleUrls: ["registration.component.css"]

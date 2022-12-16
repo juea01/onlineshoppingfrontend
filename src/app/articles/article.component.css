@@ -1,11 +1,39 @@
-figure {
-  padding: 1em;
-  background-color: #eee;
-  border-radius: 5px;
-  box-shadow: .1em .1em .5em .1em rgba(0,0,0, 0.3);
+.moveRight {
+  float: right;
 }
 
-img {
-  border: 2px solid  black;
-  border-radius: 5px;
+
+.card img {
+  height: 200px;
 }
+
+
+.card:hover {
+
+  cursor: pointer;
+}
+
+
+.main-article .card:hover {
+  box-shadow: .25em .25em .5em .5em rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+/*
+  @media only screen and  (max-height: 700px){
+    #main-container {
+      height: 700px;
+  }
+}
+
+@media only screen and  (min-height: 700px){
+  #main-container {
+    height: calc(100vh);
+  }
+}
+
+@media only screen and  (min-height: 500px){
+  #main-container {
+    height: calc(100vh - 200px);
+  }
+} */
+

@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Search } from '../model/search.model';
 import { Images } from '../model/images.model';
 
+
 @Component({
   selector: "productDetail",
   templateUrl: "productDetail.component.html",

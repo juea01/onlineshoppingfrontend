@@ -14,7 +14,11 @@ import {CartDetailComponent } from "./store/cartDetail.component";
 import { RegistrationComponent } from './registration/registration.component';
 import { ProductDetailComponent } from './store/productDetail.component';
 
-import { ArticleDetailComponent } from './articles/article.component';
+
+import {ArticleComponent} from "./articles/article.component";
+import {ArticleDetailComponent} from "./articles/articledetail.component";
+
+
 
 import {RouterModule } from "@angular/router";
 import {StoreFirstGuard} from "./storeFirst.guard";
@@ -50,6 +54,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     RegistrationComponent,
+    ArticleComponent,
     ArticleDetailComponent
   ],
   imports: [
@@ -68,7 +73,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "checkout", component: CheckoutComponent},
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
+
+      {path: "article", component: ArticleComponent, canActivate: [StoreFirstGuard]},
+      {path: "articleDetail/:id", component: ArticleDetailComponent},
       {path: "articleDetail", component: ArticleDetailComponent},
+
       {path: "registration", component: RegistrationComponent, canActivate: [StoreFirstGuard]},
       {path: "admin", loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule)},
       {path: "myaccount", loadChildren: () => import("./myaccount/myaccount.module").then(m => m.MyaccountModule)},
