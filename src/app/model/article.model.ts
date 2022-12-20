@@ -15,6 +15,8 @@ export class Article {
     public user?: User,
     public comments?: Comment[],
 
+    public images?: Image[],
+
     public publishDate?: Date,
     public lastEditDate?: Date
   ){}
