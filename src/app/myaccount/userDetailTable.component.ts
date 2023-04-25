@@ -8,13 +8,26 @@ import { UserRepository } from "../model/user.repository";
 
 export class UserDetailTableComponent implements AfterViewInit{
 
+  userDetail = new User();
   constructor(private repository: UserRepository){
 
+    this.repository.loadUserForUserDetail().subscribe(
+      user => {
+      console.log("Success");
+      this.userDetail = user;
+      }, error => {
+
+        console.log(error);
+      });
   }
 
+
+
   getUserDetails():User {
-    return this.repository.getUser();
+    return this.userDetail;
   }
+
+
 
   ngAfterViewInit() {
 

@@ -19,12 +19,14 @@
           <li class="nav-item dropdown">
              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Article</a>
              <div class="dropdown-menu">
-              <a class="dropdown-item"routerLink="/article"> HTML</a>
-              <a class="dropdown-item" href="#"> JavaScript</a>
-              <a class="dropdown-item" href="#"> Java</a>
-              <a class="dropdown-item" href="#"> Machine Learning</a>
+              <a class="dropdown-item" (click)="navigateToArticle('HTML')"> HTML</a>
+              <a class="dropdown-item" (click)="navigateToArticle('JavaScript')"> JavaScript</a>
+              <a class="dropdown-item" (click)="navigateToArticle('Java')"> Java</a>
+              <a class="dropdown-item" (click)="navigateToArticle('ML')"> Machine Learning</a>
+
              </div>
           </li>
+
 
 
 
@@ -46,7 +48,6 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
       </div>
-      <cart-summary></cart-summary>
     </div>
 
   </nav>

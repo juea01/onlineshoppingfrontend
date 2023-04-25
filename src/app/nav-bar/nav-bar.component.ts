@@ -13,6 +13,9 @@ export class NavBarComponent implements OnInit {
   navbarOpen = false;
   public clicked = false;
 
+
+
+
   _el: any;
 
   toogleNavbar() {
@@ -45,6 +48,11 @@ export class NavBarComponent implements OnInit {
 
   navigateToHome() {
     this.router.navigate(['store']);
+  }
+
+  navigateToArticle(subCategory: string) {
+    window.sessionStorage.setItem('articleSubcategory',subCategory);
+    this.router.navigate(['article', subCategory]);
   }
 
 }

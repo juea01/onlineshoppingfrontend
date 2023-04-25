@@ -10,6 +10,8 @@ import {catchError, map } from "rxjs/operators"
 import { HttpHeaders } from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
 import { User } from 'src/app/model/user.model';
+import { Reply } from 'src/app/model/reply.model';
+import { Comment } from 'src/app/model/comment.model';
 
 const PROTOCOL = "http";
 const PORT = 8765;
@@ -105,13 +107,42 @@ export class RestDataSource{
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/`);
   }
 
-  getArticle(articleId: number): Observable<Article> {
+  getArticleDetailById(articleId: number): Observable<Article> {
     return this.sendRequest<Article>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}`);
   }
 
-  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, orderBody?: Order): Observable<T> {
 
-    let body = userBody ? userBody : productBody ? productBody : orderBody? orderBody: null;
+  getArticleBySubcategory(subcategory: string): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/subcategory/${subcategory}`);
+  }
+
+  getRepliesByArticleAndCommentId(articleId: number, commentId: number): Observable<Reply[]> {
+    return this.sendRequest<Reply[]>("GET", `${this.baseUrl}product-listing-service/articles/${articleId}/comments/${commentId}/replies`);
+  }
+
+
+  saveComment(comment: Comment): Observable<Comment> {
+    //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);
+    return this.sendRequest<Comment>("POST",`${this.baseUrl}product-listing-service/comments`, null, null, comment, null);
+  }
+
+  updateComment(comment: Comment): Observable<Comment> {
+    //  return this.http.put<User>(`${this.baseUrl}user-service/customers/${user.id}`, user, {withCredentials: true});
+
+      return this.sendRequest<Comment>("PUT",`${this.baseUrl}product-listing-service/comments/${comment.id}`, null, null, comment, null);
+    }
+
+  saveReply(reply: Reply): Observable<Reply> {
+    return this.sendRequest<Reply>("POST",`${this.baseUrl}product-listing-service/articles/comments/replies`,null, null, null, reply, null);
+  }
+
+  updateReply(reply: Reply): Observable<Reply> {
+    return this.sendRequest<Reply>("PUT",`${this.baseUrl}product-listing-service/articles/comments/replies/${reply.id}`,null, null, null, reply, null);
+  }
+
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, orderBody?: Order): Observable<T> {
+
+    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: orderBody? orderBody: null;
     return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
       (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
     ));
@@ -130,6 +161,9 @@ export class RestDataSource{
     console.log(this.mlPredictionUrl+"baseURL");
     return this.http.get<Prediction>(this.mlPredictionUrl + "weatherpredict");
   }
+
+
+
 
 
 }

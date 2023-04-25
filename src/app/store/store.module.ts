@@ -8,7 +8,9 @@ import {CartSummaryComponent} from "./cartSummary.component";
 import {CartDetailComponent} from "./cartDetail.component";
 import {CheckoutComponent} from "./checkout.component";
 import { RouterModule} from "@angular/router";
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
+
+import { NavBarModule } from "../nav-bar/nav-bar.module";
+
 import { FooterComponent } from '../footer/footer.component';
 import { PredictionComponent } from '../prediction/prediction.component';
 import { ProductDetailComponent } from './productDetail.component';
@@ -17,9 +19,9 @@ import { GalleryComponent } from "../imageGallery/gallery.component";
 import { GalleryDirective } from "../imageGallery/gallery.directive";
 
 @NgModule({
-  imports: [ModelModule, BrowserModule, FormsModule, RouterModule],
+  imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule],
   declarations: [StoreComponent, CounterDirective, CartSummaryComponent,
-  CartDetailComponent, CheckoutComponent, NavBarComponent,FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective ],
-  exports: [StoreComponent, CartDetailComponent, CheckoutComponent, NavBarComponent, FooterComponent, ProductDetailComponent]
+  CartDetailComponent, CheckoutComponent,FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective ],
+  exports: [StoreComponent, CartDetailComponent, CheckoutComponent, FooterComponent, ProductDetailComponent]
 })
 export class StoreModule {}

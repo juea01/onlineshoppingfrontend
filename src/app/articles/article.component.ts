@@ -15,12 +15,14 @@ export class ArticleComponent {
   public articlesPerPage = 4;
   public selectedPage = 1;
 
-  constructor(private repository: ArticleRepository, private router: Router, private searchString: Search) {}
+  constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
+
+  }
 
   get articles(): Article[] {
 
     let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
-    this.selectedSubCategory = this.searchString.category;
+    this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
     return this.repository.getArticles(this.selectedSubCategory).slice(pageIndex, pageIndex + this.articlesPerPage);
   }
 

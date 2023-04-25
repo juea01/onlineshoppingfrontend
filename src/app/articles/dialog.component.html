@@ -1,0 +1,9 @@
+<h1>Update/Reply Comment</h1>
+    <p>Enter your details:</p>
+    <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
+      <label>Type comment here:</label>
+      <input type="text" name="comment" [(ngModel)]="comment"/>
+      <br />
+      <button type="submit">Submit</button>
+      <button (click)="cancel()">Cancel</button>
+    </form>

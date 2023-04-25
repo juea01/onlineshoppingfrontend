@@ -10,6 +10,8 @@ import { UserDetailTableComponent } from "./userDetailTable.component";
 import { UserDetailEditorComponent } from "./userDetailEditor.component";
 import { AuthKeyCloakGuard } from "./authkeycloak.guard";
 
+import { NavBarModule } from '../nav-bar/nav-bar.module';
+
 
 let routing = RouterModule.forChild([
   {path: "auth", component: AuthComponent},
@@ -26,7 +28,7 @@ let routing = RouterModule.forChild([
 ]);
 
 @NgModule({
-  imports: [CommonModule, FormsModule, routing],
+  imports: [CommonModule, FormsModule, routing, NavBarModule],
   providers: [AuthGuard],
   declarations: [AuthComponent, MyaccountComponent, OrderTableComponent, UserDetailTableComponent, UserDetailEditorComponent]
 })

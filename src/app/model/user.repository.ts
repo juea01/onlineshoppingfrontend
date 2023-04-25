@@ -33,6 +33,14 @@ export class UserRepository {
     }
   }
 
+  loadUserForUserDetail(): Observable<User> {
+    this.loggedInUser = JSON.parse(sessionStorage.getItem('userdetails'));
+    if (!this.loggedInUser) {
+      return throwError("Error- can't get user detail from session storage!");
+    }
+    return  this.dataSource.getUserByName(this.loggedInUser.username);
+  }
+
 
   /**
    *

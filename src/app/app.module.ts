@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { ProductDetailComponent } from './store/productDetail.component';
 
 import {ArticleComponent} from "./articles/article.component";
 import {ArticleDetailComponent} from "./articles/articledetail.component";
+import {DialogComponent} from "./articles/dialog.component";
 
 
 
@@ -24,10 +26,12 @@ import {RouterModule } from "@angular/router";
 import {StoreFirstGuard} from "./storeFirst.guard";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NavBarModule} from './nav-bar/nav-bar.module';
 
 import { XhrInterceptor } from './interceptors/app.request.interceptor';
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { MatDialogModule} from "@angular/material/dialog";
 
 /**
  *
@@ -55,13 +59,16 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppComponent,
     RegistrationComponent,
     ArticleComponent,
-    ArticleDetailComponent
+    ArticleDetailComponent,
+    DialogComponent
   ],
   imports: [
-    BrowserModule, StoreModule,
+    BrowserModule, BrowserAnimationsModule, StoreModule,
     FormsModule,
     KeycloakAngularModule,
     HttpClientModule,
+    NavBarModule,
+    MatDialogModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
@@ -74,7 +81,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
 
-      {path: "article", component: ArticleComponent, canActivate: [StoreFirstGuard]},
+      {path: "article/:subcategory", component: ArticleComponent, canActivate: [StoreFirstGuard]},
       {path: "articleDetail/:id", component: ArticleDetailComponent},
       {path: "articleDetail", component: ArticleDetailComponent},
 

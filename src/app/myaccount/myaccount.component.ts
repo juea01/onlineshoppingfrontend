@@ -24,6 +24,7 @@ export class MyaccountComponent implements OnInit {
   * Need to upgrade Angular as well as keycloak library
   */
   logout() {
+    window.sessionStorage.setItem("userdetails",null);
     this.keycloak.logout(`http://${location.hostname}:80`).then(()=> {
       this.keycloak.clearToken();
     })
