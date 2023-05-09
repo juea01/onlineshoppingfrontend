@@ -21,20 +21,16 @@
         <ng-template ngFor let-product [ngForOf]="products">
           <div class="col-6 col-md-4 p-2">
             <div class="card m-1 p-1 bg-light">
-              <img class="card-img-top" src="{{product.images[0].location}}{{product.images[0].name}}" alt="Card image cap">
+              <img class="card-img-top" src="{{product.images[0].location}}" alt="product image">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-10"><h5 class="card-title">{{product.name}}</h5></div>
                   <div class="col-md-2"> <span class="badge badge-pill badge-primary float-right">
-                    {{product.price | currency:"USD":"symbol":"2.2-2"}}
+
                   </span></div>
                 </div>
-              <p class="card-text">{{product.description}}</p>
               <div class="row">
                 <div class="col-md-6"><a [routerLink]="['/productDetail',product.id]" class="btn btn-primary">More Details</a> </div>
-                <div class="col-md-6">  <button class="btn btn-success" (click)="addProductToCart(product)">
-                  Add to Cart
-                </button></div>
               </div>
               </div>
 

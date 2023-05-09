@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {Product} from "./product.model";
 //import {StaticDataSource} from "./static.datasource";
 import {RestDataSource} from "./rest.datasource";
+import { Observable } from "rxjs";
+
 
 @Injectable()
 export class ProductRepository {
@@ -29,17 +31,64 @@ export class ProductRepository {
     return this.categories;
   }
 
-  saveProduct(product: Product) {
-    if (product.id == null || product.id == 0) {
-      this.dataSource.saveProduct(product).subscribe(p => {
-        product.id = p.id;
-        return this.products.push(product)});
-    } else {
-      this.dataSource.updateProduct(product).subscribe(p => {
-        this.products.splice(this.products.findIndex(p => p.id == product.id),1,product);
-      } )
-    }
+  saveProduct(product: Product): Observable<number> {
+
+      return  new Observable(observer =>{
+        if (product.id == null || product.id == 0){
+          this.dataSource.saveProduct(product).subscribe(p => {
+            product.id = p.id;
+            this.products.push(product);
+            observer.next(p.id);
+            observer.complete();
+          }, error => {
+            observer.error(error);
+          });
+        } else {
+          this.dataSource.updateProduct(product).subscribe(p => {
+            this.products.splice(this.products.findIndex(p => p.id == product.id),1,product);
+            observer.next(p.id);
+            observer.complete();
+          }, error => {
+            observer.error(error);
+          } )
+        }
+
+      });
+
   }
+
+  saveImage(formData: FormData, pId: number) {
+    this.dataSource.saveImage(formData).subscribe(res => {
+        let product = this.products.find(p => p.id == pId);
+
+        if (product.images) {
+          for (const img of res) {
+            product.images.push(img);
+          }
+        } else {
+          product.images = res;
+        }
+
+        this.products.splice(this.products.findIndex(p => p.id == product.id),1,product);
+    })
+  }
+
+  deleteImage(id: number, pId: number): Observable<Product> {
+    return new Observable(observer => {
+      this.dataSource.deleteImage(id).subscribe(res => {
+        let product = this.products.find(p => p.id == pId);
+        let images = product.images;
+        images.splice(images.findIndex(img => img.id == id),1);
+        product.images = null;
+        product.images = images;
+        this.products.splice(this.products.findIndex(p => p.id == product.id),1,product);
+        observer.next(product);
+        observer.complete();
+      })
+    })
+
+  }
+
 
   deleteProduct(id: number) {
     this.dataSource.deleteProduct(id).subscribe(p => {

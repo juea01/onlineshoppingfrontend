@@ -11,9 +11,9 @@ export class Cart {
     let line = this.lines.find(line => line.product.id == product.id);
     if (line != undefined) {
       line.itemCount += quantity;
-      line.linePrice = (+(product.price * quantity).toFixed(2));
+     // line.linePrice = (+(product.price * quantity).toFixed(2));
     } else {
-      this.lines.push(new CartLine(product,quantity,+(product.price * quantity).toFixed(2)));
+     // this.lines.push(new CartLine(product,quantity,+(product.price * quantity).toFixed(2)));
     }
     this.recalculate();
   }
@@ -22,9 +22,9 @@ export class Cart {
     let line = this.lines.find(line => line.product.id == product.id);
     if (line != undefined) {
       line.itemCount = Number(quantity);
-      line.linePrice = (+(product.price * quantity).toFixed(2));
+    //  line.linePrice = (+(product.price * quantity).toFixed(2));
     } else {
-      this.lines.push(new CartLine(product,quantity, (+(product.price * quantity).toFixed(2))));
+    //  this.lines.push(new CartLine(product,quantity, (+(product.price * quantity).toFixed(2))));
     }
     this.recalculate();
   }
@@ -50,7 +50,7 @@ export class Cart {
     this.lines.forEach(l => {
       this.itemCount += l.itemCount;
 
-      price = (+(l.itemCount * l.product.price).toFixed(2));
+   //   price = (+(l.itemCount * l.product.price).toFixed(2));
       console.log("Price"+price);
       console.log("Cart Price Before"+this.cartPrice);
       this.cartPrice = +(this.cartPrice +price).toFixed(2);

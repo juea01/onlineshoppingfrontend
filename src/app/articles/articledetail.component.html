@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8 col-sm-12">
-        <p>{{article.description}}</p>
+        <p>{{article.introduction}}</p>
       </div>
       <div class="col-md-2"></div>
     </div>
@@ -25,19 +25,19 @@
       <div class="col-md-2"></div>
       <div class="col-sm-4 col-md-3">
         <figure>
-          <img src="../../assets/Find_Area_DefInt.jpg" height="300px" width="300px" />
+          <img src="{{article?.images[0].location}}" height="300px" width="300px" />
           <figcaption> Image Name is here</figcaption>
         </figure>
       </div>
-      <div class="col-sm-8 col-md-5">{{article.content}}</div>
+      <div class="col-sm-8 col-md-5">{{article.firstParagraph}}</div>
       <div class="col-md-2"></div>
     </div>
     <div class="row">
       <div class="col-md-2"></div>
-      <div class="col-sm-7 col-md-5">{{article.content}}</div>
+      <div class="col-sm-7 col-md-5">{{article.secondParagraph}}</div>
       <div class="col-sm-4 col-md-3">
         <figure>
-          <img src="../../assets/tensorsflow.gif" height="300px" width="300px" />
+          <img src="{{article?.images[1].location}}" height="300px" width="300px" />
           <figcaption>Image Name is here</figcaption>
         </figure>
       </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="row">
       <div class="col-md-2"></div>
-      <div class="col-sm-12 col-md-8">Conclusion here</div>
+      <div class="col-sm-12 col-md-8">{{article.conclusion}}</div>
       <div class="col-md-2"></div>
     </div>
     <br>

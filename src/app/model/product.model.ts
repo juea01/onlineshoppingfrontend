@@ -4,8 +4,10 @@ export class Product {
     public id?: number,
     public name?: string,
     public category?: string,
+    public suitableAudience?: string,
+    public features?: string,
     public description?: string,
-    public price?: number,
+    public sellerLink?: string,
     public images?: Image[],
   ){}
 }

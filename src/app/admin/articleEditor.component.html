@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1">
+
+    </div>
+    <div class="col-10">
+      <div class="bg-primary p-2 text-white" [class.bg-warning] = "editing" [class.text-dark] = "editing">
+        <h5>{{editing ? "Edit": "Create"}} Article</h5>
+      </div>
+      <form novalidate #form="ngForm" (ngSubmit)="save(form)">
+        <div class="form-group">
+          <label>Title</label>
+          <input class="form-control" name="title" [(ngModel)]="article.title"/>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <input class="form-control" name="category" [(ngModel)]="article.category"/>
+        </div>
+        <div class="form-group">
+          <label>Sub Category</label>
+          <input class="form-control" name="subcategory" [(ngModel)]="article.subcategory"/>
+        </div>
+        <div class="form-group">
+          <label>Introduction</label>
+          <textarea class="form-control" name="description" [(ngModel)]="article.introduction"></textarea>
+        </div>
+        <div class="form-group">
+          <label>First Paragraph</label>
+          <textarea class="form-control" name="content" [(ngModel)]="article.firstParagraph"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Second Paragraph</label>
+          <textarea class="form-control" name="content" [(ngModel)]="article.secondParagraph"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Conclusion</label>
+          <textarea class="form-control" name="content" [(ngModel)]="article.conclusion"></textarea>
+        </div>
+        <ng-template ngFor let-image [ngForOf]="article.images">
+          <img class="w-01" src="{{image.location}}" alt="product image">
+          <button class="btn btn-sm btn-danger" (click)="removeImage($event,image.id)"> Remove image </button>
+        </ng-template>
+
+
+        <div class="form-group">
+          <label *ngIf="article.images">Images (Can upload up to {{maxAllowedImages - article?.images.length}} images)</label>
+          <label *ngIf="!article.images">Images (Can upload up to {{maxAllowedImages}} images)</label>
+          <input type="file" class="form-control-file" id="images" name="images" (change)="onFileSelected($event)" multiple>
+        </div>
+        <button type="submit" class="btn btn-primary m-1" [class.btn-warning]="editing">{{editing ? "Save" : "Create" }}</button>
+        <button type="reset" class="btn btn-secondary" routerLink="/admin/main/articles"> Cancel </button>
+      </form>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </div>
+</div>
+

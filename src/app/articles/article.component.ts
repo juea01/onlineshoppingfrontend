@@ -14,16 +14,32 @@ export class ArticleComponent {
   public selectedSubCategory = null;
   public articlesPerPage = 4;
   public selectedPage = 1;
+  public articlesList: Article[] = [];
 
   constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
+    let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
+    this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
+    this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
+      this.articlesList = data;
+
+    });
 
   }
 
-  get articles(): Article[] {
+  getArticles(): Article[] {
 
-    let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
-    this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
-    return this.repository.getArticles(this.selectedSubCategory).slice(pageIndex, pageIndex + this.articlesPerPage);
+    if (this.selectedSubCategory == this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category ) {
+      let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
+      return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
+    } else {
+      this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
+      this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
+        this.articlesList = data;
+        let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
+        return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
+      });
+    }
+
   }
 
   getProductSize(): number {
@@ -47,9 +63,9 @@ export class ArticleComponent {
     this.changePage(1);
   }
 
-  get pageCount(): number {
-    return Math.ceil(this.repository.getArticles(this.selectedSubCategory).length / this.articlesPerPage);
-  }
+  // get pageCount(): number {
+  //   return Math.ceil(this.repository.getArticles(this.selectedSubCategory).length / this.articlesPerPage);
+  // }
   /*
   get pageNumbers(): number[] {
     return Array(Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.articlesPerPage)).fill(0).map((x,i) => i + 1);
@@ -77,13 +93,10 @@ export class ArticleComponent {
   getOptimalMainContainerHeight():string {
     if (this.getMainContainerHeight() >= this.getWindowInnerHeight()) {
       let pixel = this.getMainContainerHeight();
-     console.log(`height to set to main container as it is bigger than window height ${pixel}, ${this.getWindowInnerHeight()}`);
       return pixel+"px";
     } else {
       //footer is 200px and nav is around 50px
       let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();
-     console.log(`height to set to main container as it is smaller than window height ${pixel} , ${this.getWindowInnerHeight()}`);
-
       return this.getWindowInnerHeight()+200+"px";
     }
   }

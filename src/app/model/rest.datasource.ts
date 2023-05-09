@@ -12,6 +12,8 @@ import {Socket} from "ngx-socket-io";
 import { User } from 'src/app/model/user.model';
 import { Reply } from 'src/app/model/reply.model';
 import { Comment } from 'src/app/model/comment.model';
+import { Image } from 'src/app/model/image.model';
+import { ArticleImage } from 'src/app/model/articleImage.model';
 
 const PROTOCOL = "http";
 const PORT = 8765;
@@ -62,6 +64,14 @@ export class RestDataSource{
     return this.sendRequest<Product>("POST",`${this.baseUrl}product-listing-service/products/`,null, product);
   }
 
+  saveImage(formData: FormData): Observable<Image[]> {
+   return this.sendRequest<Image[]>("POST", `${this.baseUrl}product-listing-service/products/images`,null, null, null, null, null, formData);
+  }
+
+  deleteImage(id: number): Observable<Object> {
+    return this.sendRequest<Object>("DELETE", `${this.baseUrl}product-listing-service/products/images/${id}`);
+   }
+
   updateProduct(product): Observable<Product> {
     return this.sendRequest<Product>("PUT",`${this.baseUrl}product-listing-service/products/${product.id}`, null, product);
   }
@@ -103,11 +113,29 @@ export class RestDataSource{
     return this.sendRequest<User>("PUT",`${this.baseUrl}user-service/customers/${user.id}`, user);
   }
 
+  saveArticle(article: Article): Observable<Article> {
+    //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);
+    return this.sendRequest<Article>("POST",`${this.baseUrl}product-listing-service/articles/`, null, null, null, null, null, null, article);
+  }
+
+  updateArticle(article: Article): Observable<Article> {
+    return this.sendRequest<Article>("PUT",`${this.baseUrl}product-listing-service/articles/${article.id}`, null, null, null, null, null, null, article);
+  }
+
+  saveArticleImage(formData: FormData): Observable<ArticleImage[]> {
+    return this.sendRequest<ArticleImage[]>("POST", `${this.baseUrl}product-listing-service/articles/images`,null, null, null, null, null, formData);
+   }
+
+   deleteArticleImage(id: number): Observable<Object> {
+     return this.sendRequest<Object>("DELETE", `${this.baseUrl}product-listing-service/articles/images/${id}`);
+    }
+
   getArticles(): Observable<Article[]> {
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/`);
   }
 
   getArticleDetailById(articleId: number): Observable<Article> {
+    console.log("rest datasource > getArticleDetailById"+articleId);
     return this.sendRequest<Article>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}`);
   }
 
@@ -140,9 +168,9 @@ export class RestDataSource{
     return this.sendRequest<Reply>("PUT",`${this.baseUrl}product-listing-service/articles/comments/replies/${reply.id}`,null, null, null, reply, null);
   }
 
-  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, orderBody?: Order): Observable<T> {
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, orderBody?: Order, formBody?: FormData, articleBody?: Article): Observable<T> {
 
-    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: orderBody? orderBody: null;
+    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: orderBody? orderBody: formBody ? formBody: articleBody ? articleBody: null;
     return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
       (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
     ));

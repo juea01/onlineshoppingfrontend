@@ -13,47 +13,57 @@
       </div>
       <div class="col-sm-7">
         <div class="row">
-          <div class="col-sm-6"><h1>{{product.name}}   </h1></div>
+          <div class="col-sm-3 text-right">Name: </div>
+          <div class="col-sm-4">{{product.name}} </div>
           <div class="col-sm-2 text-left"></div>
-          <div class="col-sm-5"> </div>
+          <div class="col-sm-3"> </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
-            <h2>
-              {{product.price | currency:"USD":"symbol":"2.2-2"}}
-            </h2>
+          <div class="col-sm-12"><p>&nbsp;</p></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">Suitable Audience: </div>
+          <div class="col-sm-4">{{product.suitableAudience}}</div>
+          <div class="col-sm-2 text-left"></div>
+          <div class="col-sm-3"> </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right">Features: </div>
+          <div class="col-sm-4">{{product.features}}</div>
+          <div class="col-sm-2 text-left"></div>
+          <div class="col-sm-3"> </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12"><p>&nbsp;</p></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 text-right"> Description: </div>
+          <div class="col-sm-9">
+            <h3>{{product.description}} </h3>
           </div>
-
         </div>
-
         <div class="row">
-          <div class="col-sm-12">
-            <p>{{product.description}} </p>
+          <div class="col-sm-3 text-right"> Seller Link: </div>
+          <div class="col-sm-9">
+            <p>{{product.sellerLink}} </p>
           </div>
         </div>
         <div *ngIf="getWindowInnerWidth() > 780px" class="row">
-          <div class="col-sm-3 col-md-2">
+          <div class="col-sm-4 col-md-3 text-right">
+          </div>
+          <div class="col-sm-8 col-md-9">
             <a routerLink="/store" class="btn btn-primary">Go Back</a>
-
-          </div>
-          <div class="col-sm-3 col-md-2">
-            <button class="btn btn-success" (click)="addProductToCart(product)">
-              Add to Cart
-            </button>
-          </div>
-          <div class="col-sm-6 col-md-8">
-
           </div>
         </div>
         <div *ngIf="getWindowInnerWidth() < 780px" class="row">
-          <div class="col-sm-2">
+          <div class="col-sm-4 text-right">
+          </div>
+          <div class="col-sm-8">
             <a routerLink="/store" class="btn btn-primary">Go Back</a>
-            <button  class="btn btn-success m-1" (click)="addProductToCart(product)">
-              Add to Cart
-            </button>
           </div>
-          <div class="col-sm-2">
-          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12"><p>&nbsp;</p></div>
         </div>
         <div class="row">
           <div class="col-sm-12">

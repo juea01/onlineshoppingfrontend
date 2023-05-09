@@ -51,7 +51,7 @@ export class NavBarComponent implements OnInit {
   }
 
   navigateToArticle(subCategory: string) {
-    window.sessionStorage.setItem('articleSubcategory',subCategory);
+    console.log("Nav to article"+subCategory);
     this.router.navigate(['article', subCategory]);
   }
 

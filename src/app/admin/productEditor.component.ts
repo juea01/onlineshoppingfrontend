@@ -9,22 +9,50 @@ import { ProductRepository } from "../model/product.repository";
 })
 
 export class ProductEditorComponent {
+
   editing: boolean = false;
   product: Product = new Product();
+  maxAllowedImages: number = 3;
+
+  selectedFiles: FileList = null;
+
   constructor(private repository: ProductRepository, private router: Router, private activeRoute: ActivatedRoute) {
     this.editing = activeRoute.snapshot.params["mode"] == "edit";
     if (this.editing) {
       Object.assign(this.product, repository.getProduct(activeRoute.snapshot.params["id"]));
-      console.log("Name"+this.product.name);
-      console.log("Cat"+this.product.category);
-      console.log("id"+this.product.id);
-      console.log("Price"+this.product.price);
     }
   }
 
   save(form: NgForm) {
-    this.repository.saveProduct(this.product);
-    this.router.navigateByUrl("/admin/main/products");
+    this.repository.saveProduct(this.product).subscribe(pId =>{
+      const formData = new FormData();
+      if (this.product.images) {
+        for (let i = 0; i < (this.maxAllowedImages -  this.product.images.length) && i < this.selectedFiles?.length; i++) {
+          formData.append('file', this.selectedFiles[i], pId+"_"+this.selectedFiles[i].name);
+       }
+      } else {
+        for (let i = 0; i < this.maxAllowedImages  && i < this.selectedFiles?.length; i++) {
+          formData.append('file', this.selectedFiles[i], pId+"_"+this.selectedFiles[i].name);
+       }
+      }
+
+      formData.append('productId', pId.toString());
+      this.repository.saveImage(formData, this.product.id);
+      this.router.navigateByUrl("/admin/main/products");
+    });
+  }
+
+  removeImage(event: Event, imageId: number) {
+    event.preventDefault();
+    this.repository.deleteImage(imageId, this.product.id).subscribe( p => {
+      Object.assign(this.product, p);
+    });
+  }
+
+
+  onFileSelected(event) {
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles);
   }
 
 }
