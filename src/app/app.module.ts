@@ -10,8 +10,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angu
 
 import {StoreModule} from "./store/store.module";
 import {StoreComponent } from "./store/store.component";
-import {CheckoutComponent } from "./store/checkout.component";
-import {CartDetailComponent } from "./store/cartDetail.component";
 import { RegistrationComponent } from './registration/registration.component';
 import { ProductDetailComponent } from './store/productDetail.component';
 
@@ -76,8 +74,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     /**StoreFirstGuard is here so that user can only navigate through UI (not like pasting the specific page link in browser) */
     RouterModule.forRoot([
       {path: "store", component: StoreComponent, canActivate: [StoreFirstGuard]},
-      {path: "cart", component: CartDetailComponent, canActivate: [StoreFirstGuard]},
-      {path: "checkout", component: CheckoutComponent},
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
 

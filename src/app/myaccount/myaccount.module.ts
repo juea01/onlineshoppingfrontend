@@ -5,7 +5,6 @@ import { RouterModule } from "@angular/router";
 import { AuthComponent } from "./auth.component";
 import { MyaccountComponent } from "./myaccount.component";
 import { AuthGuard} from "./auth.guard";
-import { OrderTableComponent } from "./orderTable.component";
 import { UserDetailTableComponent } from "./userDetailTable.component";
 import { UserDetailEditorComponent } from "./userDetailEditor.component";
 import { AuthKeyCloakGuard } from "./authkeycloak.guard";
@@ -21,7 +20,6 @@ let routing = RouterModule.forChild([
    {path: "userdetails/:mode/:id", component: UserDetailEditorComponent},
    {path: "userdetails/:mode", component: UserDetailEditorComponent},
    {path: "userdetails", component: UserDetailTableComponent},
-   {path: "orders", component: OrderTableComponent},
    {path: "**", redirectTo: "userdetails"}
   ]},
   {path: "**", redirectTo: "auth"}
@@ -30,6 +28,6 @@ let routing = RouterModule.forChild([
 @NgModule({
   imports: [CommonModule, FormsModule, routing, NavBarModule],
   providers: [AuthGuard],
-  declarations: [AuthComponent, MyaccountComponent, OrderTableComponent, UserDetailTableComponent, UserDetailEditorComponent]
+  declarations: [AuthComponent, MyaccountComponent, UserDetailTableComponent, UserDetailEditorComponent]
 })
 export class MyaccountModule {}

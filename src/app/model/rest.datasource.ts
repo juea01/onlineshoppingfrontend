@@ -4,7 +4,6 @@ import {Observable, of, throwError} from "rxjs";
 import {Product} from "./product.model";
 import {Cart} from "./cart.model";
 import {Article} from "./article.model";
-import {Order} from "./order.model";
 import { Prediction } from "./prediction.model";
 import {catchError, map } from "rxjs/operators"
 import { HttpHeaders } from "@angular/common/http";
@@ -40,9 +39,6 @@ export class RestDataSource{
     return this.sendRequest<Product[]>("GET",`${this.baseUrl}product-listing-service/products`);
   }
 
-  saveOrder(order: Order): Observable<Order> {
-    return this.sendRequest<Order>("POST",`${this.baseUrl}customer-order-fulfillment-service/orders/`,null, null, order);
-  }
 
   authenticate(user: string, pass: string): Observable<boolean> {
     return this.http.post<any>(this.baseUrl + "login", {
@@ -65,7 +61,7 @@ export class RestDataSource{
   }
 
   saveImage(formData: FormData): Observable<Image[]> {
-   return this.sendRequest<Image[]>("POST", `${this.baseUrl}product-listing-service/products/images`,null, null, null, null, null, formData);
+   return this.sendRequest<Image[]>("POST", `${this.baseUrl}product-listing-service/products/images`,null, null, null, null,  formData);
   }
 
   deleteImage(id: number): Observable<Object> {
@@ -80,21 +76,7 @@ export class RestDataSource{
     return this.http.delete<Product>(`${this.baseUrl}product/${id}`, this.getOptions());
   }
 
-  getOrders(): Observable<Order[]> {
-    return this.sendRequest<Order[]>("GET",`${this.baseUrl}customer-order-fulfillment-service/orders/`);
-  }
 
-  getOrdersByLoggedInUserName(username: string): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.baseUrl}user-service/customers/${username}/orders`,{ withCredentials: true });
-  }
-
-  deleteOrder(id: number): Observable<Order> {
-    return this.http.delete<Order>(`${this.baseUrl}orders/${id}`, this.getOptions());
-  }
-
-  updateOrder(order: Order): Observable<Order> {
-    return this.sendRequest<Order>("PUT",`${this.baseUrl}customer-order-fulfillment-service/orders/${order.id}`,null, null, order);
-  }
 
 
   getUserByName(username: string): Observable<User> {
@@ -115,15 +97,15 @@ export class RestDataSource{
 
   saveArticle(article: Article): Observable<Article> {
     //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);
-    return this.sendRequest<Article>("POST",`${this.baseUrl}product-listing-service/articles/`, null, null, null, null, null, null, article);
+    return this.sendRequest<Article>("POST",`${this.baseUrl}product-listing-service/articles/`, null, null, null, null, null,  article);
   }
 
   updateArticle(article: Article): Observable<Article> {
-    return this.sendRequest<Article>("PUT",`${this.baseUrl}product-listing-service/articles/${article.id}`, null, null, null, null, null, null, article);
+    return this.sendRequest<Article>("PUT",`${this.baseUrl}product-listing-service/articles/${article.id}`, null, null, null, null, null,  article);
   }
 
   saveArticleImage(formData: FormData): Observable<ArticleImage[]> {
-    return this.sendRequest<ArticleImage[]>("POST", `${this.baseUrl}product-listing-service/articles/images`,null, null, null, null, null, formData);
+    return this.sendRequest<ArticleImage[]>("POST", `${this.baseUrl}product-listing-service/articles/images`,null, null, null, null,  formData);
    }
 
    deleteArticleImage(id: number): Observable<Object> {
@@ -168,9 +150,9 @@ export class RestDataSource{
     return this.sendRequest<Reply>("PUT",`${this.baseUrl}product-listing-service/articles/comments/replies/${reply.id}`,null, null, null, reply, null);
   }
 
-  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, orderBody?: Order, formBody?: FormData, articleBody?: Article): Observable<T> {
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article): Observable<T> {
 
-    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: orderBody? orderBody: formBody ? formBody: articleBody ? articleBody: null;
+    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: null;
     return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
       (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
     ));

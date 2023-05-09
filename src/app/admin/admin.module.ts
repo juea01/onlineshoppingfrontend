@@ -7,7 +7,6 @@ import { AdminComponent } from "./admin.component";
 import { ProductTableComponent } from "./productTable.component";
 import { ProductEditorComponent } from "./productEditor.component";
 import { ArticleEditorComponent } from "./articleEditor.component";
-import { OrderTableComponent } from "./orderTable.component";
 import { AuthKeyCloakGuard } from "./authkeycloak.guard";
 
 import { ArticleTableComponent } from "./articleTable.component";
@@ -22,7 +21,6 @@ let routing = RouterModule.forChild([
    {path: "articles/:mode/:id", component: ArticleEditorComponent},
    {path: "articles/:mode", component: ArticleEditorComponent},
    {path: "articles", component: ArticleTableComponent},
-   {path: "orders", component: OrderTableComponent},
    {path: "**", redirectTo: "products"}
   ]},
   {path: "**", redirectTo: "auth"}
@@ -31,6 +29,6 @@ let routing = RouterModule.forChild([
 @NgModule({
   imports: [CommonModule, FormsModule, routing],
   providers: [],
-  declarations: [AuthComponent, AdminComponent, ProductTableComponent, ProductEditorComponent, OrderTableComponent, ArticleTableComponent, ArticleEditorComponent]
+  declarations: [AuthComponent, AdminComponent, ProductTableComponent, ProductEditorComponent, ArticleTableComponent, ArticleEditorComponent]
 })
 export class AdminModule {}
