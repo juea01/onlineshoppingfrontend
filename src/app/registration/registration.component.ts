@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { ActivatedRoute} from "@angular/router";
 import { UserRepository } from "../model/user.repository";
 import { User} from "../model/user.model";
-
+import {MatSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   templateUrl: "registration.component.html",
@@ -22,21 +22,19 @@ export class RegistrationComponent {
 
 
   constructor(private router: Router, activeRoute: ActivatedRoute, private repository: UserRepository) {
-    this.user.country = "New Zealand";
+
   }
 
   authenticate(form: NgForm) {
     if (form.valid) {
-      console.log("Valid Form");
         this.repository.saveUser(this.user).subscribe( ()=>{
           window.sessionStorage.setItem("userRegistrationSuccess","true");
           this.router.navigateByUrl("/myaccount",);
         }, error => {
           this.errorMessage = error;
         });
-
+        this.errorMessage = "Valid form";
     } else {
-      console.log("Invalid Form");
       this.errorMessage = "Form Data Invalid";
     }
   }

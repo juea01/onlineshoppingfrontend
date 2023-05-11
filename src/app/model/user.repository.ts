@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {User} from "./user.model";
 import {RestDataSource} from "./rest.datasource";
 import { Observable, throwError, of } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import {  map } from "rxjs/operators";
 
 
 
@@ -15,44 +15,58 @@ export class UserRepository {
 
   constructor(private dataSource: RestDataSource) {}
 
-  loadUser() {
-    console.log(" load user");
-    this.loggedInUser = JSON.parse(sessionStorage.getItem('userdetails'));
-    console.log("Logged in user"+this.loggedInUser);
-    if(this.loggedInUser) {
-      console.log(this.loggedInUser);
-      this.dataSource.getUserByName(this.loggedInUser.username).subscribe(
-        user => {
-        console.log("Success");
-        this.loaded = true;
-        this.userDetail = user;
-        }, error => {
-          this.hasError = true;
-          console.log(error);
-        });
-    }
-  }
+  // loadUser() {
+  //   console.log(" load user");
+  //   this.loggedInUser = JSON.parse(sessionStorage.getItem('userdetails'));
+  //   console.log("Logged in user"+this.loggedInUser);
+  //   if(this.loggedInUser) {
+  //     console.log(this.loggedInUser);
+  //     this.dataSource.getUserByName(this.loggedInUser.username).subscribe(
+  //       user => {
+  //       console.log("Success");
+  //       this.loaded = true;
+  //       this.userDetail = user;
+  //       }, error => {
+  //         this.hasError = true;
+  //         console.log(error);
+  //       });
+  //   }
+  // }
 
+
+
+  /**
+   *
+   * This method is called from UserDetail page as when the flow reach to the point user should have been logged in.
+   */
   loadUserForUserDetail(): Observable<User> {
-    this.loggedInUser = JSON.parse(sessionStorage.getItem('userdetails'));
-    if (!this.loggedInUser) {
-      return throwError("Error- can't get user detail from session storage!");
-    }
-    return  this.dataSource.getUserByName(this.loggedInUser.username);
+    return new Observable( observer => {
+      this.loggedInUser = JSON.parse(sessionStorage.getItem('userdetails'));
+      if (!this.loggedInUser) {
+        observer.error("Error- can't get user detail from session storage!");
+      } else {
+        if (!this.userDetail.username) {
+          this.dataSource.getUserByName(this.loggedInUser.username).subscribe(data => {
+            this.userDetail = data;
+            observer.next(data);
+            observer.complete();
+          })
+        } else {
+          observer.next(this.userDetail);
+          observer.complete();
+        }
+       }
+
+    });
   }
 
 
   /**
    *
-   * @returns Checking for this.loaded is good idea as whenever subscribe methods is called (for example from upper components)
-   * http request is send to servers and if not careful it will drain both UI and server.
-   * If we include expresion (method) in Template, angular repeatedly evaluate that expresion and resulting the method call repeatedly
+   * This method is called from UserDetailEditor page as when the flow reach to the point user should have been logged in and user detail has been
+   * loaded.
    */
   getUser(): User {
-    if (!this.loaded && !this.hasError) {
-      console.log("getUser load user");
-      this.loadUser();
-    }
     return this.userDetail;
   }
 
@@ -61,6 +75,7 @@ export class UserRepository {
     if (user.id == null || user.id == 0) {
       return this.dataSource.saveUser(user).pipe(
         map((value: User) =>{
+          this.userDetail = user;
           return value;
         }));
     } else {
@@ -72,6 +87,10 @@ export class UserRepository {
       );
     }
 
+  }
+
+  isUserNameUnique(username: string): Observable<boolean> {
+    return  this.dataSource.isUserNameUnique(username);
   }
 
 

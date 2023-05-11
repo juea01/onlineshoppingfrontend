@@ -84,14 +84,15 @@ export class RestDataSource{
     return this.sendRequest<User>("GET",`${this.baseUrl}user-service/customers/${username}`);
   }
 
+  isUserNameUnique(username: string): Observable<boolean> {
+    return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/customers/exist/${username}`);
+  }
+
   saveUser(user: User): Observable<User> {
-    //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);
     return this.sendRequest<User>("POST",`${this.baseUrl}user-service/customers/`, user);
   }
 
   updateUser(user: User): Observable<User> {
-  //  return this.http.put<User>(`${this.baseUrl}user-service/customers/${user.id}`, user, {withCredentials: true});
-
     return this.sendRequest<User>("PUT",`${this.baseUrl}user-service/customers/${user.id}`, user);
   }
 

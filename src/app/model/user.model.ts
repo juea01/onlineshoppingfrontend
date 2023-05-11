@@ -18,9 +18,12 @@ export class User{
   public country: string;
   public postalCode: number;
 
+  public ageAboveEighteen: boolean;
+  public occupation: string;
+  public gender: string;
 
   constructor(id?: number,firstname?: string, lastname?: string, name?: string, mobileNumber?: string, email?: string,  password?: string,role?: string,
-       authStatus?:string, emailPromotion?:boolean, address?: string, city?: string, state?: string, country?: string, postalCode?: number){
+       authStatus?:string, emailPromotion?:boolean, address?: string, city?: string, state?: string, country?: string, postalCode?: number, ageAboveEighteen?: boolean, gender?: string, occupation?: string){
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -37,6 +40,10 @@ export class User{
         this.state = state;
         this.country = country;
         this.postalCode = postalCode;
+
+        this.ageAboveEighteen = ageAboveEighteen;
+        this.gender = gender;
+        this.occupation = occupation;
   }
 
 }

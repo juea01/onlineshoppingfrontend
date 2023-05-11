@@ -5,7 +5,8 @@ import { User } from "../model/user.model";
 import { UserRepository } from "../model/user.repository";
 
 @Component({
-  templateUrl: "userDetailEditor.component.html"
+  templateUrl: "userDetailEditor.component.html",
+  styleUrls: ["userDetail.component.css"]
 })
 
 export class UserDetailEditorComponent {

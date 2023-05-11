@@ -11,7 +11,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angu
 import {StoreModule} from "./store/store.module";
 import {StoreComponent } from "./store/store.component";
 import { RegistrationComponent } from './registration/registration.component';
+import { UniqueUsernameValidator } from './registration/uniqueUsernameValidator.service';
+import { UniqueUsernameValidatorDirective } from './registration/uniqueUsernameValidator.directive';
 import { ProductDetailComponent } from './store/productDetail.component';
+
 
 
 import {ArticleComponent} from "./articles/article.component";
@@ -58,7 +61,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     RegistrationComponent,
     ArticleComponent,
     ArticleDetailComponent,
-    DialogComponent
+    DialogComponent,
+    UniqueUsernameValidatorDirective
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, StoreModule,
@@ -101,7 +105,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService]
     },
-    StoreFirstGuard],
+    StoreFirstGuard,
+    UniqueUsernameValidator],
 
   bootstrap: [AppComponent]
 })

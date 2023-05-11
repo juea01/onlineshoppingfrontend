@@ -16,20 +16,56 @@
     </div>
     <div class="col-10">
       <div class="bg-primary p-2 text-white" [class.bg-warning] = "editing" [class.text-dark] = "editing">
-        <h5>{{editing ? "Edit": "Create"}} Product</h5>
+        <h5>{{editing ? "Edit": "Create"}} User Detail</h5>
       </div>
       <form novalidate #form="ngForm" (ngSubmit)="save(form)">
         <div class="form-group">
-          <label>User Name</label>
-          <input class="form-control" name="name" [(ngModel)]="user.username" readonly/>
+          <label>First Name</label>
+          <input class="form-control" name="firstname" [(ngModel)]="user.firstname" readonly/>
         </div>
         <div class="form-group">
-          <label>Phone</label>
-          <input class="form-control" name="category" [(ngModel)]="user.phone"/>
+          <label>Last Name</label>
+          <input class="form-control" name="lastname" [(ngModel)]="user.lastname" readonly/>
         </div>
+        <div class="form-group">
+          <label>User Name</label>
+          <input class="form-control" name="username" [(ngModel)]="user.username" readonly/>
+        </div>
+
         <div class="form-group">
           <label>Email</label>
-          <textarea class="form-control" name="description" [(ngModel)]="user.email"></textarea>
+          <input email class="form-control" id="email" name="email" [(ngModel)]="user.email" required #email="ngModel"/>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+            <div> Please enter valid email</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input class="form-control" id="city"  name="city" [(ngModel)]="user.city" required minlength="3" maxlength="20" #city="ngModel"/>
+           <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert">
+             <div> City is required and need to be between 3 to 20 characters. </div>
+           </div>
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input class="form-control" id="country" name="country" [(ngModel)]="user.country" required minlength="3" maxlength="35" #country="ngModel"/>
+          <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert">
+            <div> Country is required and need to be between 3 to 35 characters. </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="occupation">Occupation</label>
+          <input class="form-control" id="occupation"  name="occupation" [(ngModel)]="user.occupation" minlength="2" maxlength="35" required #occupation="ngModel"/>
+          <div *ngIf="occupation.invalid && (occupation.dirty || occupation.touched)" class="alert">
+            <div> Occupation is required and need to be between 2 to 35 characters. </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+           <input class="form-control" id="gender" name="gender" [(ngModel)]="user.gender" maxlength="15" required #gender="ngModel"/>
+           <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="alert">
+             <div> Gender is required and can not exceed more than 15 characters. </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary m-1" [class.btn-warning]="editing">Save</button>
         <button type="reset" class="btn btn-secondary" routerLink="/myaccount/main/userdetails"> Cancel </button>
