@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}">
         <ul class="navbar-nav">
           <li class="nav-item">
-           <a class="nav-link active" aria-current="page" routerLink="/store">Home</a>
+           <a class="nav-link active" style="cursor: pointer;" aria-current="page" (click)="navigateToHome()">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">AboutUs</a>
@@ -40,10 +40,23 @@
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-        <form class="d-flex">
-          <input #searchValue class="form-control me-2" type="search" placeholder="Watch" aria-label="Search">
+        <div *ngFor="let option of options">
+          <label style="color:white">
+            {{ option.label }}
+            <input  type="radio"
+                   name="option"
+                   [value]="option.value"
+                   [(ngModel)]="selectedOption" >
+          </label>
+        </div>
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="d-flex">
+          <input #searchValue class="form-control me-2" type="search" placeholder="laptop" aria-label="Search">
           <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
-        </form>
+        </div>
+
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>

@@ -82,6 +82,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "productDetail", component: ProductDetailComponent},
 
       {path: "article/:subcategory", component: ArticleComponent, canActivate: [StoreFirstGuard]},
+      {path: "article", component: ArticleComponent, canActivate: [StoreFirstGuard]},
       {path: "articleDetail/:id", component: ArticleDetailComponent},
       {path: "articleDetail", component: ArticleDetailComponent},
 

@@ -12,8 +12,10 @@
        <app-gallery></app-gallery>
       </div>
       <div class="col-sm-7">
+      <div>
         <div class="row">
-          <div class="col-sm-3 text-right">Name: </div>
+          <div *ngIf="getWindowInnerWidth() > 780px" class="col-sm-3 text-right">Name: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px" class="col-sm-3 ">Name: </div>
           <div class="col-sm-4">{{product.name}} </div>
           <div class="col-sm-2 text-left"></div>
           <div class="col-sm-3"> </div>
@@ -22,13 +24,15 @@
           <div class="col-sm-12"><p>&nbsp;</p></div>
         </div>
         <div class="row">
-          <div class="col-sm-3 text-right">Suitable Audience: </div>
+          <div *ngIf="getWindowInnerWidth() > 780px" class="col-sm-3 text-right">Suitable Audience: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px" class="col-sm-3">Suitable Audience: </div>
           <div class="col-sm-4">{{product.suitableAudience}}</div>
           <div class="col-sm-2 text-left"></div>
           <div class="col-sm-3"> </div>
         </div>
         <div class="row">
-          <div class="col-sm-3 text-right">Features: </div>
+          <div *ngIf="getWindowInnerWidth() > 780px"  class="col-sm-3 text-right">Features: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px"  class="col-sm-3">Features: </div>
           <div class="col-sm-4">{{product.features}}</div>
           <div class="col-sm-2 text-left"></div>
           <div class="col-sm-3"> </div>
@@ -37,13 +41,15 @@
           <div class="col-sm-12"><p>&nbsp;</p></div>
         </div>
         <div class="row">
-          <div class="col-sm-3 text-right"> Description: </div>
+          <div *ngIf="getWindowInnerWidth() > 780px"  class="col-sm-3 text-right"> Description: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px"  class="col-sm-3"> Description: </div>
           <div class="col-sm-9">
             <h3>{{product.description}} </h3>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-3 text-right"> Seller Link: </div>
+          <div *ngIf="getWindowInnerWidth() > 780px" class="col-sm-3 text-right"> Seller Link: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px" class="col-sm-3"> Seller Link: </div>
           <div class="col-sm-9">
             <p>{{product.sellerLink}} </p>
           </div>
@@ -74,6 +80,7 @@
         </div>
 
 
+    </div>
     </div>
   </div>
 

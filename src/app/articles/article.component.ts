@@ -11,33 +11,49 @@ import { Search } from '../model/search.model';
   styleUrls: ["article.component.css"]
 })
 export class ArticleComponent {
-  public selectedSubCategory = null;
+  public selectedSubCategory = "";
   public articlesPerPage = 4;
   public selectedPage = 1;
   public articlesList: Article[] = [];
 
   constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
-    let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
+    this.getRemoteArticles();
+  }
+
+  getRemoteArticles() {
     this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
-    this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
-      this.articlesList = data;
+    if(this.activatedRoute.snapshot.params["subcategory"]) {
+      this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
+        this.articlesList = data;
 
-    });
+      });
+    } else {
+      this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
+        this.articlesList = data;
 
+      });
+    }
   }
 
   getArticles(): Article[] {
+    let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
 
-    if (this.selectedSubCategory == this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category ) {
-      let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
-      return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
-    } else {
-      this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
-      this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
-        this.articlesList = data;
-        let pageIndex = (this.selectedPage -1) * this.articlesPerPage;
+    if(this.activatedRoute.snapshot.params["subcategory"]) {
+      if (this.selectedSubCategory == this.activatedRoute.snapshot.params["subcategory"] ) {
+        console.log("GetArticles old selectedCat"+this.selectedSubCategory);
         return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
-      });
+      } else {
+        console.log("GetArticles new"+this.selectedSubCategory);
+        this.getRemoteArticles();
+      }
+    } else {
+      if (this.selectedSubCategory == this.searchString.category) {
+        console.log("search Articles old selectedCat"+this.selectedSubCategory);
+        return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
+      } else {
+        console.log("search Articles new selectedCat"+this.selectedSubCategory);
+        this.getRemoteArticles();
+      }
     }
 
   }

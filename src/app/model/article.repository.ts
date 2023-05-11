@@ -147,6 +147,52 @@ deleteImage(id: number, aId: number): Observable<Article> {
 
   }
 
+  searchArticles(searchCategory: string):Observable<Article[]> {
+    return new Observable(observer => {
+
+      //check if articles are already hrere
+     const result = this.articles.filter(a => {
+
+      const article_category = a.category.toLocaleLowerCase().split(/[ -]/);
+      const article_subcategory = a.subcategory.toLocaleLowerCase().split(/[ -]/);
+      const search_category = searchCategory.toLocaleLowerCase().split(/[ -]/);
+
+        var hasCommonWord = article_category.some(word => search_category.includes(word));
+        //if search word is not found in article existing category then search in sub category
+        if(!hasCommonWord) {
+          hasCommonWord = article_subcategory.some(word => search_category.includes(word));
+        }
+          return hasCommonWord;
+       });
+
+      if (!_.isEmpty(result)) {
+        observer.next(result);
+        observer.complete();
+      } else {
+        this.dataSource.searchArticle(searchCategory).subscribe(data => {
+
+          if (!_.isEmpty(data)) {
+              if (!_.isEmpty(this.articles)) {
+                for (const art of data) {
+                  this.articles.push(art);
+                }
+              } else {
+                this.articles = data;
+              }
+          }
+
+        observer.next(data);
+        observer.complete();
+        });
+
+      }
+
+    })
+
+  }
+
+
+
   getArticleDetailById(articleId: number): Observable<Article> {
    return this.dataSource.getArticleDetailById(articleId);
   }

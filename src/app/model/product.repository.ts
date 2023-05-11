@@ -18,9 +18,18 @@ export class ProductRepository {
   }
 
   getProducts(category: string = null): Product[] {
-    return this.products.filter(p => {
-      return (!category) || category.toLocaleUpperCase() === p.category.toLocaleUpperCase() }
-      );
+    if (!category) {
+      return this.products;
+    } else {
+      return this.products.filter(p => {
+
+        const product_category = p.category.toLocaleLowerCase().split(/[ -]/);
+        const search_category = category.toLocaleLowerCase().split(/[ -]/);
+        const hasCommonWord = product_category.some(word => search_category.includes(word));
+        return hasCommonWord;
+         });
+    }
+
   }
 
   getProduct(id: number): Product{

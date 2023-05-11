@@ -18,7 +18,6 @@ export class StoreComponent {
   constructor(private repository: ProductRepository, private cart: Cart, private router: Router, private searchString: Search) {}
 
   get products(): Product[] {
-
     let pageIndex = (this.selectedPage -1) * this.productsPerPage;
     this.selectedCategory = this.searchString.category;
     return this.repository.getProducts(this.selectedCategory).slice(pageIndex, pageIndex + this.productsPerPage);

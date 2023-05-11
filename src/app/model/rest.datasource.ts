@@ -127,6 +127,10 @@ export class RestDataSource{
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/subcategory/${subcategory}`);
   }
 
+  searchArticle(searchCategory: string): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/search/${searchCategory}`);
+  }
+
   getRepliesByArticleAndCommentId(articleId: number, commentId: number): Observable<Reply[]> {
     return this.sendRequest<Reply[]>("GET", `${this.baseUrl}product-listing-service/articles/${articleId}/comments/${commentId}/replies`);
   }

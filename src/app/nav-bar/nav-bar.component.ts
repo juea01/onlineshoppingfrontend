@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Search } from '../model/search.model';
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,10 +14,14 @@ export class NavBarComponent implements OnInit {
   navbarOpen = false;
   public clicked = false;
 
-
-
-
+  @ViewChild('searchValue', {static: true}) searchInput: ElementRef;
   _el: any;
+
+  options = [
+    {label: 'Search Article', value: 'searchArticle'},
+    {label: 'Search Product', value: 'searchProduct'}
+  ]
+  selectedOption = this.options[0].value;
 
   toogleNavbar() {
     this.navbarOpen = !this.navbarOpen;
@@ -41,12 +46,22 @@ export class NavBarComponent implements OnInit {
   }
 
   search(searchValue?: string ) {
-    this.searchString.category = searchValue;
-    console.log(searchValue);
+    console.log(this.selectedOption);
+    if (this.selectedOption == "searchProduct") {
+      this.searchString.category = searchValue;
+      this.searchInput.nativeElement.value = "";
+      this.router.navigate(['store']);
+    } else {
+      this.searchString.category = searchValue;
+      this.searchInput.nativeElement.value = "";
+      this.router.navigate(['article']);
+    }
+
 
   }
 
   navigateToHome() {
+    this.searchString.category = "";
     this.router.navigate(['store']);
   }
 
