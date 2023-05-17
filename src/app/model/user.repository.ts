@@ -1,5 +1,7 @@
 import {Injectable} from "@angular/core";
 import {User} from "./user.model";
+import {ApiResponse} from "./apiResponse.model";
+import {Subscription} from "./subscription.model";
 import {RestDataSource} from "./rest.datasource";
 import { Observable, throwError, of } from "rxjs";
 import {  map } from "rxjs/operators";
@@ -88,6 +90,17 @@ export class UserRepository {
     }
 
   }
+
+
+  saveSubscription(subscription: Subscription): Observable<ApiResponse<null>> {
+      return this.dataSource.saveSubscription(subscription);
+  }
+
+  isUserEmailUnique(email: string): Observable<boolean> {
+    return  this.dataSource.isUserEmailUnique(email);
+  }
+
+
 
   isUserNameUnique(username: string): Observable<boolean> {
     return  this.dataSource.isUserNameUnique(username);

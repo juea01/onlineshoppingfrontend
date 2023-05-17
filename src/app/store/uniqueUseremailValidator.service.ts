@@ -5,14 +5,14 @@ import { map } from "rxjs/operators";
 import {Observable} from "rxjs";
 
 @Injectable({ providedIn: 'root'})
-export class UniqueUsernameValidator implements AsyncValidator {
+export class UniqueUseremailValidator implements AsyncValidator {
 
   constructor(private userRepository: UserRepository) {
   }
 
   validate( control: AbstractControl): Observable<{ [key: string]: any } | null> {
-    return this.userRepository.isUserNameUnique(control.value).pipe(
-      map(isTaken => (isTaken ? {usernameTaken: true} : null))
+    return this.userRepository.isUserEmailUnique(control.value).pipe(
+      map(isTaken => (isTaken ? {emailTaken: true} : null))
     );
   }
 

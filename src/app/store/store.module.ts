@@ -3,6 +3,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {ModelModule} from "../model/model.module";
 import {StoreComponent} from "./store.component";
+import {AboutUsComponent} from "./aboutUs.component";
 import {CounterDirective} from "./counter.directive";
 import { RouterModule} from "@angular/router";
 
@@ -15,10 +16,17 @@ import { ProductDetailComponent } from './productDetail.component';
 import { GalleryComponent } from "../imageGallery/gallery.component";
 import { GalleryDirective } from "../imageGallery/gallery.directive";
 
+import { DialogComponent } from "./dialog.component";
+
+import { UniqueUseremailValidator } from "./uniqueUserEmailValidator.service";
+import { UniqueUseremailValidatorDirective} from "./uniqueUseremailValidator.directive";
+
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule],
+  providers: [
+    UniqueUseremailValidator],
   declarations: [StoreComponent, CounterDirective,
-  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective ],
+  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, UniqueUseremailValidatorDirective ],
   exports: [StoreComponent, FooterComponent, ProductDetailComponent]
 })
 export class StoreModule {}

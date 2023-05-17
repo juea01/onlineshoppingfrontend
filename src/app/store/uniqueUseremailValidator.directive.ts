@@ -1,20 +1,20 @@
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from "@angular/forms";
-import { UniqueUsernameValidator } from "./uniqueUsernameValidator.service";
+import { UniqueUseremailValidator } from "./uniqueUserEmailValidator.service";
 import { Directive, forwardRef} from '@angular/core';
 import {Observable} from "rxjs";
 
 @Directive({
-  selector: "[appUniqueUsername]",
+  selector: "[appUniqueUseremail]",
   providers: [
     {
       provide: NG_ASYNC_VALIDATORS,
-      useExisting: forwardRef(() => UniqueUsernameValidatorDirective),
+      useExisting: forwardRef(() => UniqueUseremailValidatorDirective),
       multi: true
     }
   ]
 })
-export class UniqueUsernameValidatorDirective implements AsyncValidator {
-  constructor(private validator: UniqueUsernameValidator) {
+export class UniqueUseremailValidatorDirective implements AsyncValidator {
+  constructor(private validator: UniqueUseremailValidator) {
   }
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {

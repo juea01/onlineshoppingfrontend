@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+    <h1>Great decision for subscribing us! <i class="fa fa-check"></i></h1>
+      <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+           <label for="firstname"> First Name:</label><span>&nbsp;</span>
+           <input type="text" class="form-control"  id="firstname" name="firstname" [(ngModel)]="subscription.firstname" minlength="2" required maxlength="15" #firstname="ngModel" />
+           <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="alert">
+            <div> Please enter valid First Name</div>
+          </div>
+          </div>
+       </div>
+       <div class="form-row">
+        <div class="form-group col-sm-12">
+          <label for="email">Email:</label><span>&nbsp;</span>
+          <input email  class="form-control"   id="email" name="email"  [(ngModel)]="subscription.email" required #email="ngModel" [ngModelOptions]="{ updateOn: 'blur' }" appUniqueUseremail />
+          <div *ngIf="(!email.errors?.emailTaken) && email.invalid && (email.dirty || email.touched)" class="alert">
+            <div> Please enter valid email. </div>
+          </div>
+          <div *ngIf="email.errors?.emailTaken && (email.dirty || email.touched)" class="alert">Email is already taken</div>
+        </div>
+     </div>
+        <br />
+        <div class="form-row"> <button type="submit">Submit</button>
+          <button (click)="cancel()">Cancel</button></div>
+
+      </form>
+    </div>
+  </div>
+</div>

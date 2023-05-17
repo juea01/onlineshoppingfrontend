@@ -1,0 +1,107 @@
+<div class="container-fluid">
+
+  <div class="row bg-dark">
+    <div class="container">
+      <app-nav-bar></app-nav-bar>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-white">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 col-sm-12">
+
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 col-sm-12">
+        <h2>Our Mission</h2>
+        <p>In tech district, we are here to share our knowledge and research about Computer Science field especially Software Engineering field.
+          Our aim is to explain complex Software Engineering concepts as simple and succint as possible and provide practical examples whenever relevant to make complex concepts more accessible and less overwhelming for our readers.
+          In addition we also offer valuable insights and guidance for purchasing decisions, providing well-informed opinions on computers and related equipment. Whether you're a technical enthusiast or a non-technical buyer, our goal is to assist you in making informed choices that align with your needs and preferences.
+        </p>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <br/><br/>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-sm-4 col-md-3">
+        <figure>
+          <img src="../../assets/php_hero_image.png" height="300px" width="300px" />
+        </figure>
+      </div>
+      <div class="col-sm-8 col-md-5"><h2>Demystifying Software Engineering</h2>
+        <p>Software Development is a complex yet exciting field that encompasses various roles such as:</p>
+          <ul>
+            <li>Front-End Software Engineer</li>
+            <li> Back-End Developer</li>
+            <li>Full Stack Develope</li>
+            <li> DevOps Engineer and more</li>
+          </ul> <p>
+        If you're new to the world of Software Engineering, these terms can be overwhelming and confusing.
+        But fret not, we're here to support you on your journey to becoming a Software Engineer.
+        Our content and explanations are designed to simplify complex concepts and provide guidance as you navigate the path of software development.</p>
+       </div>
+      <div class="col-md-2"></div>
+    </div>
+    <br/><br/>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-sm-7 col-md-5"><h2>Exploring Machine Learning and AI</h2><p>Although our primary focus at Tech District is to provide content primarily related to Software Development, we also aim to offer high-level overviews of Machine Learning and Artificial Intelligence (AI) to our readers.
+        In this modern age, we believe it is beneficial for Software Engineers to have some familiarity with these cutting-edge technologies.</p></div>
+      <div class="col-sm-4 col-md-3">
+        <figure>
+          <img src="../../assets/AI.JPG" height="300px" width="300px" />
+        </figure>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <br/><br/>
+
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="bg-success mt-2 p-2 text-center text-white" *ngIf="message != null">
+          {{message}}
+          </div>
+      </div>
+      <div class="col-md-2"></div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-sm-12 col-md-8"><h2>Subscribe and Stay Informed</h2><p>We encourage you to  <a (click)="openDialog()">subscribe <i class="fa fa-check"></i>  </a> to our newsletter for the latest updates, articles, and insights. Additionally, if you're in the market for computers and related equipment, be sure to check out our <a (click)="navigateToProduct()">product reviews </a> to make informed purchasing decisions.</p></div>
+      <div class="col-md-2"></div>
+    </div>
+    <br><br/>
+
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-sm-12 col-md-8">
+        <h2> Author info</h2>
+        <div class="media">
+          <img class="mr-3" src="../../assets/author_image.JPG" alt="Author Avatar">
+          <div class="media-body">
+            <h5 class="mt-0">Ar Kar</h5>
+            <p class="lead"> Software Engineer, Blogger</p>
+            <p>Please join with me on Linkedin <a href="https://nz.linkedin.com/in/ar-jue-developer" target="_blank"><img class ="social_icon" src="../../assets/linkedin.JPG"></a></p>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <br><br/>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid">
+      <app-footer></app-footer>
+    </div>
+  </div>
+
+</div>

@@ -9,10 +9,12 @@ import {catchError, map } from "rxjs/operators"
 import { HttpHeaders } from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
 import { User } from 'src/app/model/user.model';
+import { Subscription } from 'src/app/model/subscription.model';
 import { Reply } from 'src/app/model/reply.model';
 import { Comment } from 'src/app/model/comment.model';
 import { Image } from 'src/app/model/image.model';
 import { ArticleImage } from 'src/app/model/articleImage.model';
+import { ApiResponse } from "./apiResponse.model";
 
 const PROTOCOL = "http";
 const PORT = 8765;
@@ -88,12 +90,20 @@ export class RestDataSource{
     return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/customers/exist/${username}`);
   }
 
+  isUserEmailUnique(email: string): Observable<boolean> {
+    return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/subscription/email/${email}`);
+  }
+
   saveUser(user: User): Observable<User> {
     return this.sendRequest<User>("POST",`${this.baseUrl}user-service/customers/`, user);
   }
 
   updateUser(user: User): Observable<User> {
     return this.sendRequest<User>("PUT",`${this.baseUrl}user-service/customers/${user.id}`, user);
+  }
+
+  saveSubscription(subscription: Subscription): Observable<ApiResponse<null>> {
+    return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}user-service/subscription/`, null, null, null, null, null,  null, subscription);
   }
 
   saveArticle(article: Article): Observable<Article> {
@@ -155,9 +165,9 @@ export class RestDataSource{
     return this.sendRequest<Reply>("PUT",`${this.baseUrl}product-listing-service/articles/comments/replies/${reply.id}`,null, null, null, reply, null);
   }
 
-  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article): Observable<T> {
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article, subscriptionBody?: Subscription): Observable<T> {
 
-    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: null;
+    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: subscriptionBody ? subscriptionBody : null;
     return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
       (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
     ));
