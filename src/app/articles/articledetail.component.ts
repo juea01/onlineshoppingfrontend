@@ -61,9 +61,18 @@ export class ArticleDetailComponent {
           this.article.comments.push(value);
           this.comment.description = '';
         // put the returned comment on Article's Comment array that UI loop through
+        }, (error) => {
+          /**
+           * This scenario is unique as user has been logged in but session/token could have been expired because of inactivity
+           */
+          if(error.includes("401")) {
+            this.errorMessage = "Please login to post a comment."
+          } else {
+            this.errorMessage = error;
+          }
+
         });
     } else {
-      console.log("Invalid Form");
      this.errorMessage = "Form Data Invalid";
     }
   }
@@ -164,6 +173,12 @@ export class ArticleDetailComponent {
       }
 
     });
+  }
+
+  navigateToMyAccountLogin() {
+    window.sessionStorage.setItem("navigatedFromarticleDetail","true");
+    window.sessionStorage.setItem("articleId",this.activatedRoute.snapshot.params["id"]);
+    this.router.navigate(['myaccount']);
   }
 
 

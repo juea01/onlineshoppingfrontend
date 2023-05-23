@@ -26,7 +26,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     state: RouterStateSnapshot
   ) {
     // Force the user to log in if currently unauthenticated.
-    if (!this.authenticated) {
+    if ( !this.keycloak.isLoggedIn) {
       console.log("Not authenticated");
       await this.keycloak.login({
         redirectUri: window.location.origin + state.url,

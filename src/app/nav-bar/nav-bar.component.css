@@ -2,3 +2,18 @@
 .dropdown-menu {
   cursor: pointer;
 }
+
+.button-container {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.centered-text {
+  margin: 0; /* Remove default margin from for example <p> element */
+}
+
+.centered-button {
+  margin-left: 5px; /* Adjust spacing between itself and element from the left */
+}

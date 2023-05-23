@@ -3,7 +3,7 @@ import { User } from 'src/app/model/user.model';
 
 import { KeycloakService } from "keycloak-angular";
 import Keycloak, { KeycloakProfile } from "keycloak-js";
-import { Cart } from "../model/cart.model";
+
 
 @Component({
   templateUrl: "auth.component.html",
@@ -14,11 +14,14 @@ import { Cart } from "../model/cart.model";
 export class AuthComponent implements OnInit{
   user = new User();
   public isLoggedIn = false;
-  public userProfile: KeycloakProfile | null = null;
+  public isTokenExpired = false;
 
+  public userProfile: KeycloakProfile | null = null;
   public userCreationSuccess: boolean = false;
 
-  constructor(private readonly keycloak: KeycloakService, private cart: Cart) {}
+  constructor(private readonly keycloak: KeycloakService) {
+
+  }
 
   public async ngOnInit() {
 
@@ -32,7 +35,12 @@ export class AuthComponent implements OnInit{
 
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
-    console.log("User has been logged in"+ this.isLoggedIn);
+
+    if (!this.isLoggedIn) {
+      console.log("User has been logged in"+ this.isLoggedIn);
+      this.keycloak.clearToken();
+
+    }
     if(this.isLoggedIn) {
       console.log("User has been logged in");
       this.userProfile = await this.keycloak.loadUserProfile();
@@ -45,14 +53,15 @@ export class AuthComponent implements OnInit{
   }
 
   public login() {
-    if ("true" === window.sessionStorage.getItem("loggedInAndCheckout")){
-      if (this.cart.itemCount > 0) {
-        console.log("Storing cart");
-        window.sessionStorage.setItem("ShoppingCart",JSON.stringify(this.cart));
-      }
-
+    if ("true" === window.sessionStorage.getItem("navigatedFromarticleDetail")){
+      window.sessionStorage.setItem("navigatedFromarticleDetail","false");
+      let articleId = window.sessionStorage.getItem("articleId");
+      window.sessionStorage.setItem("articleId","0");
+      this.keycloak.login({"redirectUri":`http://${location.hostname}:80/articleDetail/${articleId}`});
+    } else {
+     this.keycloak.login({"redirectUri":`http://${location.hostname}:80/myaccount/main`});
     }
-    this.keycloak.login({"redirectUri":`http://${location.hostname}:80/myaccount/main`});
+
   }
 }
 

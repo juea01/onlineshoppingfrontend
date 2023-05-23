@@ -1,6 +1,7 @@
 import {OnInit, Component} from "@angular/core";
 import {Router} from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
+import { UserRepository } from '../model/user.repository';
 
 @Component({
   templateUrl: "myaccount.component.html"
@@ -9,7 +10,7 @@ export class MyaccountComponent implements OnInit {
 
 
 
-  constructor(private keycloak: KeycloakService, private router: Router) {}
+  constructor(private keycloak: KeycloakService, private router: Router,  private userRepository: UserRepository) {}
 
   ngOnInit(): void {
 
@@ -24,11 +25,10 @@ export class MyaccountComponent implements OnInit {
   * Need to upgrade Angular as well as keycloak library
   */
   logout() {
-    window.sessionStorage.setItem("userdetails",null);
+    this.userRepository.clearUserData();
     this.keycloak.logout(`http://${location.hostname}:80`).then(()=> {
       this.keycloak.clearToken();
     })
-
   }
 
 }

@@ -45,7 +45,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         url: `http://${location.hostname}:8080`,
-        realm: 'shoppingdistrictdev',
+        realm: 'Tech-District',
         clientId: 'shoppingdistrictpublicclient'
       },
       initOptions: {
@@ -79,16 +79,16 @@ function initializeKeycloak(keycloak: KeycloakService) {
     /**StoreFirstGuard is here so that user can only navigate through UI (not like pasting the specific page link in browser) */
     RouterModule.forRoot([
       {path: "store", component: StoreComponent, canActivate: [StoreFirstGuard]},
-      {path: "aboutUs", component: AboutUsComponent, canActivate: [StoreFirstGuard]},
+      {path: "aboutUs", component: AboutUsComponent},
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
 
-      {path: "article/:subcategory", component: ArticleComponent, canActivate: [StoreFirstGuard]},
-      {path: "article", component: ArticleComponent, canActivate: [StoreFirstGuard]},
+      {path: "article/:subcategory", component: ArticleComponent},
+      {path: "article", component: ArticleComponent},
       {path: "articleDetail/:id", component: ArticleDetailComponent},
       {path: "articleDetail", component: ArticleDetailComponent},
 
-      {path: "registration", component: RegistrationComponent, canActivate: [StoreFirstGuard]},
+      {path: "registration", component: RegistrationComponent},
       {path: "admin", loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule)},
       {path: "myaccount", loadChildren: () => import("./myaccount/myaccount.module").then(m => m.MyaccountModule)},
       {path: "**", redirectTo: "/store"},

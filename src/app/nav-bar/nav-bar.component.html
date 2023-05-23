@@ -1,6 +1,5 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-
       <a class="navbar-brand">Shopping District</a>
       <button class="navbar-toggler" type="button" (click)="toogleNavbar()">
         <span class="navbar-toggler-icon"></span>
@@ -60,6 +59,13 @@
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
+
+          <div *ngIf="getUserDetail().email" class="button-container">
+            <p style="color:white" class="centered-text">{{getUserDetail().username}} </p>
+            <button class="btn btn-outline-success btn-block centered-button" (click)="logout()">Logout</button>
+          </div>
+
+
       </div>
     </div>
 

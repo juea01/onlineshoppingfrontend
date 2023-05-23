@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Search } from '../model/search.model';
-import { FormsModule } from "@angular/forms";
+import { KeycloakService } from "keycloak-angular";
+import { UserRepository } from '../model/user.repository';
+import {User} from "../model/user.model";
 
 @Component({
   selector: 'app-nav-bar',
@@ -27,7 +29,7 @@ export class NavBarComponent implements OnInit {
     this.navbarOpen = !this.navbarOpen;
   }
 
-  constructor(private router: Router, private searchString: Search) { }
+  constructor(private router: Router, private searchString: Search, private keycloak: KeycloakService, private userRepository: UserRepository) { }
 
   ngOnInit(): void {
   }
@@ -66,8 +68,30 @@ export class NavBarComponent implements OnInit {
   }
 
   navigateToArticle(subCategory: string) {
-    console.log("Nav to article"+subCategory);
+    console.log("Nav to article"+this.router.url);
     this.router.navigate(['article', subCategory]);
+  }
+
+   /**
+  * To use logout functionality provided by library (keycloak 8.3.0) compatible with Angular 9
+  * We need to add --spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true start when starting docker container.
+  * Please see here -> https://www.keycloak.org/2022/04/keycloak-1800-released
+  * Newer version of keycloak doesn't support redirect uri option anymore
+  * Please see more, OpenID Connect Logout section (https://www.keycloak.org/2022/04/keycloak-1800-released)
+  * Need to upgrade Angular as well as keycloak library
+  */
+   logout() {
+
+    this.keycloak.logout(`http://${location.hostname}:80`).then(()=> {
+      this.keycloak.clearToken();
+      this.userRepository.clearUserData();
+    })
+
+
+  }
+
+  getUserDetail(): User {
+    return this.userRepository.getUser();
   }
 
 }

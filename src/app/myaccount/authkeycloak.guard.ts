@@ -7,6 +7,7 @@ import {
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { User } from '../model/user.model';
 import { KeycloakProfile } from 'keycloak-js';
+import { UserRepository } from '../model/user.repository';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
   public userProfile: KeycloakProfile | null = null;
   constructor(
     protected readonly router: Router,
-    protected readonly keycloak: KeycloakService
+    protected readonly keycloak: KeycloakService, private userRepository: UserRepository
   ) {
     super(router, keycloak);
   }
@@ -26,9 +27,11 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     state: RouterStateSnapshot
   ) {
     // Force the user to log in if currently unauthenticated.
-    if (!this.authenticated) {
+    if (!this.authenticated && !this.keycloak.isTokenExpired) {
       console.log("Not authenticated");
+      console.log("Rdirection after login"+window.location.origin +"state"+ state.url),
       await this.keycloak.login({
+
         redirectUri: window.location.origin + state.url,
       });
     }else{
@@ -36,13 +39,14 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
         this.user.authStatus = 'AUTH';
         this.user.username = this.userProfile.username;
         this.user.email = this.userProfile.email;
-        window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
+        this.userRepository.storeLoggedInUserToSession(this.user);
 
         if ("true" === window.sessionStorage.getItem("loggedInAndCheckout")){
           window.sessionStorage.setItem("loggedInAndCheckout","false");
           this.router.navigate(['checkout']);
         }
     }
+
 
     // Get the roles required from the route.
     const requiredRoles = route.data.roles;

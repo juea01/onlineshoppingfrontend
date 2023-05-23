@@ -5,6 +5,7 @@ import {Subscription} from "./subscription.model";
 import {RestDataSource} from "./rest.datasource";
 import { Observable, throwError, of } from "rxjs";
 import {  map } from "rxjs/operators";
+import { KeycloakService } from 'keycloak-angular';
 
 
 
@@ -15,7 +16,7 @@ export class UserRepository {
   loggedInUser = new User();
   userDetail = new User();
 
-  constructor(private dataSource: RestDataSource) {}
+  constructor(private dataSource: RestDataSource, private keyCloakService: KeycloakService) {}
 
   // loadUser() {
   //   console.log(" load user");
@@ -40,24 +41,38 @@ export class UserRepository {
   /**
    *
    * This method is called from UserDetail page as when the flow reach to the point user should have been logged in.
+   * Also called from article detail page to check whether or not to allow user to post comment.
    */
   loadUserForUserDetail(): Observable<User> {
     return new Observable( observer => {
+
       this.loggedInUser = JSON.parse(sessionStorage.getItem('userdetails'));
-      if (!this.loggedInUser) {
-        observer.error("Error- can't get user detail from session storage!");
-      } else {
-        if (!this.userDetail.username) {
-          this.dataSource.getUserByName(this.loggedInUser.username).subscribe(data => {
-            this.userDetail = data;
-            observer.next(data);
-            observer.complete();
-          })
+      this.keyCloakService.isLoggedIn().then((value)=>{
+
+        if (!value) {
+          observer.error("Error- no logged in user yet.");
         } else {
-          observer.next(this.userDetail);
-          observer.complete();
-        }
-       }
+
+            if (!this.userDetail.username) {
+              this.keyCloakService.loadUserProfile().then((profile)=> {
+                this.dataSource.getUserByName(profile.username).subscribe(data => {
+                  this.userDetail = data;
+                  observer.next(data);
+                  observer.complete();
+                })
+              })
+
+            } else {
+              observer.next(this.userDetail);
+              observer.complete();
+            }
+
+         }
+
+      }).catch((error)=> {
+        console.log("Error"+error);
+      })
+
 
     });
   }
@@ -72,19 +87,31 @@ export class UserRepository {
     return this.userDetail;
   }
 
+  storeLoggedInUserToSession(user: User) {
+    window.sessionStorage.setItem("userdetails",JSON.stringify(user));
+  }
 
-  saveUser(user: User): Observable<User> {
+  /**
+   * This method is intended to be called when keycloak user logut button is called
+   */
+  clearUserData() {
+    window.sessionStorage.setItem("userdetails",null);
+    this.loggedInUser = null;
+    this.userDetail = null;
+  }
+
+
+  saveUser(user: User): Observable<ApiResponse<null>> {
     if (user.id == null || user.id == 0) {
       return this.dataSource.saveUser(user).pipe(
         map((value: User) =>{
-          this.userDetail = user;
-          return value;
+          return new ApiResponse<null>("User created successfully.",null);
         }));
     } else {
       return this.dataSource.updateUser(user).pipe(
         map((value: User) =>{
           this.userDetail = user;
-          return value;
+          return new ApiResponse<null>("User updated successfully.",null);
         })
       );
     }
