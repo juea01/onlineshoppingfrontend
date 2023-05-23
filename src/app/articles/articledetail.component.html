@@ -65,8 +65,12 @@
                 <div class="form-row">
                   <div class="form-group col-sm-6">
                     <label for="comment">You can post your comment here. Please be respectful.</label>
-                    <input class="form-control" id="comment" name="comment" [(ngModel)]="comment.description"
-                      required />
+                    <textarea class="form-control" id="description" name="description" [(ngModel)]="comment.description"
+                      required minlength="10" maxlength="140" required #description="ngModel"></textarea>
+
+                  </div>
+                  <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
+                    <div> Comment is required to have minimum 10 and maximum 140 words. </div>
                   </div>
 
                 </div>
