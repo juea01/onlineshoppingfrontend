@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from "@angular/forms";
 
 @Component({
@@ -8,21 +8,25 @@ import { NgForm } from "@angular/forms";
   styleUrls: ['./articledetail.component.css']
 })
 export class DialogComponent {
-  comment: string;
+  public comment: string;
   status: string;
 
 
-  constructor(private dialogRef: MatDialogRef<DialogComponent>) {}
+  constructor(private dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.comment = data.comment;
+  }
 
   postComment(form: NgForm) {
     if (form.valid) {
-      const data = { comment: this.comment };
+      console.log("post button")
+    const data = { comment: this.comment };
     this.dialogRef.close(data);
     }
 
   }
 
   cancel() {
+    console.log("Cancel button")
     this.dialogRef.close();
   }
 }

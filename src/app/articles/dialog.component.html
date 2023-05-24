@@ -1,9 +1,20 @@
 <h1>Update/Reply Comment</h1>
-    <p>Enter your details:</p>
     <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
-      <label>Type comment here:</label>
-      <input type="text" name="comment" [(ngModel)]="comment"/>
-      <br />
-      <button type="submit">Submit</button>
-      <button (click)="cancel()">Cancel</button>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="comment">You can update or reply to comment here. Please be respectful.</label>
+          <textarea class="form-control" id="description" name="description" [(ngModel)]="comment"
+            required minlength="10" maxlength="140" required #description="ngModel"></textarea>
+
+        </div>
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
+          <div> Comment is required to have minimum 10 and maximum 140 words. </div>
+        </div>
+
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-primary m-1" type="submit">Post</button>
+        <button class="btn btn-primary m-1" type="button" (click)="cancel()">Cancel</button>
+      </div>
     </form>

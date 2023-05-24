@@ -118,7 +118,7 @@
                 <span *ngIf="user.email">
                   <td>
                     <span *ngIf="user.id == c.user.id">
-                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, 0,'edit')"></i> |
+                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, 0,'edit', c.description)"></i> |
                     </span>
                     <i class="fas fa-reply hover-pointer" aria-hidden="true" (click)="openDialog(c.id, 0,'reply')"></i>
                   </td>
@@ -132,7 +132,7 @@
                 <tr>
                   <td><p class="text-primary"> {{r.description}} --{{r.user?.email}}
                     <span *ngIf="user.id == r.user.id">
-                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, r.id, 'edit')"></i>
+                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, r.id, 'edit', r.description)"></i>
                    </span> </p>
                 </td>
                 </tr>

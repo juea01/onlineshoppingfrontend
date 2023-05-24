@@ -103,12 +103,20 @@ export class ArticleDetailComponent {
   //   return this.user;
   // }
 
-  openDialog(commentId: number, replyId: number, mode: string) {
-    const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("Pop up dialog"+commentId+result.comment);
+  openDialog(commentId: number, replyId: number, mode: string, userComment?: string) {
 
-      if (result.comment?.length > 10) {
+
+    const dialogConfig = {
+      data: {
+        comment: userComment
+      }
+    };
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("Pop up dialog"+commentId+result?.comment);
+
+      if (result?.comment?.length > 10) {
         this.errorMessage = null;
         //for edit mode
         if (mode == "edit") {
@@ -168,9 +176,8 @@ export class ArticleDetailComponent {
       }
 
 
-      } else if (result.comment?.length > 0 && result.comment?.length < 10) {
-        this.errorMessage = "Comment should be at least 15 to 150 characters.";
       }
+
 
     });
   }
