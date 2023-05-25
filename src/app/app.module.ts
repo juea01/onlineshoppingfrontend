@@ -35,6 +35,8 @@ import { XhrInterceptor } from './interceptors/app.request.interceptor';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { MatDialogModule} from "@angular/material/dialog";
 
+import { ServiceModule } from './service/service.module';
+
 /**
  *
  * if loadUserProfileAtStartUp option is true mean, user will be redirected to login page once application is started
@@ -72,6 +74,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HttpClientModule,
     NavBarModule,
     MatDialogModule,
+    ServiceModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',

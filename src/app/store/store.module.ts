@@ -18,13 +18,14 @@ import { GalleryDirective } from "../imageGallery/gallery.directive";
 
 import { DialogComponent } from "./dialog.component";
 
-import { UniqueUseremailValidator } from "./uniqueUserEmailValidator.service";
+import { UniqueEmailValidator } from "./uniqueEmailValidator.service";
 import { UniqueUseremailValidatorDirective} from "./uniqueUseremailValidator.directive";
+import { ServiceModule } from "../service/service.module";
 
 @NgModule({
-  imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule],
+  imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule, ServiceModule],
   providers: [
-    UniqueUseremailValidator],
+    UniqueEmailValidator],
   declarations: [StoreComponent, CounterDirective,
   FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, UniqueUseremailValidatorDirective ],
   exports: [StoreComponent, FooterComponent, ProductDetailComponent]

@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import {Observable} from "rxjs";
 
 @Injectable({ providedIn: 'root'})
-export class UniqueUseremailValidator implements AsyncValidator {
+export class UniqueEmailValidator implements AsyncValidator {
 
   constructor(private userRepository: UserRepository) {
   }

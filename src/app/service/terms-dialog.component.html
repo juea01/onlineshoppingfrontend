@@ -1,0 +1,11 @@
+<h1>Terms and Conditions</h1>
+<p>We are not responsible for any loss and other consequences that may directly or indirectly cause you by using our Web SiteWeb Application.</p>
+
+<div *ngIf="isAcceptDeclineButton">
+  <button class="btn btn-primary m-1" (click)="accept()">Accept</button>
+
+  <button class="btn btn-danger m-1" (click)="decline()">Decline</button>
+</div>
+<div *ngIf="!isAcceptDeclineButton">
+  <button class="btn btn-primary m-1" (click)="accept()">Close</button>
+</div>

@@ -1,5 +1,5 @@
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from "@angular/forms";
-import { UniqueUseremailValidator } from "./uniqueUserEmailValidator.service";
+import { UniqueEmailValidator } from "./uniqueEmailValidator.service";
 import { Directive, forwardRef} from '@angular/core';
 import {Observable} from "rxjs";
 
@@ -14,7 +14,7 @@ import {Observable} from "rxjs";
   ]
 })
 export class UniqueUseremailValidatorDirective implements AsyncValidator {
-  constructor(private validator: UniqueUseremailValidator) {
+  constructor(private validator: UniqueEmailValidator) {
   }
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {

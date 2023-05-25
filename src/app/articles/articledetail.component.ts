@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog.component';
 
 import { filter } from 'rxjs/operators';
-
+import { TermsDialogComponent } from "../service/terms-dialog.component";
 
 @Component({
   selector: 'app-articledetail',
@@ -186,6 +186,21 @@ export class ArticleDetailComponent {
     window.sessionStorage.setItem("navigatedFromarticleDetail","true");
     window.sessionStorage.setItem("articleId",this.activatedRoute.snapshot.params["id"]);
     this.router.navigate(['myaccount']);
+  }
+
+
+  openTermsDialog(event: Event): void {
+    event.preventDefault();
+
+    const dialogConfig = {
+      data: {
+        isAcceptDecline: false
+      }
+    };
+
+    const dialogRef=this.dialog.open(TermsDialogComponent, dialogConfig);
+
+
   }
 
 

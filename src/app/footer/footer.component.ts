@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TermsDialogComponent } from '../service/terms-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  opensTermsDialog(event: Event): void {
+    event.preventDefault();
+    const dialogConfig = {
+      data: {
+        isAcceptDecline: false
+      }
+    };
+
+    this.dialog.open(TermsDialogComponent, dialogConfig);
   }
 
 }
