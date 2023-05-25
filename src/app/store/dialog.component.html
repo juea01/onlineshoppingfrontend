@@ -1,6 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
+      <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+        Error: {{errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
     <h1>Great decision for subscribing us! <i class="fa fa-check"></i></h1>
       <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
         <div class="form-row">
@@ -28,5 +35,14 @@
 
       </form>
     </div>
+  </div>
+  <div class="row">
+
+    <div class="col-sm-12">
+      <p style="font-style: italic;">* Please note that by providing your information and registering with us, you agreed to our
+       <a href="#" (click)="opensTermsDialog($event)">privacy policy and Website/Application terms of use.</a>
+      </p>
+    </div>
+
   </div>
 </div>
