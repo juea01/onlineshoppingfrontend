@@ -23,7 +23,7 @@ export class RegistrationComponent {
 
 
   constructor(private router: Router, activeRoute: ActivatedRoute, private repository: UserRepository, private dialog: MatDialog) {
-
+    this.user.emailSubscription = true;
   }
 
   authenticate(form: NgForm) {
