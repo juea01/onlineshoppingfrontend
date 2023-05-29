@@ -5,14 +5,18 @@ export class Subscription{
   public firstname: string;
   public email : string;
   public emailVerified: boolean;
+  public acceptTermsConditions: boolean;
+  public enabled: number;
 
 
 
-  constructor(id?: number, firstname?: string, email?: string,  emailVerified?:boolean){
+  constructor(id?: number, firstname?: string, email?: string,  emailVerified?:boolean, acceptTermsConditions?: boolean, enabled?: number){
         this.id = id;
         this.firstname = firstname;
         this.email = email;
         this.emailVerified = emailVerified;
+        this.acceptTermsConditions = acceptTermsConditions;
+        this.enabled = enabled;
   }
 
 }

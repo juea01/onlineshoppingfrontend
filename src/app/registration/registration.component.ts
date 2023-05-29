@@ -57,6 +57,7 @@ export class RegistrationComponent {
     //Return true if user accept terms and conditions otherwise false
    dialogRef.afterClosed().subscribe((result)=> {
       if(result) {
+        this.user.acceptTermsConditions = result;
         this.repository.saveUser(this.user).subscribe( ()=>{
           window.sessionStorage.setItem("userRegistrationSuccess","true");
           this.router.navigateByUrl("/myaccount",);

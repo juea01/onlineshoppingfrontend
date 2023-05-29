@@ -56,6 +56,7 @@ export class DialogComponent {
     //Return true if user accept terms and conditions otherwise false
    dialogRef.afterClosed().subscribe((result)=> {
       if(result) {
+        this.subscription.acceptTermsConditions = result;
         this.userRepository.saveSubscription(this.subscription).subscribe( result => {
           const data = { message: result.message };
           this.dialogRef.close(data)}
