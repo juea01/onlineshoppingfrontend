@@ -12,8 +12,6 @@ import {StoreModule} from "./store/store.module";
 import {StoreComponent } from "./store/store.component";
 import {AboutUsComponent } from "./store/aboutUs.component";
 import { RegistrationComponent } from './registration/registration.component';
-import { UniqueUsernameValidator } from './registration/uniqueUsernameValidator.service';
-import { UniqueUsernameValidatorDirective } from './registration/uniqueUsernameValidator.directive';
 import { ProductDetailComponent } from './store/productDetail.component';
 
 
@@ -64,8 +62,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     RegistrationComponent,
     ArticleComponent,
     ArticleDetailComponent,
-    DialogComponent,
-    UniqueUsernameValidatorDirective
+    DialogComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, StoreModule,
@@ -111,8 +108,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService]
     },
-    StoreFirstGuard,
-    UniqueUsernameValidator],
+    StoreFirstGuard],
 
   bootstrap: [AppComponent]
 })

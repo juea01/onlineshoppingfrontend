@@ -17,17 +17,14 @@ import { GalleryComponent } from "../imageGallery/gallery.component";
 import { GalleryDirective } from "../imageGallery/gallery.directive";
 
 import { DialogComponent } from "./dialog.component";
-
-import { UniqueEmailValidator } from "./uniqueEmailValidator.service";
-import { UniqueUseremailValidatorDirective} from "./uniqueUseremailValidator.directive";
 import { ServiceModule } from "../service/service.module";
 
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule, ServiceModule],
   providers: [
-    UniqueEmailValidator],
+    ],
   declarations: [StoreComponent, CounterDirective,
-  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, UniqueUseremailValidatorDirective ],
+  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent ],
   exports: [StoreComponent, FooterComponent, ProductDetailComponent]
 })
 export class StoreModule {}

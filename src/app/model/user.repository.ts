@@ -123,6 +123,10 @@ export class UserRepository {
       return this.dataSource.saveSubscription(subscription);
   }
 
+  isSubscriptionEmailUnique(email: string): Observable<boolean> {
+    return  this.dataSource.isSubscriptionEmailUnique(email);
+  }
+
   isUserEmailUnique(email: string): Observable<boolean> {
     return  this.dataSource.isUserEmailUnique(email);
   }

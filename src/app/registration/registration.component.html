@@ -64,10 +64,11 @@
                  <!--TODO: Password Re-enter field-->
                  <div class="form-group col-sm-6">
                   <label for="email">Email</label>
-                  <input email class="form-control" id="email" name="email" [(ngModel)]="user.email" required #email="ngModel"/>
-                  <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
-                    <div> Please enter valid email</div>
+                  <input email class="form-control" id="email" name="email" [(ngModel)]="user.email" required #email="ngModel" [ngModelOptions]="{ updateOn: 'blur' }" appUniqueUseremail [configValue]="'userEmailCheck'"/>
+                  <div *ngIf="(!email.errors?.emailTaken) && email.invalid && (email.dirty || email.touched)" class="alert">
+                    <div> Please enter valid email. </div>
                   </div>
+                  <div *ngIf="email.errors?.emailTaken && (email.dirty || email.touched)" class="alert">Email is already taken</div>
                 </div>
               </div>
 

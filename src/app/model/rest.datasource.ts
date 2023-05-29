@@ -87,10 +87,14 @@ export class RestDataSource{
   }
 
   isUserNameUnique(username: string): Observable<boolean> {
-    return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/customers/exist/${username}`);
+    return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/customers/exist/username/${username}`);
   }
 
   isUserEmailUnique(email: string): Observable<boolean> {
+    return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/customers/exist/email/${email}`);
+  }
+
+  isSubscriptionEmailUnique(email: string): Observable<boolean> {
     return this.sendRequest<boolean>("GET",`${this.baseUrl}user-service/subscription/email/${email}`);
   }
 
