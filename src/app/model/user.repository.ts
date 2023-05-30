@@ -131,6 +131,10 @@ export class UserRepository {
     return  this.dataSource.isUserEmailUnique(email);
   }
 
+  confirmUserEmailCode(user: User): Observable<ApiResponse<null>> {
+    return this.dataSource.confirmUserEmailCode(user);
+  }
+
 
 
   isUserNameUnique(username: string): Observable<boolean> {

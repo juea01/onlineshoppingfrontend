@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+        Error: {{errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+    <h1>Great decision for subscribing us! <i class="fa fa-check"></i></h1>
+      <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+           <label for="username"> User Name:</label><span>&nbsp;</span>
+           <input type="text" class="form-control"  id="username" name="username" [(ngModel)]="user.username"  minlength="5" maxlength="10"  required #username="ngModel" />
+           <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert">
+            <div> Please enter valid User name</div>
+          </div>
+          </div>
+       </div>
+       <div class="form-row">
+        <div class="form-group col-sm-12">
+          <label for="emailcode">Email confirmation code:</label><span>&nbsp;</span>
+          <input type="text"  class="form-control"   id="emailcode" name="emailcode"  [(ngModel)]="user.emailConfirmCode" minlength="7" maxlength="7" required #emailcode="ngModel"  />
+          <div *ngIf=" emailcode.invalid && (emailcode.dirty || emailcode.touched)" class="alert">
+            <div> Please enter valid email confirmation code. </div>
+          </div>
+        </div>
+     </div>
+        <br />
+        <div class="form-row"> <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

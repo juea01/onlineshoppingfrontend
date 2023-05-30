@@ -19,12 +19,14 @@ import { GalleryDirective } from "../imageGallery/gallery.directive";
 import { DialogComponent } from "./dialog.component";
 import { ServiceModule } from "../service/service.module";
 
+import { EmailConfirmationComponent } from "./emailConfirmation.component";
+
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule, ServiceModule],
   providers: [
     ],
   declarations: [StoreComponent, CounterDirective,
-  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent ],
-  exports: [StoreComponent, FooterComponent, ProductDetailComponent]
+  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, EmailConfirmationComponent ],
+  exports: [StoreComponent, FooterComponent, ProductDetailComponent, EmailConfirmationComponent]
 })
 export class StoreModule {}

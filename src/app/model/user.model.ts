@@ -24,9 +24,13 @@ export class User{
   public gender: string;
   public enabled: number;
 
+  public passwordResetCode: string;
+  public emailConfirmCode: string;
+
   constructor(id?: number,firstname?: string, lastname?: string, name?: string, mobileNumber?: string, email?: string,  password?: string,role?: string,
        authStatus?:string, emailSubscription?:boolean, address?: string, city?: string, state?: string, country?: string, postalCode?: number, ageAboveEighteen?: boolean, gender?: string,
-       occupation?: string, acceptTermsConditions?: boolean, enabled?: number){
+       occupation?: string, acceptTermsConditions?: boolean, enabled?: number,
+       passwordResetCode?: string, emailConfirmCode?: string){
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -49,6 +53,9 @@ export class User{
         this.occupation = occupation;
         this.acceptTermsConditions = acceptTermsConditions;
         this.enabled = enabled;
+
+        this.emailConfirmCode = emailConfirmCode;
+        this.passwordResetCode = passwordResetCode;
   }
 
 }

@@ -13,6 +13,7 @@ import {StoreComponent } from "./store/store.component";
 import {AboutUsComponent } from "./store/aboutUs.component";
 import { RegistrationComponent } from './registration/registration.component';
 import { ProductDetailComponent } from './store/productDetail.component';
+import { EmailConfirmationComponent } from './store/emailConfirmation.component';
 
 
 
@@ -34,6 +35,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { MatDialogModule} from "@angular/material/dialog";
 
 import { ServiceModule } from './service/service.module';
+
 
 /**
  *
@@ -82,6 +84,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "aboutUs", component: AboutUsComponent},
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
+      {path: "emailConfirmation", component: EmailConfirmationComponent},
 
       {path: "article/:subcategory", component: ArticleComponent},
       {path: "article", component: ArticleComponent},

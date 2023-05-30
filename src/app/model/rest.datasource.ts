@@ -102,6 +102,10 @@ export class RestDataSource{
     return this.sendRequest<User>("POST",`${this.baseUrl}user-service/customers/`, user);
   }
 
+  confirmUserEmailCode(user: User): Observable<ApiResponse<null>> {
+    return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}user-service/customers/emailconfirmation`, user);
+  }
+
   updateUser(user: User): Observable<User> {
     return this.sendRequest<User>("PUT",`${this.baseUrl}user-service/customers/${user.id}`, user);
   }
