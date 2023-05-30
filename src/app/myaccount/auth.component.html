@@ -13,7 +13,8 @@
     </div>
     <div class="col-md-8 col-sm-12">
       <div class="bg-success mt-2 p-2 text-center text-white" *ngIf="userCreationSuccess===true">
-        Great! Almost there. Please check your email for verification.
+        Great! Almost there. We have sent the link to your email for verification. Please check your email inbox, including spam and junk folders.
+        Once you have verified your email you can start logging in to your account and post comments on articles.
       </div>
     </div>
     <div class="col-md-2">
@@ -27,8 +28,7 @@
     </div>
     <div class="col-md-8 col-sm-12">
       <div class="text-center mt-5 border border-info bg-success text-white border rounded p-5 border-shadow">
-        <h3> We have sent the link to your email for verification. Please check your email inbox, including spam and junk folders.
-          Once you have verified your email you can start logging in to your account and post comments on articles.</h3>
+        <h3> Please continue to Login page or go back to Home page.</h3>
         <button class="btn btn-secondary m-2" routerLink="/">Home</button>
         <button class="btn btn-primary m-2" (click)="login()">Continue</button>
       </div>
