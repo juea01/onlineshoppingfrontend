@@ -114,6 +114,10 @@ export class RestDataSource{
     return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}user-service/subscription/`, null, null, null, null, null,  null, subscription);
   }
 
+  saveSubscriptionEmailCode(subscription: Subscription): Observable<ApiResponse<null>> {
+    return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}user-service/subscription/emailconfirmation`, null, null, null, null, null,  null, subscription);
+  }
+
   saveArticle(article: Article): Observable<Article> {
     //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);
     return this.sendRequest<Article>("POST",`${this.baseUrl}product-listing-service/articles/`, null, null, null, null, null,  article);

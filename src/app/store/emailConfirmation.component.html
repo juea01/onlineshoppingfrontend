@@ -1,16 +1,30 @@
 <div class="container-fluid">
+
+  <div class="row bg-dark">
+    <div class="container">
+      <app-nav-bar></app-nav-bar>
+    </div>
+  </div>
+
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
       <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
         Error: {{errorMessage}}
       </div>
+      <div class="bg-success mt-2 p-2 text-center text-white" *ngIf="successMessage != null">
+        {{successMessage}}
+      </div>
     </div>
+    <div class="col-sm-2"></div>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-    <h1>Great decision for subscribing us! <i class="fa fa-check"></i></h1>
+  <div class="row" id="main-container" [style.height]="getOptimalMainContainerHeight()">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+    <h1>Verify your Email address  <i class="fa fa-check"></i></h1>
+    <div class="container-sm my-3 p-2 bg-success text-white border rounded">
       <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
-        <div class="form-row">
+        <div class="form-row" *ngIf="lastUrlPath.toLowerCase() === pathUserCodeUrl.toLowerCase()">
           <div class="form-group col-sm-12">
            <label for="username"> User Name:</label><span>&nbsp;</span>
            <input type="text" class="form-control"  id="username" name="username" [(ngModel)]="user.username"  minlength="5" maxlength="10"  required #username="ngModel" />
@@ -19,7 +33,16 @@
           </div>
           </div>
        </div>
-       <div class="form-row">
+       <div class="form-row" *ngIf="lastUrlPath.toLowerCase() === pathSubCodeUrl.toLowerCase()">
+        <div class="form-group col-sm-12">
+         <label for="username"> Your Email:</label><span>&nbsp;</span>
+         <input email class="form-control"  id="email" name="email" [(ngModel)]="sub.email"   required #email="ngModel" />
+         <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+          <div> Please enter valid email</div>
+        </div>
+        </div>
+     </div>
+       <div class="form-row" *ngIf="lastUrlPath.toLowerCase() === pathUserCodeUrl.toLowerCase()">
         <div class="form-group col-sm-12">
           <label for="emailcode">Email confirmation code:</label><span>&nbsp;</span>
           <input type="text"  class="form-control"   id="emailcode" name="emailcode"  [(ngModel)]="user.emailConfirmCode" minlength="7" maxlength="7" required #emailcode="ngModel"  />
@@ -28,10 +51,26 @@
           </div>
         </div>
      </div>
+     <div class="form-row" *ngIf="lastUrlPath.toLowerCase() === pathSubCodeUrl.toLowerCase()">
+      <div class="form-group col-sm-12">
+        <label for="emailcode">Email confirmation code:</label><span>&nbsp;</span>
+        <input type="text"  class="form-control"   id="emailcode" name="emailcode"  [(ngModel)]="sub.emailConfirmCode" minlength="7" maxlength="7" required #emailcode="ngModel"  />
+        <div *ngIf=" emailcode.invalid && (emailcode.dirty || emailcode.touched)" class="alert">
+          <div> Please enter valid email confirmation code. </div>
+        </div>
+      </div>
+   </div>
         <br />
-        <div class="form-row"> <button type="submit">Submit</button>
+        <div class="form-row"> <button class="btn btn-primary m-1"  type="submit">Submit</button>
         </div>
       </form>
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+  <div class="row">
+    <div class="container-fluid">
+      <app-footer></app-footer>
     </div>
   </div>
 </div>

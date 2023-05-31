@@ -84,7 +84,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "aboutUs", component: AboutUsComponent},
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
-      {path: "emailConfirmation", component: EmailConfirmationComponent},
+      {path: 'emailConfirmation/:code', component: EmailConfirmationComponent},
 
       {path: "article/:subcategory", component: ArticleComponent},
       {path: "article", component: ArticleComponent},
