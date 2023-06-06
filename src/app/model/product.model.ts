@@ -9,5 +9,7 @@ export class Product {
     public description?: string,
     public sellerLink?: string,
     public images?: Image[],
+    public publishDate?: Date,
+    public lastEditDate?: Date
   ){}
 }

@@ -7,13 +7,15 @@ import { Search } from '../model/search.model';
 import { Images } from '../model/images.model';
 import { TermsDialogComponent } from "../service/terms-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
+import { DatePipe } from "@angular/common";
 
 
 
 @Component({
   selector: "productDetail",
   templateUrl: "productDetail.component.html",
-  styleUrls: ["productDetail.component.css"]
+  styleUrls: ["productDetail.component.css"],
+  providers: [DatePipe]
 })
 export class ProductDetailComponent {
 
@@ -21,7 +23,8 @@ export class ProductDetailComponent {
 
 
   constructor(private repository: ProductRepository, private cart: Cart, private router: Router, private activatedRoute: ActivatedRoute,
-    private searchString: Search, private images:Images, private dialog: MatDialog) {
+    private searchString: Search, private images:Images, private dialog: MatDialog,
+    private datePipe: DatePipe) {
     this.product = this.repository.getProduct(this.activatedRoute.snapshot.params["id"]);
     this.images.setImages(this.product.images);
   }
@@ -55,6 +58,14 @@ export class ProductDetailComponent {
         // console.log("Decline");
       }
     })
+  }
+
+  getTrimmedPublishDate(): string {
+    return this.datePipe.transform(this.product.publishDate, 'yyyy-MM-dd');
+  }
+
+  getTrimmedLastEditedDate(): string {
+    return this.datePipe.transform(this.product.lastEditDate, 'yyyy-MM-dd');
   }
 
 

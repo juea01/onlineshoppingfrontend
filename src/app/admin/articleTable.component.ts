@@ -13,7 +13,9 @@ export class ArticleTableComponent {
   public articles: Article[] = [];
 
   constructor(private repository: ArticleRepository) {
+    console.log("Article Table constructor");
     this.repository.getAllArticles().subscribe(data => {
+      console.log("Article Table constructor getAllArticles "+ data);
       this.articles = data;
     })
   }

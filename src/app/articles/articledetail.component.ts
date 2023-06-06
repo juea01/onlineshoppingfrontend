@@ -16,10 +16,13 @@ import { DialogComponent } from './dialog.component';
 import { filter } from 'rxjs/operators';
 import { TermsDialogComponent } from "../service/terms-dialog.component";
 
+import { DatePipe } from "@angular/common";
+
 @Component({
   selector: 'app-articledetail',
   templateUrl: './articledetail.component.html',
-  styleUrls: ['./articledetail.component.css']
+  styleUrls: ['./articledetail.component.css'],
+  providers: [DatePipe]
 })
 export class ArticleDetailComponent {
 
@@ -32,7 +35,8 @@ export class ArticleDetailComponent {
   showRepliesOfComment: number = 0;
   replyExist: boolean = false;
 
-  constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private userRepository: UserRepository, private dialog: MatDialog) {
+  constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute,
+    private userRepository: UserRepository, private dialog: MatDialog, private datePipe: DatePipe) {
     this.repository.getArticleDetailById(this.activatedRoute.snapshot.params["id"]).subscribe( article => {
       this.article = article;
     });
@@ -75,6 +79,14 @@ export class ArticleDetailComponent {
     } else {
      this.errorMessage = "Form Data Invalid";
     }
+  }
+
+  getTrimmedPublishDate(): string {
+    return this.datePipe.transform(this.article.publishDate, 'yyyy-MM-dd');
+  }
+
+  getTrimmedLastEditedDate(): string {
+    return this.datePipe.transform(this.article.lastEditDate, 'yyyy-MM-dd');
   }
 
   getRepliesByArticleAndCommentId(articleId: number, commentId: number) {

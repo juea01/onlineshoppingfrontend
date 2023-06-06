@@ -21,6 +21,20 @@
           <div class="col-sm-3"> </div>
         </div>
         <div class="row">
+          <div *ngIf="getWindowInnerWidth() > 780px" class="col-sm-3 text-right">Review Published Date: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px" class="col-sm-3 ">Review Published Date:</div>
+          <div class="col-sm-4">{{getTrimmedPublishDate()}} </div>
+          <div class="col-sm-2 text-left"></div>
+          <div class="col-sm-3"> </div>
+        </div>
+        <div class="row">
+          <div *ngIf="getWindowInnerWidth() > 780px" class="col-sm-3 text-right">Review Last Edited Date: </div>
+          <div *ngIf="getWindowInnerWidth() < 780px" class="col-sm-3 ">Review Last Edited Date:</div>
+          <div class="col-sm-4">{{getTrimmedLastEditedDate()}} </div>
+          <div class="col-sm-2 text-left"></div>
+          <div class="col-sm-3"> </div>
+        </div>
+        <div class="row">
           <div class="col-sm-12"><p>&nbsp;</p></div>
         </div>
         <div class="row">
