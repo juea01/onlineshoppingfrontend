@@ -5,7 +5,8 @@ import { Article } from "../model/article.model";
 import { ArticleRepository } from "../model/article.repository";
 
 @Component({
-  templateUrl: "articleEditor.component.html"
+  templateUrl: "articleEditor.component.html",
+  styleUrls: ["articleEditor.component.css"]
 })
 
 export class ArticleEditorComponent {
@@ -15,6 +16,7 @@ export class ArticleEditorComponent {
   maxAllowedImages: number = 2;
 
   selectedFiles: FileList = null;
+  public errorMessage: string;
 
   constructor(private repository: ArticleRepository, private router: Router, private activeRoute: ActivatedRoute) {
     this.editing = activeRoute.snapshot.params["mode"] == "edit";
@@ -29,22 +31,27 @@ export class ArticleEditorComponent {
   }
 
   save(form: NgForm) {
-    this.repository.saveArticle(this.article).subscribe(aId =>{
-      const formData = new FormData();
-      if (this.article.images) {
-        for (let i = 0; i < (this.maxAllowedImages -  this.article.images.length) && i < this.selectedFiles?.length; i++) {
-          formData.append('file', this.selectedFiles[i], aId+"_"+this.selectedFiles[i].name);
-       }
-      } else {
-        for (let i = 0; i < this.maxAllowedImages  && i < this.selectedFiles?.length; i++) {
-          formData.append('file', this.selectedFiles[i], aId+"_"+this.selectedFiles[i].name);
-       }
-      }
+    if (form.valid) {
+      this.repository.saveArticle(this.article).subscribe(aId =>{
+        const formData = new FormData();
+        if (this.article.images) {
+          for (let i = 0; i < (this.maxAllowedImages -  this.article.images.length) && i < this.selectedFiles?.length; i++) {
+            formData.append('file', this.selectedFiles[i], aId+"_"+this.selectedFiles[i].name);
+         }
+        } else {
+          for (let i = 0; i < this.maxAllowedImages  && i < this.selectedFiles?.length; i++) {
+            formData.append('file', this.selectedFiles[i], aId+"_"+this.selectedFiles[i].name);
+         }
+        }
 
-      formData.append('articleId', aId.toString());
-      this.repository.saveImage(formData, this.article.id);
-      this.router.navigateByUrl("/admin/main/articles");
-    });
+        formData.append('articleId', aId.toString());
+        this.repository.saveImage(formData, this.article.id);
+        this.router.navigateByUrl("/admin/main/articles");
+      });
+    } else {
+      this.errorMessage = "Form Data Invalid";
+    }
+
   }
 
   removeImage(event: Event, imageId: number) {

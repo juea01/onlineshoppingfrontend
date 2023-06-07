@@ -1,5 +1,15 @@
 <div class="container-fluid">
   <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+        Error: {{errorMessage}}
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+
+  <div class="row">
     <div class="col-1">
 
     </div>
@@ -10,31 +20,61 @@
       <form novalidate #form="ngForm" (ngSubmit)="save(form)">
         <div class="form-group">
           <label>Title</label>
-          <input class="form-control" name="title" [(ngModel)]="article.title"/>
+          <input class="form-control" name="title" [(ngModel)]="article.title"  minlength="2" maxlength="35" required #title="ngModel"/>
+          <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
+            <div> Title should have at least two characters and no more than 35 characters </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Category</label>
-          <input class="form-control" name="category" [(ngModel)]="article.category"/>
+          <select id="category" class="form-control" name="category" [(ngModel)]="article.category"  required #category="ngModel">
+            <option value=""> Select a category</option>
+            <option value="Backend Development"> Backend Development</option>
+            <option value="Front-End Development"> Front-End Development</option>
+          </select>
+          <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert">
+            <div> Allowed values are - Backend Development,  Front-End Development </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Sub Category</label>
-          <input class="form-control" name="subcategory" [(ngModel)]="article.subcategory"/>
+          <select id="subcategory" class="form-control" name="subcategory" [(ngModel)]="article.subcategory"   required #subcategory="ngModel">
+            <option value=""> Select a subcategory</option>
+            <option value="Java"> Java</option>
+            <option value="HTML"> HTML</option>
+            <option value="ML"> ML</option>
+          </select>
+          <div *ngIf="subcategory.invalid && (subcategory.dirty || subcategory.touched)" class="alert">
+            <div> Allowed values are - Java, HTML or ML </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Introduction</label>
-          <textarea class="form-control" name="description" [(ngModel)]="article.introduction"></textarea>
+          <textarea class="form-control" name="description" [(ngModel)]="article.introduction" minlength="200" maxlength="245" required #introduction="ngModel"></textarea>
+          <div *ngIf="introduction.invalid && (introduction.dirty || introduction.touched)" class="alert">
+            <div> Introduction should have at least 200 characters and no more than 245 characters</div>
+          </div>
         </div>
         <div class="form-group">
           <label>First Paragraph</label>
-          <textarea class="form-control" name="content" [(ngModel)]="article.firstParagraph"></textarea>
+          <textarea class="form-control" name="content" [(ngModel)]="article.firstParagraph"  minlength="200" maxlength="395" required #firstParagraph="ngModel"></textarea>
+          <div *ngIf="firstParagraph.invalid && (firstParagraph.dirty || firstParagraph.touched)" class="alert">
+            <div> First Paragraph should have at least 200 characters and no more than 395 characters</div>
+          </div>
         </div>
         <div class="form-group">
           <label>Second Paragraph</label>
-          <textarea class="form-control" name="content" [(ngModel)]="article.secondParagraph"></textarea>
+          <textarea class="form-control" name="content" [(ngModel)]="article.secondParagraph"  minlength="200" maxlength="395" required #secondParagraph="ngModel"></textarea>
+          <div *ngIf="secondParagraph.invalid && (secondParagraph.dirty || secondParagraph.touched)" class="alert">
+            <div> Second Paragraph should have at least 200 characters and no more than 395 characters</div>
+          </div>
         </div>
         <div class="form-group">
           <label>Conclusion</label>
-          <textarea class="form-control" name="content" [(ngModel)]="article.conclusion"></textarea>
+          <textarea class="form-control" name="content" [(ngModel)]="article.conclusion" minlength="200" maxlength="395" required #conclusion="ngModel"></textarea>
+          <div *ngIf="conclusion.invalid && (conclusion.dirty || conclusion.touched)" class="alert">
+            <div> Conclusion should have at least 200 characters and no more than 395 characters</div>
+          </div>
         </div>
         <ng-template ngFor let-image [ngForOf]="article.images">
           <img class="w-01" src="{{image.location}}" alt="product image">
