@@ -163,6 +163,7 @@ export class ArticleDetailComponent {
 
            this.repository.postReplies(this.reply).subscribe(result=>{
                  this.replies.splice(this.replies.findIndex(r => r.id == result.id), 1, result);
+                 this.reply.id = 0;
            });
           }
         }
