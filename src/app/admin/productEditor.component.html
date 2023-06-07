@@ -1,5 +1,14 @@
 <div class="container-fluid">
   <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+        Error: {{errorMessage}}
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+  <div class="row">
     <div class="col-1">
 
     </div>
@@ -8,29 +17,57 @@
         <h5>{{editing ? "Edit": "Create"}} Product</h5>
       </div>
       <form novalidate #form="ngForm" (ngSubmit)="save(form)">
-        <div class="form-group">
+        <div class="form-group" >
           <label>Name</label>
-          <input class="form-control" name="name" [(ngModel)]="product.name"/>
+          <input class="form-control" name="name" [(ngModel)]="product.name" minlength="5" maxlength="40" required #name="ngModel"/>
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+            <div> Title should have at least five characters and no more than 40 characters </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Category</label>
-          <input class="form-control" name="category" [(ngModel)]="product.category"/>
+          <select id="category" class="form-control" name="category" [(ngModel)]="product.category"  required #category="ngModel">
+            <option value=""> Select a category</option>
+            <option value="Desktop-Computer"> Desktop-Computer</option>
+            <option value="Mac"> Mac</option>
+            <option value="Laptop"> Laptop</option>
+            <option value="Screen Protector"> Screen Protector</option>
+            <option value="Wifi Adapter"> Usb/Wifi Adapter card</option>
+            <option value="Computer Accessories"> Computer Accessories</option>
+            <option value="Other"> Other</option>
+          </select>
+          <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert">
+            <div> Please select one of the valid value from drop down list. </div>
+          </div>
+
         </div>
         <div class="form-group">
           <label>Suitable For</label>
-          <input class="form-control" name="suitable audience" [(ngModel)]="product.suitableAudience"/>
+          <input class="form-control" name="suitable audience" [(ngModel)]="product.suitableAudience" minlength="5" maxlength="60" required #audience="ngModel"/>
+          <div *ngIf="audience.invalid && (audience.dirty || audience.touched)" class="alert">
+            <div> Suitable audience should have at least five characters and no more than 60 characters </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Feature</label>
-          <input class="form-control" name="features" [(ngModel)]="product.features"/>
+          <input class="form-control" name="features" [(ngModel)]="product.features" required  minlength="5" maxlength="95"  #feature="ngModel"/>
+          <div *ngIf="feature.invalid && (feature.dirty || feature.touched)" class="alert">
+            <div> Feature should have at least five characters and no more than 95 characters </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Description</label>
-          <textarea class="form-control" name="description" [(ngModel)]="product.description"></textarea>
+          <textarea class="form-control" name="description" [(ngModel)]="product.description" required minlength="30" maxlength="470"  #description="ngModel"></textarea>
+          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
+            <div> Description should have at least 30 characters and no more than 470 characters </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Seller Link</label>
-          <input class="form-control" name="link" [(ngModel)]="product.sellerLink"/>
+          <input class="form-control" name="link" [(ngModel)]="product.sellerLink" minlength="5" required #sellerLink="ngModel"/>
+          <div *ngIf="sellerLink.invalid && (sellerLink.dirty || sellerLink.touched)" class="alert">
+            <div> Seller link is required. </div>
+          </div>
         </div>
 
         <ng-template ngFor let-image [ngForOf]="product.images">

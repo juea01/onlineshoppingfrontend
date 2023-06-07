@@ -1,0 +1,14 @@
+.container-sm {
+  box-shadow: .5em .5em .5em .2em rgba(0,0,0,0.3);
+}
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #c3d317; /* red */
+}
+
+.alert div {
+  color: #c3d317;
+}

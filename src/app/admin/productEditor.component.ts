@@ -4,8 +4,10 @@ import { NgForm } from "@angular/forms";
 import { Product } from "../model/product.model";
 import { ProductRepository } from "../model/product.repository";
 
+
 @Component({
-  templateUrl: "productEditor.component.html"
+  templateUrl: "productEditor.component.html",
+  styleUrls: ["productEditor.component.css"]
 })
 
 export class ProductEditorComponent {
@@ -15,6 +17,7 @@ export class ProductEditorComponent {
   maxAllowedImages: number = 3;
 
   selectedFiles: FileList = null;
+  public errorMessage: string;
 
   constructor(private repository: ProductRepository, private router: Router, private activeRoute: ActivatedRoute) {
     this.editing = activeRoute.snapshot.params["mode"] == "edit";
@@ -24,22 +27,27 @@ export class ProductEditorComponent {
   }
 
   save(form: NgForm) {
-    this.repository.saveProduct(this.product).subscribe(pId =>{
-      const formData = new FormData();
-      if (this.product.images) {
-        for (let i = 0; i < (this.maxAllowedImages -  this.product.images.length) && i < this.selectedFiles?.length; i++) {
-          formData.append('file', this.selectedFiles[i], pId+"_"+this.selectedFiles[i].name);
-       }
-      } else {
-        for (let i = 0; i < this.maxAllowedImages  && i < this.selectedFiles?.length; i++) {
-          formData.append('file', this.selectedFiles[i], pId+"_"+this.selectedFiles[i].name);
-       }
-      }
+    if (form.valid) {
+      this.repository.saveProduct(this.product).subscribe(pId =>{
+        const formData = new FormData();
+        if (this.product.images) {
+          for (let i = 0; i < (this.maxAllowedImages -  this.product.images.length) && i < this.selectedFiles?.length; i++) {
+            formData.append('file', this.selectedFiles[i], pId+"_"+this.selectedFiles[i].name);
+         }
+        } else {
+          for (let i = 0; i < this.maxAllowedImages  && i < this.selectedFiles?.length; i++) {
+            formData.append('file', this.selectedFiles[i], pId+"_"+this.selectedFiles[i].name);
+         }
+        }
 
-      formData.append('productId', pId.toString());
-      this.repository.saveImage(formData, this.product.id);
-      this.router.navigateByUrl("/admin/main/products");
-    });
+        formData.append('productId', pId.toString());
+        this.repository.saveImage(formData, this.product.id);
+        this.router.navigateByUrl("/admin/main/products");
+      });
+    } else {
+      this.errorMessage = "Form Data Invalid";
+    }
+
   }
 
   removeImage(event: Event, imageId: number) {
