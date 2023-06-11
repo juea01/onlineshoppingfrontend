@@ -35,6 +35,7 @@ import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { MatDialogModule} from "@angular/material/dialog";
 
 import { ServiceModule } from './service/service.module';
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 
 /**
@@ -46,13 +47,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: `http://${location.hostname}:8080`,
-        realm: 'Tech-District',
-        clientId: 'shoppingdistrictpublicclient'
+        url: docker_env_config.KeycloakUrl,
+        realm: docker_env_config.keycloakRelam,
+        clientId: docker_env_config.keycloakClientId
       },
       initOptions: {
         pkceMethod: 'S256',
-        redirectUri: `http://${location.hostname}:80/myaccount/main`
+        redirectUri: `${docker_env_config.redirectUrlProtocol}://${location.hostname}:${docker_env_config.redirectUrlPort}/myaccount/main`
       }, loadUserProfileAtStartUp: false
     });
 }

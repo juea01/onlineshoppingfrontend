@@ -15,9 +15,10 @@ import { Comment } from 'src/app/model/comment.model';
 import { Image } from 'src/app/model/image.model';
 import { ArticleImage } from 'src/app/model/articleImage.model';
 import { ApiResponse } from "./apiResponse.model";
+import { environment } from "src/environments/environment.docker";
 
-const PROTOCOL = "http";
-const PORT = 8765;
+const PROTOCOL = environment.urlProtocol;
+const PORT = environment.urlPort;
 const MLPORT = 5000;
 
 @Injectable()
