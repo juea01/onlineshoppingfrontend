@@ -82,7 +82,7 @@ export class NavBarComponent implements OnInit {
   */
    logout() {
 
-    this.keycloak.logout(`http://${location.hostname}:80`).then(()=> {
+    this.keycloak.logout(`https://hightechdistrict.com`).then(()=> {
       this.keycloak.clearToken();
       this.userRepository.clearUserData();
     })

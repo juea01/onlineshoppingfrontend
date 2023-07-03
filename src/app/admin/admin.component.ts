@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Component({
   templateUrl: "admin.component.html"
@@ -17,7 +18,7 @@ export class AdminComponent {
   * Need to upgrade Angular as well as keycloak library
   */
   logout() {
-    this.keycloak.logout(`http://${location.hostname}:80`).then(()=> {
+    this.keycloak.logout(`${docker_env_config.keycloakRedirectUrl}`).then(()=> {
       this.keycloak.clearToken();
     })
   }

@@ -8,6 +8,7 @@ import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { User } from '../model/user.model';
 import { KeycloakProfile } from 'keycloak-js';
 import { UserRepository } from '../model/user.repository';
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Injectable({
   providedIn: 'root',
@@ -29,10 +30,10 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     // Force the user to log in if currently unauthenticated.
     if (!this.authenticated && !this.keycloak.isTokenExpired) {
       console.log("Not authenticated");
-      console.log("Rdirection after login"+window.location.origin +"state"+ state.url),
+      console.log("Rdirection after login"+docker_env_config.keycloakRedirectUrl +"state"+ state.url),
       await this.keycloak.login({
 
-        redirectUri: window.location.origin + state.url,
+        redirectUri: docker_env_config.keycloakRedirectUrl + state.url,
       });
     }else{
         this.userProfile = await this.keycloak.loadUserProfile();

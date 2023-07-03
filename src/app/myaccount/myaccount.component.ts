@@ -2,6 +2,7 @@ import {OnInit, Component} from "@angular/core";
 import {Router} from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
 import { UserRepository } from '../model/user.repository';
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Component({
   templateUrl: "myaccount.component.html"
@@ -26,7 +27,7 @@ export class MyaccountComponent implements OnInit {
   */
   logout() {
     this.userRepository.clearUserData();
-    this.keycloak.logout(`http://${location.hostname}:80`).then(()=> {
+    this.keycloak.logout(`${docker_env_config.keycloakRedirectUrl}`).then(()=> {
       this.keycloak.clearToken();
     })
   }

@@ -7,6 +7,7 @@ import {
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { User } from '../model/user.model';
 import { KeycloakProfile } from 'keycloak-js';
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     if ( !this.keycloak.isLoggedIn) {
       console.log("Not authenticated");
       await this.keycloak.login({
-        redirectUri: window.location.origin + state.url,
+        redirectUri: docker_env_config.keycloakRedirectUrl + state.url,
       });
     }else{
         this.userProfile = await this.keycloak.loadUserProfile();

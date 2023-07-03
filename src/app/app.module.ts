@@ -24,7 +24,7 @@ import {DialogComponent} from "./articles/dialog.component";
 
 
 import {RouterModule } from "@angular/router";
-import {StoreFirstGuard} from "./storeFirst.guard";
+//import {StoreFirstGuard} from "./storeFirst.guard";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NavBarModule} from './nav-bar/nav-bar.module';
@@ -53,7 +53,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       },
       initOptions: {
         pkceMethod: 'S256',
-        redirectUri: `${docker_env_config.redirectUrlProtocol}://${location.hostname}:${docker_env_config.redirectUrlPort}/myaccount/main`
+        redirectUri: `${docker_env_config.keycloakRedirectUrl}/myaccount/main`
       }, loadUserProfileAtStartUp: false
     });
 }
@@ -81,7 +81,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     }),
     /**StoreFirstGuard is here so that user can only navigate through UI (not like pasting the specific page link in browser) */
     RouterModule.forRoot([
-      {path: "store", component: StoreComponent, canActivate: [StoreFirstGuard]},
+      //{path: "store", component: StoreComponent, canActivate: [StoreFirstGuard]},
+      {path: "store", component: StoreComponent},
       {path: "aboutUs", component: AboutUsComponent},
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
@@ -112,7 +113,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService]
     },
-    StoreFirstGuard],
+  //  StoreFirstGuard
+  ],
 
   bootstrap: [AppComponent]
 })

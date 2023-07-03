@@ -3,6 +3,7 @@ import { User } from 'src/app/model/user.model';
 
 import { KeycloakService } from "keycloak-angular";
 import Keycloak, { KeycloakProfile } from "keycloak-js";
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 
 @Component({
@@ -57,9 +58,9 @@ export class AuthComponent implements OnInit{
       window.sessionStorage.setItem("navigatedFromarticleDetail","false");
       let articleId = window.sessionStorage.getItem("articleId");
       window.sessionStorage.setItem("articleId","0");
-      this.keycloak.login({"redirectUri":`http://${location.hostname}:80/articleDetail/${articleId}`});
+      this.keycloak.login({"redirectUri":`${docker_env_config.keycloakRedirectUrl}/articleDetail/${articleId}`});
     } else {
-     this.keycloak.login({"redirectUri":`http://${location.hostname}:80/myaccount/main`});
+     this.keycloak.login({"redirectUri":`${docker_env_config.keycloakRedirectUrl}/myaccount/main`});
     }
 
   }

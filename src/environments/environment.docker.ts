@@ -1,13 +1,14 @@
 export const environment = {
-  urlProtocol: 'http',
-  urlPort: 8765,
+  urlProtocol: 'https',
+  urlPort: 443,
 
-  KeycloakUrl: 'http://localhost:8080',
+  KeycloakUrl: 'https://hightechdistrict.com/keyauthcl',
+  keycloakRedirectUrl: 'https://hightechdistrict.com',
   keycloakRelam: 'Tech-District',
   keycloakClientId: 'shoppingdistrictpublicclient',
 
-  redirectUrlProtocol: 'http',
-  redirectUrlPort: 80
+  redirectUrlProtocol: 'https',
+  redirectUrlPort: 443
 
 
 }

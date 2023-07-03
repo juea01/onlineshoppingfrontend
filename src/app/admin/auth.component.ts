@@ -4,6 +4,7 @@ import { User } from 'src/app/model/user.model';
 
 import { KeycloakService } from "keycloak-angular";
 import { KeycloakProfile } from "keycloak-js";
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Component({
   templateUrl: "auth.component.html",
@@ -39,7 +40,7 @@ export class AuthComponent implements OnInit{
   public login() {
     console.log("going to keycloak login page");
     this.keycloak.login({
-      redirectUri: `http://${location.hostname}:80/admin/main`
+      redirectUri:`${docker_env_config.keycloakRedirectUrl}/admin/main`
     });
   }
 
