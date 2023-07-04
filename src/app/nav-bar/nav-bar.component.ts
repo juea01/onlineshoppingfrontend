@@ -4,6 +4,7 @@ import { Search } from '../model/search.model';
 import { KeycloakService } from "keycloak-angular";
 import { UserRepository } from '../model/user.repository';
 import {User} from "../model/user.model";
+import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Component({
   selector: 'app-nav-bar',
@@ -82,7 +83,7 @@ export class NavBarComponent implements OnInit {
   */
    logout() {
 
-    this.keycloak.logout(`https://hightechdistrict.com`).then(()=> {
+    this.keycloak.logout(`${docker_env_config.keycloakRedirectUrl}`).then(()=> {
       this.keycloak.clearToken();
       this.userRepository.clearUserData();
     })
