@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, of, throwError} from "rxjs";
 import {Product} from "./product.model";
+import {Question} from "./question.model";
+import {Subject} from "./subject.model";
 import {Cart} from "./cart.model";
 import {Article} from "./article.model";
 import { Prediction } from "./prediction.model";
@@ -16,6 +18,8 @@ import { Image } from 'src/app/model/image.model';
 import { ArticleImage } from 'src/app/model/articleImage.model';
 import { ApiResponse } from "./apiResponse.model";
 import { environment } from "src/environments/environment.docker";
+import { UserSubject } from "./userSubject.model";
+import {CompletedQuestion} from "./completedQuestion.model";
 
 const PROTOCOL = environment.urlProtocol;
 const PORT = environment.urlPort;
@@ -30,7 +34,8 @@ export class RestDataSource{
 
   //constructor(private http: HttpClient, private socket: Socket) {
   constructor(private http: HttpClient) {
-    this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    //this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
   //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
     //this.baseUrl = "/api/";
   }
@@ -40,6 +45,38 @@ export class RestDataSource{
 
   getProducts():Observable<Product[]> {
     return this.sendRequest<Product[]>("GET",`${this.baseUrl}product-listing-service/products`);
+  }
+
+  getSubjectsByLevelCategoryAndSubCategory(level: number, category: string, subcategory: string):Observable<Subject[]> {
+    return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}/${category}/${subcategory}`);
+  }
+
+  getSubjectsByLevel(level: number):Observable<Subject[]> {
+    return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}`);
+  }
+
+  getQuestionsBySubjectId(subjectId: number):Observable<Question[]> {
+    return this.sendRequest<Question[]>("GET",`${this.baseUrl}product-listing-service/questions/search/${subjectId}`);
+  }
+
+  getUserSubjectsByUserId(userId: number):Observable<UserSubject[]> {
+    return this.sendRequest<UserSubject[]>("GET",`${this.baseUrl}product-listing-service/userSubject/${userId}`);
+  }
+
+  getUserSubjectsByUserAbdSubjectId(userId: number, subjectId: number):Observable<UserSubject> {
+    return this.sendRequest<UserSubject>("GET",`${this.baseUrl}product-listing-service/userSubject/${userId}/${subjectId}`);
+  }
+
+  saveUserSubject(userSubject: UserSubject): Observable<UserSubject> {
+    return this.sendRequest<UserSubject>("POST",`${this.baseUrl}product-listing-service/userSubject/`, null, null, null, null, null,  null, null, userSubject);
+  }
+
+  updateUserSubject(userSubject: UserSubject): Observable<ApiResponse<null>> {
+    return this.sendRequest<ApiResponse<null>>("PUT",`${this.baseUrl}product-listing-service/userSubject/`, null, null, null, null, null,  null, null, userSubject);
+  }
+
+  saveSubjectPracticeProgress(completedQuestions: CompletedQuestion[]): Observable<ApiResponse<null>> {
+    return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}product-listing-service/userSubject/progress/`, null, null, null, null, null,  null, null, null, completedQuestions);
   }
 
 
@@ -178,9 +215,9 @@ export class RestDataSource{
     return this.sendRequest<Reply>("PUT",`${this.baseUrl}product-listing-service/articles/comments/replies/${reply.id}`,null, null, null, reply, null);
   }
 
-  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article, subscriptionBody?: Subscription): Observable<T> {
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article, subscriptionBody?: Subscription,  userSubject?: UserSubject,  completedQuestions?: CompletedQuestion[] ): Observable<T> {
 
-    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: subscriptionBody ? subscriptionBody : null;
+    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: subscriptionBody ? subscriptionBody : userSubject ? userSubject :  completedQuestions ? completedQuestions : null;
     return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
       (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
     ));

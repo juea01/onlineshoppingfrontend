@@ -15,6 +15,17 @@
   <div class="row mt-2">
     <div class="col-3">
       <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/userdetails" routerLinkActive="active">My Details</button>
+
+        <button class="btn btn-outline-info btn-block dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Practice Tests</button>
+        <div class="dropdown-menu">
+         <button class="dropdown-item" (click)="navigateToPractice(1)" > Beginner</button>
+         <button class="dropdown-item" > Intermediate</button>
+         <button class="dropdown-item" > Intermediate-Advanced</button>
+         <button class="dropdown-item" > Advanced</button>
+         <!-- <a class="dropdown-item" (click)="navigateToArticle('ML')"> Machine Learning</a> -->
+
+        </div>
+        <button class="btn btn-outline-info btn-block" >Settings</button>
       <button class="btn btn-outline-danger btn-block" (click)="logout()">Logout</button>
     </div>
 
@@ -22,5 +33,12 @@
       <router-outlet></router-outlet>
     </div>
   </div>
+
+  <div class="row">
+    <div class="container-fluid">
+      <app-footer></app-footer>
+    </div>
+  </div>
+
 
 </div>

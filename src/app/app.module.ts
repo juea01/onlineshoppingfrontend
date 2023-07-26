@@ -33,10 +33,10 @@ import { XhrInterceptor } from './interceptors/app.request.interceptor';
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { MatDialogModule} from "@angular/material/dialog";
+import { MatProgressBarModule} from "@angular/material/progress-bar";
 
 import { ServiceModule } from './service/service.module';
 import { environment as docker_env_config } from 'src/environments/environment.docker';
-
 
 /**
  *
@@ -74,6 +74,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HttpClientModule,
     NavBarModule,
     MatDialogModule,
+    MatProgressBarModule,
     ServiceModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',

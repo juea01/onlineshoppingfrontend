@@ -9,7 +9,7 @@ import { RouterModule} from "@angular/router";
 
 import { NavBarModule } from "../nav-bar/nav-bar.module";
 
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../nav-bar/footer/footer.component';
 import { PredictionComponent } from '../prediction/prediction.component';
 import { ProductDetailComponent } from './productDetail.component';
 
@@ -26,7 +26,7 @@ import { EmailConfirmationComponent } from "./emailConfirmation.component";
   providers: [
     ],
   declarations: [StoreComponent, CounterDirective,
-  FooterComponent,PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, EmailConfirmationComponent ],
-  exports: [StoreComponent, FooterComponent, ProductDetailComponent, EmailConfirmationComponent]
+  PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, EmailConfirmationComponent ],
+  exports: [StoreComponent, ProductDetailComponent, EmailConfirmationComponent]
 })
 export class StoreModule {}

@@ -10,6 +10,7 @@ import { ArticleEditorComponent } from "./articleEditor.component";
 import { AuthKeyCloakGuard } from "./authkeycloak.guard";
 
 import { ArticleTableComponent } from "./articleTable.component";
+import { NavBarModule } from '../nav-bar/nav-bar.module';
 
 let routing = RouterModule.forChild([
   {path: "auth", component: AuthComponent},
@@ -27,7 +28,7 @@ let routing = RouterModule.forChild([
 ]);
 
 @NgModule({
-  imports: [CommonModule, FormsModule, routing],
+  imports: [CommonModule, FormsModule, routing, NavBarModule],
   providers: [],
   declarations: [AuthComponent, AdminComponent, ProductTableComponent, ProductEditorComponent, ArticleTableComponent, ArticleEditorComponent]
 })

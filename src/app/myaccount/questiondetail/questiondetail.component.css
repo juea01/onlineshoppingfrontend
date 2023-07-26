@@ -1,0 +1,12 @@
+.main-question {
+  box-shadow: .25em .25em .5em .5em rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.text-purple {
+  color:  rgb(59, 59, 232);
+}
+
+.text-warn {
+  color:  rgb(224, 231, 23);
+}

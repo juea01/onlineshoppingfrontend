@@ -17,6 +17,10 @@ export class MyaccountComponent implements OnInit {
 
   }
 
+  navigateToPractice(level: number) {
+    this.router.navigate(['/myaccount/main/practicetests']);
+  }
+
  /**
   * To use logout functionality provided by library (keycloak 8.3.0) compatible with Angular 9
   * We need to add --spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true start when starting docker container.

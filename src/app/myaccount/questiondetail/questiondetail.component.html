@@ -1,0 +1,116 @@
+<div class="container-fluid">
+
+  <!--
+  <div class="row" id="main-container" [style.height]="getOptimalMainContainerHeight()">
+    <div *ngIf="getWindowInnerWidth() > 780px" class="col-md-2">
+
+    </div>-->
+
+
+ <!-- This is for wider screen like laptop phone-->
+  <div *ngIf="getWindowInnerWidth() > 780px" class="row" id="main-container" [style.height]="getOptimalMainContainerHeight()">
+    <div *ngIf="getWindowInnerWidth() > 780px" class="col-md-1">
+      <!--This is just to push main content to the middle in wider screen-->
+    </div>
+    <div class="col-sm-12 col-md-8">
+
+      <div class="row main-question">
+
+
+              <div class="card-body bg-success text-white border rounded">
+
+                <div class="row" *ngIf="!complete">
+                  <div class="col-sm-4 col-md-4">
+                    <h2 class="text-purple">Questions {{questionNum+1}}/{{questions.length}} </h2>
+                  </div>
+                  <div class="col-sm-4 col-md-4">
+
+                  </div>
+
+                  <div class="col-sm-4 col-md-4">
+                    <button class="btn btn-primary m-1" (click)="saveProgress()">Save Progress</button>
+                    <button class="btn btn-warning m-1" (click)="exit()">Exit</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="text-warn" *ngIf="errorMessage != null">
+                    {{errorMessage}}
+                  </p>
+                  <p class="text-warn" *ngIf="successMessage != null">
+                    {{successMessage}}
+                  </p>
+                </div>
+                <div class="row" *ngIf="!complete">
+                    <p>{{questions[questionNum]?.content}}</p>
+                </div>
+                <div class="row" *ngIf="complete">
+                  <div class="col-sm-2 col-md-2"></div>
+                  <div class="col-sm-8 col-md-8">
+                    <p> <i class="fa fa-clipboard-check"></i> You have successfully completed this exercise. Well done <i class="fa fa-thumbs-up"></i></p>
+                  </div>
+                  <div class="col-sm-2 col-md-2"></div>
+                </div>
+                <ng-template ngFor let-questionOption [ngForOf]="questions[questionNum]?.options" *ngIf="!complete">
+                  <div class="row">
+                    <label>
+                      {{ questionOption.content }}
+                      <input  type="radio"
+                             name="option"
+                             [value]="questionOption.content"
+                             [(ngModel)]="selectedOption">
+                    </label>
+                  </div>
+
+                </ng-template>
+                <div class="row" *ngIf="explanation != null" >
+                  <p class="text-purple">Correct:{{explanation}}</p>
+                </div>
+                <div class="row" *ngIf="!complete">
+                  <div class="col-sm-6 col-md-8">
+                    <button class="btn btn-primary m-1" (click)="previous()">Previous</button>
+                    <button class="btn btn-primary m-1" *ngIf="explanation == null" (click)="checkAnswer()">Check Answer</button>
+                    <button class="btn btn-warning m-1" *ngIf="explanation == null" (click)="skip()">Skip</button>
+                  </div>
+                  <div class="col-sm-5 col-md-2">
+                    <button class="btn btn-primary m-1" *ngIf="explanation != null" (click)="next()">Next</button>
+                  </div>
+                  <div class="col-sm-1 col-md-2">
+                  </div>
+                </div>
+                <div class="row" *ngIf="complete">
+                  <div class="col-sm-4 col-md-4"></div>
+                  <div class="col-sm-8 col-md-8">
+                    <button *ngIf="this.correctQuestions.length > 0" class="btn btn-primary m-1" (click)="saveAndExit()">Save Progress And Exit</button>
+                    <button class="btn btn-primary m-1" (click)="exit()">Exit</button>
+                  </div>
+
+                </div>
+              </div>
+              <div *ngIf="!complete">
+                <p> <i class="fa fa-bullhorn"></i> Please save your progress before exiting from this exercise.</p>
+              </div>
+
+
+
+
+     </div>
+
+    </div>
+    <div class="col-sm-2 col-md-3">
+      <div class="card m-1 p-1 bg-light">
+        <img class="card-img-top" src="../../assets/crypto_com.JPG" alt="Card image cap">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-10"><h5 class="card-title">Interested in staking crypto coin?</h5></div>
+
+          </div>
+        <p class="card-text">Join crypto.com exchange and stake cro. Use referal code esqk2y962e to get bonus.
+           Please invest responsibly</p>
+        <div class="row">
+          <div class="col-md-6"><a href="https://crypto.com/exch/esqk2y962e" target="_blank" class="btn btn-primary">More Detais</a> </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
