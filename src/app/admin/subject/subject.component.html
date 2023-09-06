@@ -1,0 +1,52 @@
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-6"></div>
+    <div class="col-sm-6">
+
+    </div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <label for="skillSet">Choose Level: </label>
+    </div>
+    <div class="col-md-2 col-sm-4 text-left">
+      <select class="from-control" [value]="skillLevel" id="skillSet" (change)="getSubjectByLevel($event.target.value)">
+        <option value={{getSkillLevelValue(localSkillLevel.Beginner)}}> {{localSkillLevel.Beginner}}</option>
+        <option value={{getSkillLevelValue(localSkillLevel.Intermediate)}}> {{localSkillLevel.Intermediate}}</option>
+        <option value={{getSkillLevelValue(localSkillLevel.Advanced)}}> {{localSkillLevel.Advanced}}</option>
+      </select>
+
+    </div>
+
+  </div>
+<div class="row">
+  <table class="table table-sm table-striped">
+
+    <thead>
+      <tr>
+        <th>ID</th><th>Title</th><th>Category</th><th>Sub Category</th><th>Level</th><th>Premium</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let subject of subjects">
+        <td>{{subject.id}}</td>
+        <td>{{subject.title}}</td>
+        <td>{{subject.category}}</td>
+        <td>{{subject.subCategory}}</td>
+        <td>{{subject.level}}</td>
+        <td>{{subject.premium}}</td>
+        <td>
+          <button class="btn btn-sm btn-warning m-1" [routerLink]="['/admin/main/questionanswereditor',subject.id]">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <button class="btn btn-primary" routerLink="/admin/main/subjects/create">
+      Create New Subject
+    </button>
+
+  </table>
+</div>
+</div>

@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angular/common/http';
 
 
@@ -70,6 +70,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     BrowserModule, BrowserAnimationsModule, StoreModule,
     FormsModule,
+    ReactiveFormsModule,
     KeycloakAngularModule,
     HttpClientModule,
     NavBarModule,

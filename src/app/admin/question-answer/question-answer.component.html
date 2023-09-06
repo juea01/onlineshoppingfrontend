@@ -1,0 +1,155 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="bg-danger mt-2 p-2 text-white" *ngIf="formSubmitted && questionForm.invalid">
+        Please fix following issues:
+        <ul>
+          <li *ngFor="let error of questionForm.getFormValidationMessages()">
+            {{error}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-1">
+
+    </div>
+    <div class="col-10">
+      <div class="bg-primary p-2 text-white" [class.bg-warning] = "editing" [class.text-dark] = "editing">
+        <h5>{{editing ? "Edit": "Create"}} Question</h5>
+      </div>
+
+
+
+      <form class="m-2" novalidate [formGroup]="questionForm" (ngSubmit)="save()">
+
+        <div class="form-group" *ngFor="let control of questionForm.productControls">
+              <div class="row">
+                <div class="col-12" *ngIf="control.label == 'Content'">
+
+                  <label> {{control.label}}</label>
+                  <input class="form-control" name="{{control.modelProperty}}"
+                      formControlName="{{control.modelProperty}}"/>
+                  <ul class="text-danger list-unstyled"
+                  *ngIf="(formSubmitted || control.dirty) && control.invalid">
+                    <li *ngFor="let error of control.getValidationMessages()">
+                        {{error}}
+                    </li>
+                  </ul>
+
+                 </div>
+                <div class="col-6" *ngIf="control.label == 'Article Id'">
+
+                    <label> {{control.label}}</label>
+                    <input class="form-control" name="{{control.modelProperty}}"
+                        formControlName="{{control.modelProperty}}"/>
+                    <ul class="text-danger list-unstyled"
+                    *ngIf="(formSubmitted || control.dirty) && control.invalid">
+                      <li *ngFor="let error of control.getValidationMessages()">
+                          {{error}}
+                      </li>
+                    </ul>
+
+               </div>
+               <div class="col-6" *ngIf="control.label == 'Article Id'">
+                  <div class="form-group">
+                    <label>Related Article Search here</label>
+                    <input #searchValue class="form-control me-2" type="search" placeholder="search by article title" aria-label="Search">
+                    <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
+                  </div>
+                  <div>
+                    <p>Maximum 5 results with Article title and author name will be shown here so that user can choose one of those articles.</p>
+                  </div>
+               </div>
+              </div>
+        </div>
+
+        <div>
+          <p>Please add options for students to choose from. One option must be correct option.</p>
+          <button type="button" class="btn btn-secondary" (click)="addQuestionOption()"> Add Option </button>
+        </div>
+
+        <div formArrayName="options">
+          <div *ngFor="let field of options.controls; let i = index">
+
+            <label> Option {{i+1}}</label>
+            <!-- Because options is array, formGroupName is index value so that angular keep track
+                 of corresponding form group with given index value in options form array-->
+             <div [formGroupName]="i">
+              <div class="form-group"  *ngFor="let control of field.questionOptionControls">
+
+                <label> {{control?.label}}</label>
+                <div *ngIf="control.modelProperty == 'selectedOption'">
+                  <select  name="{{control.modelProperty}}" (change)="chooseOption($event, i)"
+                  formControlName="{{control.modelProperty}}">
+                    <option value="">Choose Correct Option</option>
+                    <option *ngFor="let yesNoOpt of yesNoOption" [ngValue]="yesNoOpt">
+                      {{yesNoOpt}}
+                    </option>
+                  </select>
+
+                </div>
+
+                <div *ngIf="control.modelProperty !== 'selectedOption'">
+                  <input class="form-control" name="{{control.modelProperty}}"
+                  formControlName="{{control.modelProperty}}"/>
+                  <ul class="text-danger list-unstyled"
+                     *ngIf="(formSubmitted || control.dirty) && control.invalid">
+                    <li *ngFor="let error of control.getValidationMessages()">
+                      {{error}}
+                    </li>
+                 </ul>
+                </div>
+
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Loop through options form array and display them-->
+
+
+        <!-- <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Article ID</label>
+              <input class="form-control" name="content" [(ngModel)]="question.content"  minlength="5" maxlength="240" required #content="ngModel"/>
+              <div *ngIf="content.invalid && (content.dirty || content.touched)" class="alert">
+                <div> Title should have at least 5 characters and no more than 240 characters </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Related Article Search here</label>
+              <input #searchValue class="form-control me-2" type="search" placeholder="search by article title" aria-label="Search">
+              <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
+            </div>
+            <div>
+              <p>Maximum 5 results with Article title and author name will be shown here so that user can choose one of those articles.</p>
+            </div>
+          </div>
+        </div> -->
+
+
+
+        <button type="submit" class="btn btn-primary m-1" [disabled]="formSubmitted && questionForm.invalid"
+        [class.btn-secondary]="formSubmitted && questionForm.invalid">{{editing ? "Save" : "Create" }}</button>
+        <button type="reset" class="btn btn-secondary" routerLink="/admin/main/articles"> Cancel </button>
+      </form>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </div>
+</div>
+
+
+

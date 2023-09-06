@@ -1,0 +1,56 @@
+
+<div class="container-fluid">
+
+
+<div class="row">
+  <table class="table table-sm table-striped">
+
+    <thead>
+      <tr><th>Subject/Practice Test</th></tr>
+      <tr>
+        <th>ID</th><th>Title</th><th>Category</th><th>Sub Category</th><th>Level</th><th>Premium</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{subject.id}}</td>
+        <td>{{subject.title}}</td>
+        <td>{{subject.category}}</td>
+        <td>{{subject.subCategory}}</td>
+        <td>{{subject.level}}</td>
+        <td>{{subject.premium}}</td>
+        <td>
+          <button class="btn btn-sm btn-warning m-1" [routerLink]="['/admin/main/subjects/edit',subject.id]">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <table class="table table-sm table-dark table-striped">
+    <thead>
+      <tr><th>Questions</th></tr>
+      <tr>
+        <th>ID</th><th>Content</th><th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let question of questions">
+        <td>{{question.id}}</td>
+        <td>{{question.content}}</td>
+        <td>
+          <button class="btn btn-sm btn-warning m-1" [routerLink]="['/admin/main/questions/edit',subject.id,question.id]">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary" (click)="addQuestion()">
+    Create New Question
+  </button>
+</div>
+</div>

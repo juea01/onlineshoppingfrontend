@@ -7,7 +7,7 @@ export class Subject {
     public subCategory?: string,
     public level?: number,
     public title?: string,
-    public isPremium?: boolean,
+    public premium?: boolean,
     public questions?: Question[],
   ){}
 }

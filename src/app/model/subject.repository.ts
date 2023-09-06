@@ -59,9 +59,70 @@ export class SubjectRepository {
 
   }
 
+  getSubjectsById(id: number):Observable<Subject> {
+    return new Observable(observer => {
+      //check if questions are already here
+     const result = this.subjects?.find(s => {
+      return s.id == id
+      });
+
+      if (!_.isEmpty(result)) {
+        observer.next(result);
+        observer.complete();
+      } else {
+        //need to get subject by id?
+      }
+    })
+  }
+
+  updateSubject(subject: Subject):Observable<Subject>{
+    return new Observable(observer => {
+      this.dataSource.updateSubject(subject).subscribe(data => {
+        this.subjects.splice(this.subjects.findIndex(sub => sub.id == data.id),1, data);
+        observer.next(data);
+        observer.complete();
+      }, error=> {
+        observer.error(error);
+      })
+    })
+  }
+
+  saveQuestion(question: Question):Observable<Question>{
+    return new Observable(observer => {
+      this.dataSource.createQuestion(question).subscribe(data=> {
+        this.questions.push(data);
+        observer.next(data);
+        observer.complete();
+      })
+    })
+  }
+
+  updateQuestion(question: Question):Observable<Question>{
+    return new Observable(observer => {
+      this.dataSource.updateQuestion(question).subscribe(data=> {
+        this.questions.splice(this.questions.findIndex(ques=> ques.id == data.id), 1, data);
+        observer.next(data);
+        observer.complete();
+      })
+    })
+  }
+
+  SaveSubjectAndDes(subject: Subject):Observable<Subject>{
+    console.log("save sub and des in sub repo"+subject.category);
+    return new Observable(observer=> {
+      this.dataSource.saveSubjectAndDes(subject).subscribe(data => {
+        //successful, add to existing Subject list
+        this.subjects.push(data);
+        this.getQuestionsBySubjectId(data.id);
+        observer.next(data);
+        observer.complete();
+      })
+    })
+  }
+
   getQuestionsBySubjectId(id: number):Observable<Question[]> {
     return new Observable(observer=> {
-          //check if questions are already here
+     //check if questions are already here
      const result = this.questions?.filter(q => {
       return q.subject.id == id
       });
@@ -80,12 +141,11 @@ export class SubjectRepository {
                 this.questions = data;
               }
           }
-
         observer.next(data);
         observer.complete();
         });
-
       }
+
     })
   }
 

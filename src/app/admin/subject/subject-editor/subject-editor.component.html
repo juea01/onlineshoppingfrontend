@@ -1,0 +1,95 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+        Error: {{errorMessage}}
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-1">
+
+    </div>
+    <div class="col-10">
+      <div class="bg-primary p-2 text-white" [class.bg-warning] = "editing" [class.text-dark] = "editing">
+        <h5>{{editing ? "Edit": "Create"}} Subject</h5>
+      </div>
+      <form novalidate #form="ngForm" (ngSubmit)="update(form)">
+        <div class="form-group">
+          <label>Title</label>
+          <input class="form-control" name="title" [(ngModel)]="subject.title"  minlength="2" maxlength="35" required #title="ngModel"/>
+          <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
+            <div> Title should have at least two characters and no more than 35 characters </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="category" class="form-control" name="category" [(ngModel)]="subject.category"  required #category="ngModel">
+            <option value=""> Select a category</option>
+            <option value="Backend Development"> Backend Development</option>
+            <option value="Front-End Development"> Front-End Development</option>
+          </select>
+          <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert">
+            <div> Allowed values are - Backend Development,  Front-End Development </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Sub Category</label>
+          <select id="subcategory" class="form-control" name="subcategory" [(ngModel)]="subject.subCategory"   required #subcategory="ngModel">
+            <option value=""> Select a subcategory</option>
+            <option value="Java"> Java</option>
+            <option value="Java"> JavaScript</option>
+            <option value="HTML"> HTML</option>
+            <option value="ML"> ML</option>
+          </select>
+          <div *ngIf="subcategory.invalid && (subcategory.dirty || subcategory.touched)" class="alert">
+            <div> Allowed values are - Java, JavaScript, HTML or ML </div>
+          </div>
+        </div>
+        <div class="form-group">
+
+          <label>Level</label>
+          <select id="skillSet" class="form-control" name="skillSet" [(ngModel)]="subject.level"   required #skillSet="ngModel">
+            <option value=""> Select level</option>
+            <option value={{getSkillLevelValue(localSkillLevel.Beginner)}}> {{localSkillLevel.Beginner}}</option>
+            <option value={{getSkillLevelValue(localSkillLevel.Intermediate)}}> {{localSkillLevel.Intermediate}}</option>
+            <option value={{getSkillLevelValue(localSkillLevel.Advanced)}}> {{localSkillLevel.Advanced}}</option>
+          </select>
+          <div *ngIf="skillSet.invalid && (skillSet.dirty || skillSet.touched)" class="alert">
+            <div> Allowed values are - {{localSkillLevel.Beginner}}, {{localSkillLevel.Intermediate}}, {{localSkillLevel.Advanced}} </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+
+          <label>Premium</label>
+         <select id="premium" class="form-control" name="premium" [(ngModel)]="subject.premium"   required #premium="ngModel">
+            <option value=""> Select Premium</option>
+            <option value=true>  Premium</option>
+            <option value=false> Not Premium</option>
+          </select>
+
+
+
+           <div *ngIf="premium.invalid && (premium.dirty || premium.touched)" class="alert">
+            <div> Allowed values are - Premium or Not Premium </div>
+          </div>
+        </div>
+
+        <!-- //here would be loop of questions with edit button
+        //here add button -->
+
+        <button *ngIf="!editing"  class="btn btn-primary m-1"  (click)="addQuestion($event)">Add Question</button>
+        <button  type="submit" *ngIf="editing"  class="btn btn-primary m-1" >Update Question</button>
+        <button type="reset" class="btn btn-secondary" routerLink="/admin/main/articles"> Cancel </button>
+      </form>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </div>
+</div>
+

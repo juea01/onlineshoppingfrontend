@@ -55,6 +55,25 @@ export class RestDataSource{
     return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}`);
   }
 
+
+   //update subject
+   updateSubject(subject: Subject):Observable<Subject> {
+    return this.sendRequest<Subject>("PUT",`${this.baseUrl}product-listing-service/subjects/`, null, null, null, null, null,  null, null, null, null, subject);
+   }
+
+   //create question
+   createQuestion(question: Question):Observable<Question> {
+    return this.sendRequest<Question>("POST",`${this.baseUrl}product-listing-service/questions/`, null, null, null, null, null,  null, null, null, null, null, question);
+   }
+
+   updateQuestion(question: Question):Observable<Question> {
+    return this.sendRequest<Question>("PUT",`${this.baseUrl}product-listing-service/questions/`, null, null, null, null, null,  null, null, null, null, null, question);
+   }
+
+   saveSubjectAndDes(subject: Subject):Observable<Subject> {
+    return this.sendRequest<Subject>("POST",`${this.baseUrl}product-listing-service/subjects/`, null, null, null, null, null,  null, null, null, null, subject);
+   }
+
   getQuestionsBySubjectId(subjectId: number):Observable<Question[]> {
     return this.sendRequest<Question[]>("GET",`${this.baseUrl}product-listing-service/questions/search/${subjectId}`);
   }
@@ -178,7 +197,7 @@ export class RestDataSource{
   }
 
   getArticleDetailById(articleId: number): Observable<Article> {
-    console.log("rest datasource > getArticleDetailById"+articleId);
+    //console.log("rest datasource > getArticleDetailById"+articleId);
     return this.sendRequest<Article>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}`);
   }
 
@@ -215,11 +234,12 @@ export class RestDataSource{
     return this.sendRequest<Reply>("PUT",`${this.baseUrl}product-listing-service/articles/comments/replies/${reply.id}`,null, null, null, reply, null);
   }
 
-  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article, subscriptionBody?: Subscription,  userSubject?: UserSubject,  completedQuestions?: CompletedQuestion[] ): Observable<T> {
+  private sendRequest<T>(verb: string, url: string, userBody?: User, productBody?: Product, commentBody?: Comment, replyBody?: Reply, formBody?: FormData, articleBody?: Article, subscriptionBody?: Subscription,  userSubject?: UserSubject,  completedQuestions?: CompletedQuestion[], subject?: Subject, question?: Question ): Observable<T> {
 
-    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: subscriptionBody ? subscriptionBody : userSubject ? userSubject :  completedQuestions ? completedQuestions : null;
+    let body = userBody ? userBody : productBody ? productBody : commentBody ? commentBody : replyBody ? replyBody: formBody ? formBody: articleBody ? articleBody: subscriptionBody ? subscriptionBody : userSubject ? userSubject :  completedQuestions ? completedQuestions : subject ? subject : question ? question : null;
+    //console.log("body"+body);
     return this.http.request<T>(verb, url, {body: body, withCredentials: true}, ).pipe(catchError(
-      (error: Response) => throwError(`Network Error: ${error.statusText} (${error.status})`)
+      (error: Response) =>{ console.log(error);return throwError(`Network Error: ${error.statusText} (${error.status})`);}
     ));
   }
 
