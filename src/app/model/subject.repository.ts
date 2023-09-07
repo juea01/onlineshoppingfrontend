@@ -30,7 +30,7 @@ export class SubjectRepository {
 
       //check if questions are already here
      const result = this.subjects?.filter(s => {
-      return s.level=== level
+      return s.level== level
       });
 
       if (!_.isEmpty(result)) {
