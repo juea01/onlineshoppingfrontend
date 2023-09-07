@@ -13,7 +13,7 @@
 
   </div>
 
-  <div class="row mt-2">
+  <div class="row mt-2" id="main-container" [style.height]="getOptimalMainContainerHeight()">
     <div class="col-3">
       <button class="btn btn-outline-info btn-block" routerLink="/admin/main/products" routerLinkActive="active">Products</button>
       <button class="btn btn-outline-info btn-block" routerLink="/admin/main/articles" routerLinkActive="active">Articles</button>

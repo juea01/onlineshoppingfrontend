@@ -4,6 +4,7 @@ import {ProductRepository} from "../model/product.repository";
 import { Cart } from "../model/cart.model";
 import { Router } from "@angular/router";
 import { Search } from '../model/search.model';
+import { WindowSizeServiceService } from "../service/window-size-service.service";
 
 @Component({
   selector: "store",
@@ -15,7 +16,7 @@ export class StoreComponent {
   public productsPerPage = 4;
   public selectedPage = 1;
 
-  constructor(private repository: ProductRepository, private cart: Cart, private router: Router, private searchString: Search) {}
+  constructor(private repository: ProductRepository, private cart: Cart, private router: Router, private searchString: Search, private windowSizeService: WindowSizeServiceService) {}
 
   get products(): Product[] {
     let pageIndex = (this.selectedPage -1) * this.productsPerPage;
@@ -59,28 +60,10 @@ export class StoreComponent {
   }
 
   getWindowInnerWidth():number {
-    return window.innerWidth;
-  }
-
-  getWindowInnerHeight():number {
-    return window.innerHeight;
-  }
-
-  getMainContainerHeight():number {
-    return document.querySelector('#main-container').clientHeight;
+    return this.windowSizeService.getWindowInnerWidth();
   }
 
   getOptimalMainContainerHeight():string {
-    if (this.getMainContainerHeight() >= this.getWindowInnerHeight()) {
-      let pixel = this.getMainContainerHeight();
-     console.log(`height to set to main container as it is bigger than window height ${pixel}, ${this.getWindowInnerHeight()}`);
-      return pixel+"px";
-    } else {
-      //footer is 200px and nav is around 50px
-      let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();
-     console.log(`height to set to main container as it is smaller than window height ${pixel} , ${this.getWindowInnerHeight()}`);
-
-      return this.getWindowInnerHeight()+200+"px";
-    }
+    return this.windowSizeService.getOptimalMainContainerHeight();
   }
 }

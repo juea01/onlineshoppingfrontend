@@ -1,6 +1,7 @@
 import { AfterViewInit, Component } from "@angular/core";
 import { User } from "../model/user.model";
 import { UserRepository } from "../model/user.repository";
+import { WindowSizeServiceService } from "../service/window-size-service.service";
 
 @Component({
   templateUrl: "userDetailTable.component.html"
@@ -9,7 +10,7 @@ import { UserRepository } from "../model/user.repository";
 export class UserDetailTableComponent implements AfterViewInit{
 
   userDetail = new User();
-  constructor(private repository: UserRepository){
+  constructor(private repository: UserRepository, private windowSizeService: WindowSizeServiceService){
 
     this.repository.loadUserForUserDetail().subscribe(
       user => {
@@ -31,6 +32,14 @@ export class UserDetailTableComponent implements AfterViewInit{
 
   ngAfterViewInit() {
 
+  }
+
+  getWindowInnerWidth():number {
+    return this.windowSizeService.getWindowInnerWidth();
+  }
+
+  getOptimalMainContainerHeight():string {
+    return this.windowSizeService.getOptimalMainContainerHeight();
   }
 
 }

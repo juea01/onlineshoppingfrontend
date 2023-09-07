@@ -4,6 +4,7 @@ import { User } from 'src/app/model/user.model';
 import { KeycloakService } from "keycloak-angular";
 import Keycloak, { KeycloakProfile } from "keycloak-js";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
+import { WindowSizeServiceService } from "../service/window-size-service.service";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class AuthComponent implements OnInit{
   public userProfile: KeycloakProfile | null = null;
   public userCreationSuccess: boolean = false;
 
-  constructor(private readonly keycloak: KeycloakService) {
+  constructor(private readonly keycloak: KeycloakService, private windowSizeService: WindowSizeServiceService) {
 
   }
 
@@ -63,6 +64,15 @@ export class AuthComponent implements OnInit{
      this.keycloak.login({"redirectUri":`${docker_env_config.keycloakRedirectUrl}/myaccount/main`});
     }
 
+  }
+
+
+  getWindowInnerWidth():number {
+    return this.windowSizeService.getWindowInnerWidth();
+  }
+
+  getOptimalMainContainerHeight():string {
+    return this.windowSizeService.getOptimalMainContainerHeight();
   }
 }
 

@@ -2,12 +2,13 @@ import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
+import { WindowSizeServiceService } from "../service/window-size-service.service";
 
 @Component({
   templateUrl: "admin.component.html"
 })
 export class AdminComponent {
-  constructor(private keycloak: KeycloakService, private router: Router) {}
+  constructor(private keycloak: KeycloakService, private router: Router,  private windowSizeService: WindowSizeServiceService) {}
 
   /**
   * To use logout functionality provided by library (keycloak 8.3.0) compatible with Angular 9
@@ -21,6 +22,14 @@ export class AdminComponent {
     this.keycloak.logout(`${docker_env_config.keycloakRedirectUrl}`).then(()=> {
       this.keycloak.clearToken();
     })
+  }
+
+  getWindowInnerWidth():number {
+    return this.windowSizeService.getWindowInnerWidth();
+  }
+
+  getOptimalMainContainerHeight():string {
+    return this.windowSizeService.getOptimalMainContainerHeight();
   }
 
 }
