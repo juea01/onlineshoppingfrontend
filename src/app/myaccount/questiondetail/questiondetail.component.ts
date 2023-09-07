@@ -29,9 +29,11 @@ export class QuestiondetailComponent implements OnInit {
   correctQuestions: CompletedQuestion[] = [];
   userSubject: UserSubject;
   user = new User();
+  level = 0;
 
 
   constructor(private repository: SubjectRepository, private userRepository: UserRepository, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.level = this.activatedRoute.snapshot.params["level"];
     this.userRepository.loadUserForUserDetail().pipe(
       filter(data => data !== null)
       ).subscribe(
@@ -268,7 +270,7 @@ export class QuestiondetailComponent implements OnInit {
    }
 
    exit():void {
-    this.router.navigate(['/myaccount/main']);
+    this.router.navigate(['/myaccount/main/practicetests',this.level]);
    }
 
    saveAndExit():void {

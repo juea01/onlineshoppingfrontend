@@ -58,10 +58,11 @@
                <div class="col-6" *ngIf="control.label == 'Article Id'">
                   <div class="form-group">
                     <label>Related Article Search here</label>
-                    <input #searchValue class="form-control me-2" type="search" placeholder="search by article title" aria-label="Search">
-                    <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
+                    <input #searchValue class="form-control me-2" disabled type="search" placeholder="search by article title" aria-label="Search">
+                    <button class="btn btn-outline-success" disabled (click)="search(searchValue.value)">Search</button>
                   </div>
                   <div>
+                    <h3>This feature is not ready yet but would be in next release :)</h3>
                     <p>Maximum 5 results with Article title and author name will be shown here so that user can choose one of those articles.</p>
                   </div>
                </div>

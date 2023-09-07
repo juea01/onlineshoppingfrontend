@@ -14,18 +14,11 @@
 
   <div class="row mt-2">
     <div class="col-3">
-      <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/userdetails" routerLinkActive="active">My Details</button>
 
-        <button class="btn btn-outline-info btn-block dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Practice Tests</button>
-        <div class="dropdown-menu">
-         <button class="dropdown-item" (click)="navigateToPractice(1)" > Beginner</button>
-         <button class="dropdown-item" > Intermediate</button>
-         <button class="dropdown-item" > Intermediate-Advanced</button>
-         <button class="dropdown-item" > Advanced</button>
-         <!-- <a class="dropdown-item" (click)="navigateToArticle('ML')"> Machine Learning</a> -->
 
-        </div>
-        <button class="btn btn-outline-info btn-block" >Settings</button>
+        <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/practicetests">Practice Tests</button>
+        <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/userdetails" routerLinkActive="active">My Details</button>
+        <button disabled class="btn btn-outline-info btn-block" >Settings-Will be available in next release:)</button>
       <button class="btn btn-outline-danger btn-block" (click)="logout()">Logout</button>
     </div>
 

@@ -4,8 +4,10 @@ import { SubjectRepository } from '../../model/subject.repository';
 import { UserSubject } from 'src/app/model/userSubject.model';
 import { User } from 'src/app/model/user.model';
 import { UserRepository } from "src/app/model/user.repository";
+import { SkillLevel, getSkillLevelValue } from "../../service/constants";
 
 import { filter } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-questions',
@@ -16,9 +18,11 @@ export class SubjectsComponent implements OnInit {
   public subjectList: Subject[] = [];
   userSubjects: UserSubject[] = [];
   user = new User();
+  public skillLevel: number;
+  public localSkillLevel;
 
-  constructor(private repository: SubjectRepository, private userRepository: UserRepository) {
-    this.getSubjects();
+  constructor(private repository: SubjectRepository, private userRepository: UserRepository, private activatedRoute: ActivatedRoute) {
+    //this.getSubjects();
     this.userRepository.loadUserForUserDetail().pipe(
       filter(data => data !== null)
       ).subscribe(
@@ -28,6 +32,14 @@ export class SubjectsComponent implements OnInit {
       }, errorMessage => {
 
       });
+
+      if (this.activatedRoute.snapshot.params["level"]){
+        this.skillLevel = this.activatedRoute.snapshot.params["level"];
+      } else {
+        this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
+      }
+      this.getSubjectByLevel(this.skillLevel);
+      this.localSkillLevel = SkillLevel;
    }
 
   ngOnInit(): void {
@@ -55,6 +67,17 @@ export class SubjectsComponent implements OnInit {
 
   getMainContainerHeight():number {
     return document.querySelector('#main-container').clientHeight;
+  }
+
+  getSubjectByLevel(level: number = 1) {
+    this.skillLevel = level;
+    this.repository.getSubjectsByLevel(level).subscribe(data => {
+      this.subjectList = data;
+    })
+  }
+
+  getSkillLevelValue(skillLevel: string): number {
+    return  getSkillLevelValue(skillLevel);
   }
 
   getOptimalMainContainerHeight():string {

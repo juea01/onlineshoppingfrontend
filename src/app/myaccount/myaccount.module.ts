@@ -25,9 +25,11 @@ let routing = RouterModule.forChild([
    {path: "userdetails/:mode/:id", component: UserDetailEditorComponent},
    {path: "userdetails/:mode", component: UserDetailEditorComponent},
    {path: "userdetails", component: UserDetailTableComponent},
+   {path: "practicetests/:level", component: SubjectsComponent},
    {path: "practicetests", component: SubjectsComponent},
+   {path: "subjectdetail/:id/:level", component: QuestiondetailComponent},
    {path: "subjectdetail/:id", component: QuestiondetailComponent},
-   {path: "**", redirectTo: "userdetails"}
+   {path: "**", redirectTo: "practicetests"}
   ]},
   {path: "**", redirectTo: "auth"}
 ]);
