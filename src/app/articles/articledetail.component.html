@@ -101,16 +101,17 @@
             <span *ngIf="!user.email">
               <div class="row">
                 <div class="col-sm-12">
-                  <p>To post comments please login to your account or register with us if you don't have one.</p>
+                  <p>If you have account with us, you can post comments and also practise exercises on these topics.</p>
                 </div>
-                <div class="col-sm-3">
-                  <a class="nav-link text-white"  style="cursor: pointer;" (click)="navigateToMyAccountLogin()">MyAccount</a>
+              </div>
+              <div class="row">
+                <div class="col-sm-1">
+                  <a class="nav-link"  style="cursor: pointer; color: blue;" (click)="navigateToMyAccountLogin()">MyAccount</a>
                 </div>
-                <div class="col-sm-3">
-                  <a class="nav-link text-white" routerLink="/registration">Registration</a>
+                <div class="col-sm-1">
+                  <a class="nav-link" style="cursor: pointer; color: blue;"  routerLink="/registration">Registration</a>
                 </div>
-                <div class="col-sm-3">
-
+                <div class="col-sm-10">
                 </div>
               </div>
             </span>
