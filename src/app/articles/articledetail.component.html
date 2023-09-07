@@ -132,7 +132,7 @@
 
             <ng-template ngFor let-c [ngForOf]="article.comments">
               <tr>
-                <td>{{c.description }} --{{c.user?.email}}</td>
+                <td>{{c.description }} --{{c.user?.username}}</td>
                 <span *ngIf="user.email">
                   <td>
                     <span *ngIf="user.id == c.user.id">
@@ -148,7 +148,7 @@
               <span *ngIf="showRepliesOfComment == c.id && replyExist">
                <ng-template ngFor let-r [ngForOf]="replies">
                 <tr>
-                  <td><p class="text-primary"> {{r.description}} --{{r.user?.email}}
+                  <td><p class="text-primary"> {{r.description}} --{{r.user?.username}}
                     <span *ngIf="user.id == r.user.id">
                       <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, r.id, 'edit', r.description)"></i>
                    </span> </p>
