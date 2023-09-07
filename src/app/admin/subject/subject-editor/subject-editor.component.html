@@ -84,7 +84,9 @@
 
         <button *ngIf="!editing"  class="btn btn-primary m-1"  (click)="addQuestion($event)">Add Question</button>
         <button  type="submit" *ngIf="editing"  class="btn btn-primary m-1" >Update Question</button>
-        <button type="reset" class="btn btn-secondary" routerLink="/admin/main/articles"> Cancel </button>
+
+        <button *ngIf="editing" type="reset" class="btn btn-secondary" [routerLink]="['/admin/main/questionanswereditor',subject.id]"> Cancel </button>
+        <button *ngIf="!editing" type="reset" class="btn btn-secondary" [routerLink]="['/admin/main/subjects']"> Cancel </button>
       </form>
     </div>
     <div class="col-1">
