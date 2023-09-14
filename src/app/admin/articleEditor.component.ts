@@ -1,37 +1,55 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Article } from "../model/article.model";
 import { ArticleRepository } from "../model/article.repository";
+import { UserRepository } from "../model/user.repository";
+
+import { filter } from 'rxjs/operators';
+import { User } from "../model/user.model";
 
 @Component({
   templateUrl: "articleEditor.component.html",
   styleUrls: ["articleEditor.component.css"]
 })
 
-export class ArticleEditorComponent {
+export class ArticleEditorComponent implements OnInit{
 
   editing: boolean = false;
   article: Article = new Article();
   maxAllowedImages: number = 2;
-
   selectedFiles: FileList = null;
   public errorMessage: string;
+  private user: User = new User();
 
-  constructor(private repository: ArticleRepository, private router: Router, private activeRoute: ActivatedRoute) {
-    this.editing = activeRoute.snapshot.params["mode"] == "edit";
+  constructor(private repository: ArticleRepository, private router: Router, private activeRoute: ActivatedRoute,
+    private userRepository: UserRepository) {
+
+  }
+
+  ngOnInit(): void {
+    this.editing = this.activeRoute.snapshot.params["mode"] == "edit";
+
     if (this.editing) {
-      console.log("Editing")
-      //Object.assign(this.article, repository.getArticleDetailById(activeRoute.snapshot.params["id"]));
-      repository.getArticleDetailById(activeRoute.snapshot.params["id"]).subscribe(data => {
-        console.log(data);
+      this.repository.getArticleDetailById(this.activeRoute.snapshot.params["id"]).subscribe(data => {
         Object.assign(this.article, data);
       });
     }
+
+    this.userRepository.loadUserForUserDetail().pipe(
+      filter(data => data !== null)
+      ).subscribe(
+      user => {
+      this.user = user;
+     // console.log("Success"+this.user.id+this.user.username);
+      }, error => {
+        //console.log(error);
+      });
   }
 
   save(form: NgForm) {
     if (form.valid) {
+      this.article.user = this.user;
       this.repository.saveArticle(this.article).subscribe(aId =>{
         const formData = new FormData();
         if (this.article.images) {

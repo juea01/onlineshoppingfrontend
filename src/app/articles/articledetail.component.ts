@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Article } from "../model/article.model";
 import { ArticleRepository } from "../model/article.repository";
 import { Router } from "@angular/router";
@@ -24,7 +24,7 @@ import { DatePipe } from "@angular/common";
   styleUrls: ['./articledetail.component.css'],
   providers: [DatePipe]
 })
-export class ArticleDetailComponent {
+export class ArticleDetailComponent implements OnInit {
 
   article: Article = new Article();
   comment: Comment = new Comment();
@@ -37,6 +37,10 @@ export class ArticleDetailComponent {
 
   constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute,
     private userRepository: UserRepository, private dialog: MatDialog, private datePipe: DatePipe) {
+
+  }
+
+  ngOnInit(): void {
     this.repository.getArticleDetailById(this.activatedRoute.snapshot.params["id"]).subscribe( article => {
       this.article = article;
     });

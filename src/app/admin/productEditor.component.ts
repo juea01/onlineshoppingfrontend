@@ -43,6 +43,8 @@ export class ProductEditorComponent {
         formData.append('productId', pId.toString());
         this.repository.saveImage(formData, this.product.id);
         this.router.navigateByUrl("/admin/main/products");
+      }, error => {
+        this.errorMessage = error;
       });
     } else {
       this.errorMessage = "Form Data Invalid";

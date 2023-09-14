@@ -19,7 +19,7 @@ import { QuestionAnswerEditorComponent } from './question-answer/question-answer
 
 let routing = RouterModule.forChild([
   {path: "auth", component: AuthComponent},
-  {path: "main", component: AdminComponent, canActivate: [AuthKeyCloakGuard],data: {roles: ['ADMIN']},
+  {path: "main", component: AdminComponent, canActivate: [AuthKeyCloakGuard],data: {roles: ['ADMIN', 'LECTURER']},
   children: [
    {path: "products/:mode/:id", component: ProductEditorComponent},
    {path: "products/:mode", component: ProductEditorComponent},
