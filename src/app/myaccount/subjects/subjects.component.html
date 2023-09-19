@@ -36,6 +36,7 @@
                   <div class="col-md-12"><h5 class="card-title">Title: {{subject?.title}}</h5></div>
                   <div class="col-md-12"><h5 class="card-title">Level: {{subject?.level}}</h5></div>
                   <div class="col-md-12"><h5 class="card-title">Premium: {{subject?.premium ? 'Yes' : 'No'}}</h5></div>
+                  <div class="col-md-12"><h5 class="card-title">Author: {{subject?.user?.username}}</h5></div>
                   <div class="col-md-12">
                     <ng-template ngFor let-userSub [ngForOf]="userSubjects">
                       <div *ngIf="userSub.subject.id === subject.id">

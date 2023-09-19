@@ -75,6 +75,34 @@ export class SubjectRepository {
     })
   }
 
+  getSubjectsByAuthorId(id: number):Observable<Subject[]> {
+    return new Observable(observer => {
+      const result = this.subjects?.filter(s => {
+        return s.user.id == id
+      });
+
+      if(!_.isEmpty(result)){
+        observer.next(result);
+        observer.complete();
+      } else {
+        this.dataSource.getSubjectsByAuthorId(id).subscribe(data => {
+          if (!_.isEmpty(data)) {
+            if (!_.isEmpty(this.subjects)) {
+              for (const subject of data) {
+                this.subjects.push(subject);
+              }
+            } else {
+              this.subjects = data;
+            }
+        }
+        observer.next(data);
+        observer.complete();
+        })
+      }
+
+    })
+  }
+
   updateSubject(subject: Subject):Observable<Subject>{
     return new Observable(observer => {
       this.dataSource.updateSubject(subject).subscribe(data => {

@@ -1,4 +1,5 @@
 import { Question } from "./question.model";
+import { User} from "./user.model";
 
 export class Subject {
   constructor(
@@ -9,5 +10,6 @@ export class Subject {
     public title?: string,
     public premium?: boolean,
     public questions?: Question[],
+    public user?: User
   ){}
 }

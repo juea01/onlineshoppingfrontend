@@ -4,12 +4,15 @@ import {Router, ActivatedRoute } from "@angular/router";
 
 import { Subject } from '../../model/subject.model';
 import { SubjectRepository } from "../../model/subject.repository";
+import { UserRepository } from "../../model/user.repository";
 import { Question } from '../../model/question.model';
 import { QuestionOption } from '../../model/questionOption.model';
 import { QuestionAnswerFormGroup, QuestionAnswerFormControl } from './questionAnswerForm.model';
 import { QuestionOptionFormGroup } from './questionOptionForm.model';
 import { Article } from '../../model/article.model';
+import { User } from '../../model/user.model';
 import * as _ from 'lodash';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-answer',
@@ -35,43 +38,8 @@ export class QuestionAnswerComponent implements OnInit {
 
   yesNoOption: any = [true, false];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private subjectRepo: SubjectRepository) {
-    this.editing = activatedRoute.snapshot.params["mode"] == "edit";
-
-    if (!this.editing){
-      activatedRoute.queryParams.subscribe(params =>{
-        this.subject.title = params.title;
-        this.subject.category = params.category;
-        this.subject.level = params.level;
-        this.subject.subCategory = params.subCategory;
-        this.subject.premium = Boolean(params.premium);
-      });
-    } else {
-      //console.log("Editing");
-      if(activatedRoute.snapshot.params["questionId"]) {
-        //Editing existing question
-        //console.log("Editing existing question");
-        this.isUpdateQuestion = true;
-        this.subject.id = activatedRoute.snapshot.params["id"];
-        this.subjectRepo.getQuestionsBySubjectId(this.subject.id).subscribe(data=> {
-          for(const question of data) {
-            //console.log(`Question id ${question.id}`);
-            if (question.id == activatedRoute.snapshot.params["questionId"]) {
-              this.question = question;
-              //console.log(`Matching question with id ${question.id} found`);
-              break;
-            }
-          }
-          this.prePopulateQuestionForm();
-          this.prePopulateOptionForm();
-        });
-      } else {
-        //Subject is already created and therefore only need id here.
-        //Adding more question to existing Subject
-        //console.log("Adding more question");
-        this.subject.id = activatedRoute.snapshot.params["id"];
-      }
-    }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private subjectRepo: SubjectRepository,
+    private userRepository: UserRepository) {
 
   }
 
@@ -93,6 +61,54 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.editing = this.activatedRoute.snapshot.params["mode"] == "edit";
+
+    if (!this.editing){
+      this.activatedRoute.queryParams.subscribe(params =>{
+        this.subject.title = params.title;
+        this.subject.category = params.category;
+        this.subject.level = params.level;
+        this.subject.subCategory = params.subCategory;
+        this.subject.premium = Boolean(params.premium);
+
+        this.userRepository.loadUserForUserDetail().pipe(
+          filter(data => data !== null)
+          ).subscribe(
+          user => {
+          this.subject.user = user;
+         // console.log("Success"+this.user.id+this.user.username);
+          }, error => {
+            //console.log(error);
+          });
+
+      });
+    } else {
+      //console.log("Editing");
+      if(this.activatedRoute.snapshot.params["questionId"]) {
+        //Editing existing question
+        //console.log("Editing existing question");
+        this.isUpdateQuestion = true;
+        this.subject.id = this.activatedRoute.snapshot.params["id"];
+        this.subjectRepo.getQuestionsBySubjectId(this.subject.id).subscribe(data=> {
+          for(const question of data) {
+            //console.log(`Question id ${question.id}`);
+            if (question.id == this.activatedRoute.snapshot.params["questionId"]) {
+              this.question = question;
+              //console.log(`Matching question with id ${question.id} found`);
+              break;
+            }
+          }
+          this.prePopulateQuestionForm();
+          this.prePopulateOptionForm();
+        });
+      } else {
+        //Subject is already created and therefore only need id here.
+        //Adding more question to existing Subject
+        //console.log("Adding more question");
+        this.subject.id = this.activatedRoute.snapshot.params["id"];
+      }
+    }
   }
 
   chooseOption(e: any, index: number) {

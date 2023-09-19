@@ -55,6 +55,10 @@ export class RestDataSource{
     return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}`);
   }
 
+  getSubjectsByAuthorId(id: number):Observable<Subject[]> {
+    return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/authors/${id}`);
+  }
+
 
    //update subject
    updateSubject(subject: Subject):Observable<Subject> {

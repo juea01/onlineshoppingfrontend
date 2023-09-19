@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Subject } from 'src/app/model/subject.model';
+import { User} from 'src/app/model/user.model';
+
 import { SubjectRepository } from 'src/app/model/subject.repository';
-import { SkillLevel, getSkillLevelValue } from "../../service/constants";
+import { UserRepository } from 'src/app/model/user.repository';
 
 
 @Component({
@@ -14,31 +16,24 @@ export class SubjectComponent implements OnInit {
 
   public errorMessage: string;
   public editing: boolean = false;
-
   public subjects: Subject[] = [];
-  public subject: Subject = new Subject();
-  public skillLevel: number;
-  public localSkillLevel;
+  private user: User = new User();
 
-  constructor(private subjectRepo: SubjectRepository) {
-    this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
-    this.getSubjectByLevel(this.skillLevel);
-    this.localSkillLevel = SkillLevel;
+
+  constructor(private subjectRepo: SubjectRepository, private userRepo: UserRepository) {
    }
 
   ngOnInit(): void {
-  }
 
-  getSubjectByLevel(level: number = 1) {
-    this.subjectRepo.getSubjectsByLevel(level).subscribe(data => {
-      this.subjects = data;
+    this.userRepo.loadUserForUserDetail().subscribe(user => {
+      this.user = user;
+      this.subjectRepo.getSubjectsByAuthorId(this.user.id).subscribe(data=> {
+        this.subjects = data;
+      })
     })
+
   }
 
 
-
-  getSkillLevelValue(skillLevel: string): number {
-    return  getSkillLevelValue(skillLevel);
-  }
 
 }

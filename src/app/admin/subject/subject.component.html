@@ -5,21 +5,9 @@
     <div class="col-md-2"></div>
     <div class="col-md-6"></div>
     <div class="col-sm-6">
-
     </div>
-    <div class="col-md-2 col-sm-2 text-right">
-      <label for="skillSet">Choose Level: </label>
-    </div>
-    <div class="col-md-2 col-sm-4 text-left">
-      <select class="from-control" [value]="skillLevel" id="skillSet" (change)="getSubjectByLevel($event.target.value)">
-        <option value={{getSkillLevelValue(localSkillLevel.Beginner)}}> {{localSkillLevel.Beginner}}</option>
-        <option value={{getSkillLevelValue(localSkillLevel.Intermediate)}}> {{localSkillLevel.Intermediate}}</option>
-        <option value={{getSkillLevelValue(localSkillLevel.Advanced)}}> {{localSkillLevel.Advanced}}</option>
-      </select>
-
-    </div>
-
   </div>
+
 <div class="row">
   <table class="table table-sm table-striped">
 

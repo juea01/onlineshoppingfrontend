@@ -23,7 +23,7 @@ export class WindowSizeServiceService {
     if (this.getMainContainerHeight() >= this.getWindowInnerHeight()) {
       let pixel = this.getMainContainerHeight();
      console.log(`height to set to main container as it is bigger than window height ${pixel}, ${this.getWindowInnerHeight()}`);
-      return pixel+"px";
+      return pixel+10+"px";
     } else {
       //footer is 200px and nav is around 50px
       let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();

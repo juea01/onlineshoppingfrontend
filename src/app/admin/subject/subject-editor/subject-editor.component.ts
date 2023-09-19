@@ -4,6 +4,8 @@ import { Subject } from 'src/app/model/subject.model';
 import * as _ from 'lodash';
 import {Router, ActivatedRoute} from "@angular/router";
 import { SubjectRepository } from 'src/app/model/subject.repository';
+import { UserRepository } from "../../../model/user.repository";
+import { filter } from 'rxjs/operators';
 
 import { SkillLevel, getSkillLevelValue } from "../../../service/constants";
 
@@ -20,19 +22,30 @@ export class SubjectEditorComponent implements OnInit {
   public skillLevel: number;
   public localSkillLevel;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private subjectRepository: SubjectRepository) {
-    this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
-    this.localSkillLevel = SkillLevel;
-    this.editing = activatedRoute.snapshot.params["mode"] == "edit";
-
-    if(this.editing) {
-      this.subjectRepository.getSubjectsById(activatedRoute.snapshot.params["id"]).subscribe(data=> {
-        this.subject = data;
-      })
-    }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute,
+    private subjectRepository: SubjectRepository, private userRepository: UserRepository) {
    }
 
   ngOnInit(): void {
+    this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
+    this.localSkillLevel = SkillLevel;
+    this.editing = this.activatedRoute.snapshot.params["mode"] == "edit";
+
+    if(this.editing) {
+      this.subjectRepository.getSubjectsById(this.activatedRoute.snapshot.params["id"]).subscribe(data=> {
+        this.subject = data;
+      })
+    }
+
+    this.userRepository.loadUserForUserDetail().pipe(
+      filter(data => data !== null)
+      ).subscribe(
+      user => {
+      this.subject.user = user;
+     // console.log("Success"+this.user.id+this.user.username);
+      }, error => {
+        //console.log(error);
+      });
   }
 
   update(form: NgForm) {
