@@ -1,6 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Product } from "../model/product.model";
+import { User } from "../model/user.model";
 import { ArticleRepository } from "../model/article.repository";
+import { UserRepository } from "../model/user.repository";
 import { Article } from "../model/article.model";
 
 
@@ -8,15 +10,21 @@ import { Article } from "../model/article.model";
   templateUrl: "articleTable.component.html"
 })
 
-export class ArticleTableComponent {
+export class ArticleTableComponent implements OnInit {
 
   public articles: Article[] = [];
+  private user: User = new User();
 
-  constructor(private repository: ArticleRepository) {
-    console.log("Article Table constructor");
-    this.repository.getAllArticles().subscribe(data => {
-      console.log("Article Table constructor getAllArticles "+ data);
-      this.articles = data;
+  constructor(private repository: ArticleRepository, private userRepository: UserRepository) {
+  }
+
+  ngOnInit(): void {
+    //console.log("Article Table ngOnInit");
+    this.userRepository.loadUserForUserDetail().subscribe(user=> {
+      this.user = user;
+      this.repository.getAllArticlesByAuthorId(this.user.id).subscribe(data => {
+        this.articles = data;
+      })
     })
   }
 

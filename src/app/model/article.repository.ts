@@ -113,6 +113,11 @@ deleteImage(id: number, aId: number): Observable<Article> {
   return this.dataSource.getArticles();
  }
 
+ getAllArticlesByAuthorId(id: number):Observable<Article[]> {
+  return this.dataSource.getAllArticlesByAuthorId(id);
+ }
+
+
   getArticles(subcategory: string):Observable<Article[]> {
     return new Observable(observer => {
 

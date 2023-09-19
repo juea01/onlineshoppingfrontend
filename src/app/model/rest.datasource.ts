@@ -196,6 +196,10 @@ export class RestDataSource{
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/`);
   }
 
+  getAllArticlesByAuthorId(id): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/authors/${id}`);
+  }
+
   getArticleDetailById(articleId: number): Observable<Article> {
     //console.log("rest datasource > getArticleDetailById"+articleId);
     return this.sendRequest<Article>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}`);

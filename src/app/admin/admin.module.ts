@@ -34,7 +34,7 @@ let routing = RouterModule.forChild([
    {path: "questions/:mode/:id", component: QuestionAnswerComponent},
    {path: "questions/:mode", component: QuestionAnswerComponent},
    {path: "questionanswereditor/:id", component: QuestionAnswerEditorComponent},
-   {path: "**", redirectTo: "products"}
+   {path: "**", redirectTo: "articles"}
   ]},
   {path: "**", redirectTo: "auth"}
 ]);
