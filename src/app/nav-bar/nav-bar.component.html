@@ -26,7 +26,7 @@
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-        <div *ngFor="let option of options">
+        <!-- <div *ngFor="let option of options">
           <label style="color:white">
             {{ option.label }}
             <input  type="radio"
@@ -35,7 +35,7 @@
                    [(ngModel)]="selectedOption">
           </label>
 
-        </div>
+        </div> -->
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
@@ -48,7 +48,9 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
 
-        <div>
+
+
+        <div *ngIf="!getUserDetail().email">
          <a class="nav-link" routerLink="/myaccount">MyAccount</a>
         </div>
 
@@ -56,6 +58,7 @@
             <p style="color:white" class="centered-text">{{getUserDetail().username}} </p>
             <button class="btn btn-outline-success btn-block centered-button" (click)="logout()">Logout</button>
         </div>
+
 
 
       </div>

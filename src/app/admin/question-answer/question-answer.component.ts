@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm, FormGroup, FormArray } from "@angular/forms";
 import {Router, ActivatedRoute } from "@angular/router";
 
@@ -13,13 +13,14 @@ import { Article } from '../../model/article.model';
 import { User } from '../../model/user.model';
 import * as _ from 'lodash';
 import { filter } from 'rxjs/operators';
+import { WindowSizeServiceService } from "../../service/window-size-service.service";
 
 @Component({
   selector: 'app-question-answer',
   templateUrl: './question-answer.component.html',
   styleUrls: ['./question-answer.component.css']
 })
-export class QuestionAnswerComponent implements OnInit {
+export class QuestionAnswerComponent implements OnInit, OnDestroy {
 
   public errorMessage: string;
   editing: boolean = false;
@@ -39,7 +40,7 @@ export class QuestionAnswerComponent implements OnInit {
   yesNoOption: any = [true, false];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private subjectRepo: SubjectRepository,
-    private userRepository: UserRepository) {
+    private userRepository: UserRepository, private windowSizeService: WindowSizeServiceService) {
 
   }
 
@@ -109,6 +110,10 @@ export class QuestionAnswerComponent implements OnInit {
         this.subject.id = this.activatedRoute.snapshot.params["id"];
       }
     }
+  }
+
+  ngOnDestroy(): void {
+      this.windowSizeService.resetAdditionalPixelToMainContainerHeight();
   }
 
   chooseOption(e: any, index: number) {
@@ -222,9 +227,10 @@ export class QuestionAnswerComponent implements OnInit {
    * At the moment only allow to add up to two options.
    */
   addQuestionOption():void {
-   if(this.options.length < 3) {
+   if(this.options.length < 2) {
       this.questionForm.addOption();
       this.options = this.questionForm.getOption();
+      this.windowSizeService.addAdditionalPixelToMainContainerHeight();
     }
   }
 

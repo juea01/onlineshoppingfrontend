@@ -18,6 +18,9 @@
     </div>
     <div class="col-sm-12 col-md-8">
       <div class="row main-article">
+        <div *ngIf="getArticles().length == 0">
+          <h3>Sorry, couldn't find articles you are looking for. Please use search phrases (without quotes) such as "Java", "JavaScript", "ML".</h3>
+        </div>
         <ng-template ngFor let-article [ngForOf]="getArticles()">
           <div class="col-6 col-md-4 p-2">
             <div class="card m-1 p-1 bg-light">

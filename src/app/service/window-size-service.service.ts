@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class WindowSizeServiceService {
 
+  private additionalPixel = 0;
   constructor() { }
 
   getWindowInnerWidth():number {
@@ -19,11 +20,19 @@ export class WindowSizeServiceService {
     return document.querySelector('#main-container').clientHeight;
   }
 
+  public addAdditionalPixelToMainContainerHeight():void {
+    this.additionalPixel += 25;
+  }
+
+  public resetAdditionalPixelToMainContainerHeight():void {
+    this.additionalPixel = 0;
+  }
+
   getOptimalMainContainerHeight():string {
     if (this.getMainContainerHeight() >= this.getWindowInnerHeight()) {
       let pixel = this.getMainContainerHeight();
      console.log(`height to set to main container as it is bigger than window height ${pixel}, ${this.getWindowInnerHeight()}`);
-      return pixel+10+"px";
+      return pixel+this.additionalPixel+"px";
     } else {
       //footer is 200px and nav is around 50px
       let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();

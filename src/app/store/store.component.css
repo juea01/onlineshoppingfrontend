@@ -3,6 +3,7 @@
 }
 
 
+
 .card img {
   height: 200px;
 }
@@ -14,10 +15,16 @@
 }
 
 
-.main-product .card:hover {
+.main-content .card:hover {
   box-shadow: .25em .25em .5em .5em rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
+
+.secondary-content .card:hover {
+  box-shadow: .25em .25em .5em .5em rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
 /*
   @media only screen and  (max-height: 700px){
     #main-container {
