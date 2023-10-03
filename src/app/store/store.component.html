@@ -53,8 +53,8 @@
           <ng-template ngFor let-article [ngForOf]="articlesPerPage"; let-i ="index">
             <div class="col-6 col-md-4 p-2">
               <div class="card m-1 p-1 bg-light">
-                <img *ngIf="article[0]?.images[0]?.location" class="card-img-top" src="{{article?.images[0]?.location}}" alt="article image">
-                <img *ngIf="!article[0]?.images[0]?.location" class="card-img-top" src="../../assets/AI.JPG" alt="article image">
+                <img *ngIf="article?.images[0]?.location" class="card-img-top" src="{{article?.images[0]?.location}}" alt="article image">
+                <img *ngIf="!article?.images[0]?.location" class="card-img-top" src="../../assets/AI.JPG" alt="article image">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-10"><h5 class="card-title">{{article?.title}}</h5></div>
