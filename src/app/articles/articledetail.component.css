@@ -12,7 +12,9 @@ img {
   min-width: 100%;
 }
 
-
+.identText {
+  text-indent: 2em;
+}
 
 .hover-pointer {
   cursor: pointer;
