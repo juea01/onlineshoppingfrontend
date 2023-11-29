@@ -52,6 +52,8 @@ export class AuthComponent implements OnInit{
       this.user.email = this.userProfile.email;
       window.sessionStorage.setItem("userdetails", JSON.stringify(this.user));
     }
+
+    this.login();
   }
 
   public login() {

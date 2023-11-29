@@ -28,7 +28,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
   ) {
     // Force the user to log in if currently unauthenticated.
     if ( !this.keycloak.isLoggedIn) {
-      console.log("Not authenticated");
+      console.log("Not authenticated"+docker_env_config.keycloakRedirectUrl + state.url);
       await this.keycloak.login({
         redirectUri: docker_env_config.keycloakRedirectUrl + state.url,
       });
