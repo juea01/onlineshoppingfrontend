@@ -1,20 +1,29 @@
 import {OnInit, Component} from "@angular/core";
 import {Router} from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
+import { User } from "../model/user.model";
 import { UserRepository } from '../model/user.repository';
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 @Component({
-  templateUrl: "myaccount.component.html"
+  templateUrl: "myaccount.component.html",
+  styleUrls: ['./myaccount.component.css']
 })
 export class MyaccountComponent implements OnInit {
 
-
+  progressBarValue = 90;
+  userDetail = new User();
 
   constructor(private keycloak: KeycloakService, private router: Router,  private userRepository: UserRepository) {}
 
   ngOnInit(): void {
-
+    this.userRepository.loadUserForUserDetail().subscribe(
+      user => {
+      //console.log("Success");
+      this.userDetail = user;
+      }, error => {
+       // console.log(error);
+      });
   }
 
   navigateToPractice(level: number) {
@@ -35,5 +44,7 @@ export class MyaccountComponent implements OnInit {
       this.keycloak.clearToken();
     })
   }
+
+
 
 }

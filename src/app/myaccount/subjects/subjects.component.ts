@@ -9,6 +9,8 @@ import { SkillLevel, getSkillLevelValue } from "../../service/constants";
 import { filter } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-questions',
   templateUrl: './subjects.component.html',
@@ -20,8 +22,13 @@ export class SubjectsComponent implements OnInit {
   user = new User();
   public skillLevel: number;
   public localSkillLevel;
+  public errorMessage: string;
 
   constructor(private repository: SubjectRepository, private userRepository: UserRepository, private activatedRoute: ActivatedRoute) {
+
+   }
+
+  ngOnInit(): void {
     //this.getSubjects();
     this.userRepository.loadUserForUserDetail().pipe(
       filter(data => data !== null)
@@ -40,9 +47,6 @@ export class SubjectsComponent implements OnInit {
       }
       this.getSubjectByLevel(this.skillLevel);
       this.localSkillLevel = SkillLevel;
-   }
-
-  ngOnInit(): void {
   }
 
   getSubjects() {
@@ -70,10 +74,16 @@ export class SubjectsComponent implements OnInit {
   }
 
   getSubjectByLevel(level: number = 1) {
+    this.errorMessage = null;
     this.skillLevel = level;
+    this.subjectList = null;
     this.repository.getSubjectsByLevel(level).subscribe(data => {
       this.subjectList = data;
+      if (_.isEmpty( this.subjectList)) {
+        this.errorMessage = "Sorry, there is no practice tests for the choosen level at the moment."
+      }
     })
+
   }
 
   getSkillLevelValue(skillLevel: string): number {

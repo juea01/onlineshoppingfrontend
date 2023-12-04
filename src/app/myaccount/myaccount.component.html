@@ -12,20 +12,115 @@
 
   </div>
 
-  <div class="row mt-2">
-    <div class="col-3">
 
 
-        <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/practicetests">Practice Tests</button>
-        <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/userdetails" routerLinkActive="active">My Details</button>
-        <button disabled class="btn btn-outline-info btn-block" >Settings-Will be available in next release:)</button>
-      <button class="btn btn-outline-danger btn-block" (click)="logout()">Logout</button>
+  <div class="row">
+
+    <div class="col-md-3 bg-warning">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <mat-card>
+              <div mat-card-avatar style="background-image: url('../../../assets/author_image.JPG');"
+                class="round-header-image">
+              </div>
+              <mat-card-content>
+                <p>
+                 {{userDetail.username}}
+                </p>
+
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card>
+              <mat-card-content>
+                <h3>Profile Completion</h3>
+                <div class="row">
+                  <div class="col-7 col-sm-7 col-md-7">
+                    <div class="mb-2"></div>
+                    <mat-progress-bar mode="determinate" [value]="progressBarValue"></mat-progress-bar>
+                  </div>
+                  <div class="col-5 col-sm-5 col-md-5">
+                    <p>{{progressBarValue}}</p>
+                  </div>
+                </div>
+
+                <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/userdetails"
+                  routerLinkActive="active">My Details</button>
+                <button disabled class="btn btn-outline-info btn-block">Privacy Settings-Will be available in next
+                  release:)</button>
+              </mat-card-content>
+
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="col-9">
-      <router-outlet></router-outlet>
+    <div class="col-md-7 bg-success">
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-2">
+            <mat-card class="subject-card">
+              <mat-icon>exposure</mat-icon>
+              <mat-card-content>
+                <p style="text-align: center;"><a routerLink="/myaccount/main/practicetests">Practice Tests</a></p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <br />
+
+        <div class="row">
+              <div class="col-md-12">
+                <mat-card id="test-content-holder">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <router-outlet></router-outlet>
+                    </div>
+                  </div>
+
+                </mat-card>
+              </div>
+            </div>
+
+        <br />
+
+
+      </div>
+
+
+
     </div>
+
+    <div class="col-md-2 bg-info">
+      <div class="card m-1 p-1 bg-light">
+        <img class="card-img-top" src="../../assets/crypto_com.JPG" alt="Card image cap">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-10">
+              <h5 class="card-title">Interested in staking crypto coin?</h5>
+            </div>
+
+          </div>
+          <p class="card-text">Join crypto.com exchange and stake cro. Use referal code esqk2y962e to get bonus.
+            Please invest responsibly</p>
+          <div class="row">
+            <div class="col-md-6"><a href="https://crypto.com/exch/esqk2y962e" target="_blank"
+                class="btn btn-primary">More Detais</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+
 
   <div class="row">
     <div class="container-fluid">

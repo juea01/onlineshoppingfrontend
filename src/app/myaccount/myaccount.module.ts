@@ -14,6 +14,8 @@ import { SubjectsComponent } from "./subjects/subjects.component";
 import { QuestiondetailComponent } from './questiondetail/questiondetail.component';
 
 import { MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
 
 
 
@@ -35,7 +37,7 @@ let routing = RouterModule.forChild([
 ]);
 
 @NgModule({
-  imports: [CommonModule, FormsModule, routing, NavBarModule, MatProgressBarModule],
+  imports: [CommonModule, FormsModule, routing, NavBarModule, MatProgressBarModule, MatCardModule, MatIconModule],
   providers: [AuthGuard],
   declarations: [AuthComponent, MyaccountComponent, UserDetailTableComponent, UserDetailEditorComponent, SubjectsComponent, QuestiondetailComponent]
 })

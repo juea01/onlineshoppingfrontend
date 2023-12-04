@@ -8,11 +8,9 @@
 
 
  <!-- This is for wider screen like laptop phone-->
-  <div *ngIf="getWindowInnerWidth() > 780px" class="row" id="main-container" [style.height]="getOptimalMainContainerHeight()">
-    <div *ngIf="getWindowInnerWidth() > 780px" class="col-md-1">
-      <!--This is just to push main content to the middle in wider screen-->
-    </div>
-    <div class="col-sm-12 col-md-8">
+  <div  class="row" id="main-container">
+
+    <div class="col-sm-12 col-md-12">
 
       <div class="row main-question">
 
@@ -41,7 +39,7 @@
                   </p>
                 </div>
                 <div class="row" *ngIf="!complete">
-                    <p>{{questions[questionNum]?.content}}</p>
+                    <h2>{{questions[questionNum]?.content}}</h2>
                 </div>
                 <div class="row" *ngIf="complete">
                   <div class="col-sm-2 col-md-2"></div>
@@ -96,21 +94,6 @@
      </div>
 
     </div>
-    <div class="col-sm-2 col-md-3">
-      <div class="card m-1 p-1 bg-light">
-        <img class="card-img-top" src="../../assets/crypto_com.JPG" alt="Card image cap">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-10"><h5 class="card-title">Interested in staking crypto coin?</h5></div>
 
-          </div>
-        <p class="card-text">Join crypto.com exchange and stake cro. Use referal code esqk2y962e to get bonus.
-           Please invest responsibly</p>
-        <div class="row">
-          <div class="col-md-6"><a href="https://crypto.com/exch/esqk2y962e" target="_blank" class="btn btn-primary">More Detais</a> </div>
-        </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
