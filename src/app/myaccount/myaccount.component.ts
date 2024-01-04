@@ -19,10 +19,10 @@ export class MyaccountComponent implements OnInit {
   ngOnInit(): void {
     this.userRepository.loadUserForUserDetail().subscribe(
       user => {
-      //console.log("Success");
+      console.log("Success loading user");
       this.userDetail = user;
       }, error => {
-       // console.log(error);
+       console.log(`Error loading user ${error}`);
       });
   }
 

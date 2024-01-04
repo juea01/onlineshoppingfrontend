@@ -27,8 +27,9 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
+    console.log(`Authenticated ${this.authenticated} and Token Expired ${this.keycloak.isTokenExpired()}`);
     // Force the user to log in if currently unauthenticated.
-    if (!this.authenticated && !this.keycloak.isTokenExpired) {
+    if (!this.authenticated && !this.keycloak.isTokenExpired()) {
       console.log("Not authenticated");
       console.log("Rdirection after login"+docker_env_config.keycloakRedirectUrl +"state"+ state.url),
       await this.keycloak.login({
@@ -36,6 +37,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
         redirectUri: docker_env_config.keycloakRedirectUrl + state.url,
       });
     }else{
+        console.log(`Storing logged in user infor into session variable`);
         this.userProfile = await this.keycloak.loadUserProfile();
         this.user.authStatus = 'AUTH';
         this.user.username = this.userProfile.username;
