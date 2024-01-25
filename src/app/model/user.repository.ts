@@ -77,6 +77,30 @@ export class UserRepository {
     });
   }
 
+  getKeycloakUserId(): Observable<string> {
+    return new Observable( observer => {
+
+
+      this.keyCloakService.isLoggedIn().then((value)=>{
+
+        if (!value) {
+          observer.error("Error- no logged in user yet.");
+        } else {
+          this.keyCloakService.loadUserProfile().then((profile)=> {
+            console.log(`keycloak user id ${profile.id}`);
+             observer.next(profile.id);
+             observer.complete();
+           })
+         }
+
+      }).catch((error)=> {
+        console.log("Error"+error);
+      })
+
+
+    });
+  }
+
 
   /**
    *
@@ -95,6 +119,7 @@ export class UserRepository {
    * This method is intended to be called when keycloak user logut button is called
    */
   clearUserData() {
+    console.log("Clearing user data");
     window.sessionStorage.setItem("userdetails",null);
     this.loggedInUser = null;
     this.userDetail = null;
@@ -138,8 +163,6 @@ export class UserRepository {
   confirmSubEmailCode(subscription: Subscription): Observable<ApiResponse<null>> {
     return this.dataSource.saveSubscriptionEmailCode(subscription);
   }
-
-
 
   isUserNameUnique(username: string): Observable<boolean> {
     return  this.dataSource.isUserNameUnique(username);

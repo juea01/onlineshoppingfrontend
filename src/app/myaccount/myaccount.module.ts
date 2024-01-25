@@ -16,11 +16,14 @@ import { QuestiondetailComponent } from './questiondetail/questiondetail.compone
 import { MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import { PaymentComponent } from './payment/payment.component';
+import { SuccessComponent } from './payment/success/success.component';
 
 
 
 let routing = RouterModule.forChild([
   {path: "auth", component: AuthComponent},
+  {path: "success", component: SuccessComponent},
   {path: "main", component: MyaccountComponent,
    canActivate: [AuthKeyCloakGuard],data: {roles: ['CUSTOMER', 'ADMIN']},
   children: [
@@ -29,8 +32,9 @@ let routing = RouterModule.forChild([
    {path: "userdetails", component: UserDetailTableComponent},
    {path: "practicetests/:level", component: SubjectsComponent},
    {path: "practicetests", component: SubjectsComponent},
-   {path: "subjectdetail/:id/:level", component: QuestiondetailComponent},
+   {path: "subjectdetail/:id/:level/:isPremium", component: QuestiondetailComponent, canActivate: [AuthKeyCloakGuard],data: {roles: ['PREMIUM', 'ADMIN']}},
    {path: "subjectdetail/:id", component: QuestiondetailComponent},
+   {path: "payment", component: PaymentComponent},
    {path: "**", redirectTo: "practicetests"}
   ]},
   {path: "**", redirectTo: "auth"}
@@ -39,6 +43,6 @@ let routing = RouterModule.forChild([
 @NgModule({
   imports: [CommonModule, FormsModule, routing, NavBarModule, MatProgressBarModule, MatCardModule, MatIconModule],
   providers: [AuthGuard],
-  declarations: [AuthComponent, MyaccountComponent, UserDetailTableComponent, UserDetailEditorComponent, SubjectsComponent, QuestiondetailComponent]
+  declarations: [AuthComponent, MyaccountComponent, UserDetailTableComponent, UserDetailEditorComponent, SubjectsComponent, QuestiondetailComponent, PaymentComponent, SuccessComponent]
 })
 export class MyaccountModule {}

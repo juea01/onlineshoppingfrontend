@@ -33,7 +33,17 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
-                <h5 class="card-title">Title: {{subject?.title}}</h5>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <h5 class="card-title">Title: {{subject?.title}}</h5>
+                  </div>
+                  <div class="col-sm-4">
+
+                    <i *ngIf="subject?.premium  && (!isAdminUser()&&!isPremiumUser())" class="fa fa-lock"></i>
+                    <i  *ngIf="subject?.premium && (isAdminUser() || isPremiumUser())" class="fa fa-lock-open"></i>
+                  </div>
+                </div>
+
               </div>
               <div class="col-md-12">
                 <h5 class="card-title">Level: {{subject?.level}}</h5>
@@ -62,8 +72,11 @@
             </div>
             <div class="row">
               <div><br /></div>
-              <div class="col-md-12"> <a [routerLink]="['/myaccount/main/subjectdetail', subject.id, subject.level]"
-                  class="btn btn-primary">Practice Now...</a></div>
+              <div class="col-md-12">
+                  <a  *ngIf="subject?.premium  && (!isAdminUser()&&!isPremiumUser())"  class="btn btn-primary" (click)="navigateToPayment()"> Unlock Now...</a>
+                  <a  *ngIf="!subject?.premium"  class="btn btn-primary" (click)="navigateToQuestionDetail(subject.id, subject.level, subject.premium)"> Practice Now...</a>
+                  <a  *ngIf="subject?.premium && (isAdminUser() || isPremiumUser())" class="btn btn-primary" (click)="navigateToQuestionDetail(subject.id, subject.level, subject.premium)"> Practice Now...</a>
+                </div>
             </div>
           </div>
 

@@ -14,13 +14,14 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { Prediction } from "./prediction.model";
 import { PredictionRepository } from "./prediction.repository";
 import { SubjectRepository } from "./subject.repository";
+import { SubscriptionRepository } from "./Subscription.repository";
 //const config: SocketIoConfig = { url: `http://${location.hostname}:1923`, options: {} };
 
 
 @NgModule({
   //imports: [HttpClientModule,SocketIoModule.forRoot(config)],
   imports: [HttpClientModule],
-  providers: [ProductRepository, Cart, PredictionRepository, UserRepository, ArticleRepository, SubjectRepository,
+  providers: [ProductRepository, Cart, PredictionRepository, UserRepository, ArticleRepository, SubjectRepository, SubscriptionRepository,
   {provide: StaticDataSource, useClass: RestDataSource}, RestDataSource, AuthService, ConnectionService, Search, Images]
 })
 export class ModelModule{}

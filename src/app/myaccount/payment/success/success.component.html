@@ -1,0 +1,33 @@
+ <div class="container-fluid">
+  <div class="row bg-dark">
+    <div class="container">
+      <app-nav-bar></app-nav-bar>
+    </div>
+  </div>
+    <!-- <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+      {{errorMessage}}
+    </div> -->
+    <div class="row" id="main-container" [style.height]="getOptimalMainContainerHeight()">
+      <div class="col-md-2">
+
+      </div>
+      <div class="col-md-8 col-sm-12">
+        <div class="bg-success mt-2 p-2 text-center text-white" >
+          <p>Great!, your subscription is successful. You can log back in to your Premium account.</p>
+        </div>
+
+      </div>
+      <div class="col-md-2">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+      <div class="container-fluid">
+        <app-footer></app-footer>
+      </div>
+    </div>
+  </div>

@@ -17,6 +17,7 @@ import { Comment } from 'src/app/model/comment.model';
 import { Image } from 'src/app/model/image.model';
 import { ArticleImage } from 'src/app/model/articleImage.model';
 import { ApiResponse } from "./apiResponse.model";
+import {RedirectApiResponse} from "src/app/model/redirectapiResponse.model";
 import { environment } from "src/environments/environment.docker";
 import { UserSubject } from "./userSubject.model";
 import {CompletedQuestion} from "./completedQuestion.model";
@@ -102,6 +103,10 @@ export class RestDataSource{
     return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}product-listing-service/userSubject/progress/`, null, null, null, null, null,  null, null, null, completedQuestions);
   }
 
+  subscribe(priceId: string, username: string, keycloakUserId: string): Observable<RedirectApiResponse> {
+    return this.sendRequest<RedirectApiResponse>("POST",`${this.baseUrl}user-service/subscription/create-checkout-session/${priceId}/${username}/${keycloakUserId}`);
+  }
+
 
   authenticate(user: string, pass: string): Observable<boolean> {
     return this.http.post<any>(this.baseUrl + "login", {
@@ -178,6 +183,7 @@ export class RestDataSource{
   saveSubscriptionEmailCode(subscription: Subscription): Observable<ApiResponse<null>> {
     return this.sendRequest<ApiResponse<null>>("POST",`${this.baseUrl}user-service/subscription/emailconfirmation`, null, null, null, null, null,  null, subscription);
   }
+
 
   saveArticle(article: Article): Observable<Article> {
     //return this.http.post<User>(this.baseUrl + "user-service/customers/", user);

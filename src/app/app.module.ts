@@ -38,6 +38,7 @@ import { MatProgressBarModule} from "@angular/material/progress-bar";
 import { ServiceModule } from './service/service.module';
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 
+
 /**
  *
  * if loadUserProfileAtStartUp option is true mean, user will be redirected to login page once application is started
@@ -66,6 +67,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ArticleComponent,
     ArticleDetailComponent,
     DialogComponent
+
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, StoreModule,

@@ -3,12 +3,14 @@ import {
   ActivatedRouteSnapshot,
   Router,
   RouterStateSnapshot,
+  ActivatedRoute
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { User } from '../model/user.model';
 import { KeycloakProfile } from 'keycloak-js';
 import { UserRepository } from '../model/user.repository';
 import { environment as docker_env_config } from 'src/environments/environment.docker';
+import { ValueStoreService } from 'src/app/service/value-store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +18,12 @@ import { environment as docker_env_config } from 'src/environments/environment.d
 export class AuthKeyCloakGuard extends KeycloakAuthGuard {
   user = new User();
   public userProfile: KeycloakProfile | null = null;
+  isItemPremium = false;
+
   constructor(
     protected readonly router: Router,
-    protected readonly keycloak: KeycloakService, private userRepository: UserRepository
+    protected readonly keycloak: KeycloakService, private userRepository: UserRepository,
+    private activatedRoute: ActivatedRoute, private valueStoreService: ValueStoreService
   ) {
     super(router, keycloak);
   }
@@ -56,10 +61,29 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     console.log("Required roles",requiredRoles);
     console.log("Roles user has"+this.roles);
 
+
+
+
+
     // Allow the user to to proceed if no additional roles are required to access the route.
     if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
       console.log("No additional roles are required");
       return true;
+    }
+
+    /**
+     * This is for routing to exercises that require PREMIUM user role for premium exercises.
+     * */
+    if (requiredRoles.includes("PREMIUM")) {
+      //console.log(`Is item premium ${this.isItemPremium}  ${this.activatedRoute.snapshot.params["isPremium"]} ${this.activatedRoute.snapshot.params["id"]}`);
+      this.isItemPremium = this.valueStoreService.getItemPremium();
+      console.log(`Is item premium ${this.isItemPremium}`);
+      if (this.isItemPremium) {
+        return requiredRoles.some((role)=> this.roles.includes(role));
+      } else {
+        //if item is not premium then PREMIUM role is not required
+        return true;
+      }
     }
 
     /* Allow the user to proceed if all the required roles are present.

@@ -5,9 +5,12 @@ import { UserSubject } from 'src/app/model/userSubject.model';
 import { User } from 'src/app/model/user.model';
 import { UserRepository } from "src/app/model/user.repository";
 import { SkillLevel, getSkillLevelValue } from "../../service/constants";
+import { ValueStoreService } from 'src/app/service/value-store.service';
+import { Router } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import {  KeycloakService } from 'keycloak-angular';
 
 import * as _ from 'lodash';
 
@@ -24,7 +27,8 @@ export class SubjectsComponent implements OnInit {
   public localSkillLevel;
   public errorMessage: string;
 
-  constructor(private repository: SubjectRepository, private userRepository: UserRepository, private activatedRoute: ActivatedRoute) {
+  constructor(private repository: SubjectRepository, private userRepository: UserRepository,
+    private activatedRoute: ActivatedRoute, private router: Router, private valueStoreService: ValueStoreService, private keycloak: KeycloakService) {
 
    }
 
@@ -35,6 +39,7 @@ export class SubjectsComponent implements OnInit {
       ).subscribe(
       user => {
         this.user = user;
+        console.log(`User role is ${this.user.role}`);
         this.getUserSubjects();
       }, errorMessage => {
 
@@ -60,6 +65,16 @@ export class SubjectsComponent implements OnInit {
       this.userSubjects = data;
     })
   }
+
+  isPremiumUser() {
+    return this.keycloak.getUserRoles().includes("PREMIUM");
+  }
+
+  isAdminUser() {
+    return this.keycloak.getUserRoles().includes("ADMIN");
+  }
+
+
 
   getWindowInnerWidth():number {
     return window.innerWidth;
@@ -99,6 +114,15 @@ export class SubjectsComponent implements OnInit {
       let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();
       return this.getWindowInnerHeight()+200+"px";
     }
+  }
+
+  navigateToQuestionDetail(id: string, level: string, isPremium: boolean) {
+    this.valueStoreService.setItemPremium(isPremium);
+    this.router.navigate(['/myaccount/main/subjectdetail', id, level, isPremium]);
+  }
+
+  navigateToPayment() {
+    this.router.navigate(['/myaccount/main/payment']);
   }
 
 }
