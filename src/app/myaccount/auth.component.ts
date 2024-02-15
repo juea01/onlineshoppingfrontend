@@ -53,7 +53,10 @@ export class AuthComponent implements OnInit{
       window.sessionStorage.setItem("userdetails", JSON.stringify(this.user));
     }
 
-    this.login();
+    if(!this.userCreationSuccess){
+      this.login();
+    }
+
   }
 
   public login() {

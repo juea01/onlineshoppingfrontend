@@ -35,10 +35,9 @@ export class RestDataSource{
 
   //constructor(private http: HttpClient, private socket: Socket) {
   constructor(private http: HttpClient) {
-   // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
-   this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
-  //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
-    //this.baseUrl = "/api/";
+       this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+     // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
+    //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
   }
 
   //SocketIO
@@ -107,6 +106,9 @@ export class RestDataSource{
     return this.sendRequest<RedirectApiResponse>("POST",`${this.baseUrl}user-service/subscription/create-checkout-session/${priceId}/${username}/${keycloakUserId}`);
   }
 
+  manageBilling(username: string): Observable<RedirectApiResponse> {
+    return this.sendRequest<RedirectApiResponse>("POST",`${this.baseUrl}user-service/subscription/manage-billing-session/${username}`);
+  }
 
   authenticate(user: string, pass: string): Observable<boolean> {
     return this.http.post<any>(this.baseUrl + "login", {

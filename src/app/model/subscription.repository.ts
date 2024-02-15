@@ -14,4 +14,8 @@ export class SubscriptionRepository {
    return this.dataSource.subscribe(priceId, username, keycloakUserId);
   }
 
+  manageBilling(username: string): Observable<RedirectApiResponse> {
+    return this.dataSource.manageBilling(username);
+   }
+
 }

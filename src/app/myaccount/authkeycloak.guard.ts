@@ -45,6 +45,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
         console.log(`Storing logged in user infor into session variable`);
         this.userProfile = await this.keycloak.loadUserProfile();
         this.user.authStatus = 'AUTH';
+        console.log(`user name ${this.userProfile.username}`);
         this.user.username = this.userProfile.username;
         this.user.email = this.userProfile.email;
         this.userRepository.storeLoggedInUserToSession(this.user);

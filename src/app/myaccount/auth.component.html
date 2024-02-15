@@ -14,7 +14,7 @@
     <div class="col-md-8 col-sm-12">
       <div class="bg-success mt-2 p-2 text-center text-white" *ngIf="userCreationSuccess===true">
         Great! Almost there. We have sent the link to your email for verification. Please check your email inbox, including spam and junk folders.
-        Once you have verified your email you can start logging in to your account and post comments on articles.
+        Once you have verified your email you can start logging in to your account, practice exercises, post comments on articles and much more...
       </div>
     </div>
     <div class="col-md-2">
@@ -28,12 +28,8 @@
 
     </div>
     <div class="col-lg-8 col-sm-12">
-      <div class="text-center mt-5 border border-info bg-success text-white border rounded p-5 border-shadow">
-        <h3> Please continue to Login page or go back to Home page.</h3>
-        <button class="btn btn-secondary m-2" routerLink="/">Home</button>
-        <button class="btn btn-primary m-2" (click)="login()">Continue</button>
-        <br/><br/>
-        <h3>Don't have account? Please Register here <a class="nav-link" routerLink="/registration" style="color:blue; display: inline;">Registration</a></h3>
+      <div class="text-center mt-5 border border-info bg-success text-white border rounded p-5 border-shadow" *ngIf="userCreationSuccess===false">
+        <h3> Redirecting to login page. Please wait a moment...</h3>
       </div>
     </div>
     <div class="col-lg-2">

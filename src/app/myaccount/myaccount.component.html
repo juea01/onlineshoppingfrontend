@@ -26,7 +26,7 @@
               </div>
               <mat-card-content>
                 <p>
-                 {{userDetail.username}}
+                  {{userDetail.username}}
                 </p>
 
               </mat-card-content>
@@ -52,6 +52,8 @@
                   routerLinkActive="active">My Details</button>
                 <button disabled class="btn btn-outline-info btn-block">Privacy Settings-Will be available in next
                   release:)</button>
+
+                <button class="btn btn-outline-info btn-block" (click)="manageBilling()">Manage Billing</button>
               </mat-card-content>
 
             </mat-card>
@@ -62,7 +64,6 @@
     </div>
 
     <div class="col-md-7 bg-success">
-
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-2">
@@ -77,17 +78,20 @@
         <br />
 
         <div class="row">
-              <div class="col-md-12">
-                <mat-card id="test-content-holder">
-                  <div class="container-fluid">
-                    <div class="row">
-                      <router-outlet></router-outlet>
-                    </div>
-                  </div>
-
-                </mat-card>
+          <div class="col-md-12">
+            <mat-card id="test-content-holder">
+              <div class="container-fluid">
+                <div class="bg-warning mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+                  Warning: {{errorMessage}}
+                </div>
+                <div class="row">
+                  <router-outlet></router-outlet>
+                </div>
               </div>
-            </div>
+
+            </mat-card>
+          </div>
+        </div>
 
         <br />
 

@@ -11,8 +11,8 @@ import { User } from "../../model/user.model";
 })
 export class PaymentComponent implements OnInit {
 
-    monthlypriceId: string = "price_1OV44oBfSvAMzEWCPSnht2ti";
-    threemonthpriceId: string = "price_1OV44oBfSvAMzEWCz3QIiDXR";
+    monthlypriceId: string = "price_1OjUWxBfSvAMzEWCPzPsZSCq";
+    threemonthpriceId: string = "price_1OjUYLBfSvAMzEWCA49MoJYt";
     userDetail = new User();
     keycloakUserId: string = '';
 
