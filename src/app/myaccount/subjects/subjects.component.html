@@ -8,14 +8,14 @@
   <!-- This is for wider screen like laptop phone-->
   <div class="row">
     <div class="col-md-6">
-      <h2> Level:{{skillLevel}}</h2>
+     <h2> Subject: {{subCategory}}</h2> <h2> Level:{{skillLevel}}</h2>
     </div>
     <div class="col-md-3">
       &nbsp;&nbsp;&nbsp;
     </div>
     <div class="col-md-3 text-left">
       <label for="skillSet">Choose Level: </label>
-      <select class="from-control" [value]="skillLevel" id="skillSet" (change)="getSubjectByLevel($event.target.value)">
+      <select class="from-control" [value]="skillLevel" id="skillSet" (change)="getSubjectBySubCaterogyLevel($event.target.value, subCategory)">
         <option value={{getSkillLevelValue(localSkillLevel.Beginner)}}> {{localSkillLevel.Beginner}}</option>
         <option value={{getSkillLevelValue(localSkillLevel.Intermediate)}}> {{localSkillLevel.Intermediate}}</option>
         <option value={{getSkillLevelValue(localSkillLevel.Advanced)}}> {{localSkillLevel.Advanced}}</option>

@@ -35,8 +35,8 @@ export class RestDataSource{
 
   //constructor(private http: HttpClient, private socket: Socket) {
   constructor(private http: HttpClient) {
-       this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
-     // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
+  //     this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+     this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
     //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
   }
 
@@ -51,8 +51,8 @@ export class RestDataSource{
     return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}/${category}/${subcategory}`);
   }
 
-  getSubjectsByLevel(level: number):Observable<Subject[]> {
-    return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}`);
+  getSubjectsByLevelAndSubCategory(level: number, subCategory: string):Observable<Subject[]> {
+    return this.sendRequest<Subject[]>("GET",`${this.baseUrl}product-listing-service/subjects/search/${level}/${subCategory}`);
   }
 
   getSubjectsByAuthorId(id: number):Observable<Subject[]> {

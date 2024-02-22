@@ -18,6 +18,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import { PaymentComponent } from './payment/payment.component';
 import { SuccessComponent } from './payment/success/success.component';
+import { SHARED_STATE, SharedState } from "./sharedstate.model";
+import { Subject } from "rxjs";
 
 
 
@@ -30,7 +32,6 @@ let routing = RouterModule.forChild([
    {path: "userdetails/:mode/:id", component: UserDetailEditorComponent},
    {path: "userdetails/:mode", component: UserDetailEditorComponent},
    {path: "userdetails", component: UserDetailTableComponent},
-   {path: "practicetests/:level", component: SubjectsComponent},
    {path: "practicetests", component: SubjectsComponent},
    {path: "subjectdetail/:id/:level/:isPremium", component: QuestiondetailComponent, canActivate: [AuthKeyCloakGuard],data: {roles: ['PREMIUM', 'ADMIN']}},
    {path: "subjectdetail/:id", component: QuestiondetailComponent},
@@ -42,7 +43,9 @@ let routing = RouterModule.forChild([
 
 @NgModule({
   imports: [CommonModule, FormsModule, routing, NavBarModule, MatProgressBarModule, MatCardModule, MatIconModule],
-  providers: [AuthGuard],
+  providers: [AuthGuard,
+    {provide: SHARED_STATE, useValue: new Subject<SharedState>()}
+  ],
   declarations: [AuthComponent, MyaccountComponent, UserDetailTableComponent, UserDetailEditorComponent, SubjectsComponent, QuestiondetailComponent, PaymentComponent, SuccessComponent]
 })
 export class MyaccountModule {}

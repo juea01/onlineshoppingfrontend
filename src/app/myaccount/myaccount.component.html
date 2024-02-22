@@ -66,13 +66,42 @@
     <div class="col-md-7 bg-success">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-2">
-            <mat-card class="subject-card">
-              <mat-icon>exposure</mat-icon>
-              <mat-card-content>
-                <p style="text-align: center;"><a routerLink="/myaccount/main/practicetests">Practice Tests</a></p>
-              </mat-card-content>
-            </mat-card>
+          <div class="col-md-12">
+            <div class="flex-container">
+              <a (click)="setSubCategory(subCategoryEnum.Java)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.Java}">
+                <mat-card class="subject-card">
+                  <mat-icon>exposure</mat-icon>
+                  <mat-card-content>
+                    <p style="text-align: center;"> Java</p>
+                  </mat-card-content>
+                </mat-card>
+              </a>
+              <a (click)="setSubCategory(subCategoryEnum.JavaScript)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.JavaScript}">
+                <mat-card class="subject-card">
+                  <mat-icon>exposure</mat-icon>
+                  <mat-card-content>
+                    <p style="text-align: center;"> JavaScript</p>
+                  </mat-card-content>
+                </mat-card>
+              </a>
+           <a (click)="setSubCategory(subCategoryEnum.HTML_CSS)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.HTML_CSS}">
+                <mat-card class="subject-card">
+                  <mat-icon>exposure</mat-icon>
+                  <mat-card-content>
+                    <p style="text-align: center;"> HTML/CSS</p>
+                  </mat-card-content>
+                </mat-card>
+              </a>
+              <a (click)="setSubCategory(subCategoryEnum.Machine_Learning)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.Machine_Learning}">
+                <mat-card class="subject-card">
+                  <mat-icon>exposure</mat-icon>
+                  <mat-card-content>
+                    <p style="text-align: center;"> ML</p>
+                  </mat-card-content>
+                </mat-card>
+              </a>
+
+            </div>
           </div>
         </div>
         <br />

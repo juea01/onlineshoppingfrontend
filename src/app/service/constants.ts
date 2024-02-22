@@ -16,6 +16,14 @@ export enum SkillLevel {
   Advanced = 'Advanced'
 }
 
+export enum SubCategory{
+  Java = 'Java',
+  Machine_Learning = 'ML',
+  JavaScript = 'JavaScript',
+  HTML_CSS = 'HTML_CSS'
+
+}
+
 export function getSkillLevelValue(skillLevel: string): number | undefined {
   const skillLevelValueKey = skillLevel as keyof SkillLevelValue;
   return SkillLevelValue[skillLevelValueKey];

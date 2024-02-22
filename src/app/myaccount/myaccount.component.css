@@ -1,7 +1,14 @@
-.subject-card{
 
-  align-content: center;
-  width: 90px;
+.flex-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.subject-card{
+  align-self: stretch;
+  width: 120px;
+  margin: 2px;
+  cursor: pointer;
 }
 
 .live-card{
@@ -25,4 +32,9 @@
 
 #test-content-holder {
   min-height: 350px;
+}
+
+.selected {
+  background-color: blue;
+  box-shadow: .25em .25em .5em .5em rgba( 0.3, 0, 0, 0.3);
 }

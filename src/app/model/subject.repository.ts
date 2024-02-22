@@ -25,19 +25,19 @@ export class SubjectRepository {
 
   }
 
-  getSubjectsByLevel(level: number):Observable<Subject[]> {
+  getSubjectsByLevelAndSubCategory(level: number, subCategory: string):Observable<Subject[]> {
     return new Observable(observer => {
 
       //check if questions are already here
      const result = this.subjects?.filter(s => {
-      return s.level== level
+      return s.level == level && s.subCategory == subCategory
       });
 
       if (!_.isEmpty(result)) {
         observer.next(result);
         observer.complete();
       } else {
-        this.dataSource.getSubjectsByLevel(level).subscribe(data => {
+        this.dataSource.getSubjectsByLevelAndSubCategory(level, subCategory).subscribe(data => {
 
           if (!_.isEmpty(data)) {
               if (!_.isEmpty(this.subjects)) {
