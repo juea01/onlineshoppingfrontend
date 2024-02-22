@@ -40,10 +40,10 @@
           <label>Sub Category</label>
           <select id="subcategory" class="form-control" name="subcategory" [(ngModel)]="subject.subCategory"   required #subcategory="ngModel">
             <option value=""> Select a subcategory</option>
-            <option value="Java"> Java</option>
-            <option value="Java"> JavaScript</option>
-            <option value="HTML"> HTML</option>
-            <option value="ML"> ML</option>
+            <option value={{subCategoryEnum.Java}}> Java</option>
+            <option value={{subCategoryEnum.JavaScript}}> JavaScript</option>
+            <option value={{subCategoryEnum.HTML_CSS}}> HTML/CSS</option>
+            <option value={{subCategoryEnum.ML}}> ML</option>
           </select>
           <div *ngIf="subcategory.invalid && (subcategory.dirty || subcategory.touched)" class="alert">
             <div> Allowed values are - Java, JavaScript, HTML or ML </div>

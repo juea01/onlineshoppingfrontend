@@ -7,7 +7,7 @@ import { SubjectRepository } from 'src/app/model/subject.repository';
 import { UserRepository } from "../../../model/user.repository";
 import { filter } from 'rxjs/operators';
 
-import { SkillLevel, getSkillLevelValue } from "../../../service/constants";
+import { SkillLevel, getSkillLevelValue, SubCategory } from "../../../service/constants";
 
 @Component({
   selector: 'app-subject-editor',
@@ -21,6 +21,7 @@ export class SubjectEditorComponent implements OnInit {
   public subject: Subject = new Subject();
   public skillLevel: number;
   public localSkillLevel;
+  public subCategoryEnum = null;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute,
     private subjectRepository: SubjectRepository, private userRepository: UserRepository) {
@@ -30,6 +31,7 @@ export class SubjectEditorComponent implements OnInit {
     this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
     this.localSkillLevel = SkillLevel;
     this.editing = this.activatedRoute.snapshot.params["mode"] == "edit";
+    this.subCategoryEnum = SubCategory;
 
     if(this.editing) {
       this.subjectRepository.getSubjectsById(this.activatedRoute.snapshot.params["id"]).subscribe(data=> {
