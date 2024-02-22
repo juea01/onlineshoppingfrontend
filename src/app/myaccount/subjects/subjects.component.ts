@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {Subject} from "../../model/subject.model";
 import { SubjectRepository } from '../../model/subject.repository';
 import { UserSubject } from 'src/app/model/userSubject.model';
@@ -6,7 +6,7 @@ import { User } from 'src/app/model/user.model';
 import { UserRepository } from "src/app/model/user.repository";
 import { SkillLevel, getSkillLevelValue, SubCategory } from "../../service/constants";
 import { ValueStoreService } from 'src/app/service/value-store.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
 import {  KeycloakService } from 'keycloak-angular';
@@ -14,14 +14,14 @@ import {  KeycloakService } from 'keycloak-angular';
 import * as _ from 'lodash';
 
 import { SHARED_STATE, SharedState } from "../sharedstate.model";
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-questions',
   templateUrl: './subjects.component.html',
   styleUrls: ['./subjects.component.css']
 })
-export class SubjectsComponent implements OnInit {
+export class SubjectsComponent implements OnInit, OnDestroy {
   public subjectList: Subject[] = [];
   userSubjects: UserSubject[] = [];
   user = new User();
@@ -31,9 +31,10 @@ export class SubjectsComponent implements OnInit {
   public errorMessage: string;
 
   constructor(private repository: SubjectRepository, private userRepository: UserRepository,
-    private router: Router, private valueStoreService: ValueStoreService,
+    private router: Router, private activatedRoute:ActivatedRoute, private valueStoreService: ValueStoreService,
     private keycloak: KeycloakService,
-    @Inject(SHARED_STATE) public stateEvents: Observable<SharedState>) {
+    @Inject(SHARED_STATE) public stateEvents: Observable<SharedState>,
+    @Inject(SHARED_STATE) public subjectStateObserver: Observer<SharedState>) {
 
    }
 
@@ -44,7 +45,6 @@ export class SubjectsComponent implements OnInit {
       ).subscribe(
       user => {
         this.user = user;
-        console.log(`User role is ${this.user.role}`);
         this.getUserSubjects();
       }, errorMessage => {
 
@@ -54,22 +54,33 @@ export class SubjectsComponent implements OnInit {
       this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
       this.subCategory = SubCategory.Java;
 
+      if(this.activatedRoute.snapshot.params["subCategory"]){
+        this.subCategory = this.activatedRoute.snapshot.params["subCategory"];
+      }
+
       /**
        * Subscribe to event that trigger value change in sub Category
        */
       this.stateEvents.subscribe(update => {
         if(update.subCategory != undefined) {
           this.subCategory = update.subCategory;
+          this.getSubjectBySubCaterogyLevel(this.skillLevel, this.subCategory);
         } else {
           this.subCategory = SubCategory.Java;
         }
-        this.getSubjectBySubCaterogyLevel(this.skillLevel, this.subCategory);
       })
 
       this.getSubjectBySubCaterogyLevel(this.skillLevel, this.subCategory);
       this.localSkillLevel = SkillLevel;
+
+      //Emit Subject component Initiated event to subscribers
+      this.subjectStateObserver.next(new SharedState(null,true));
   }
 
+  ngOnDestroy(): void {
+      //Emit Subject component Destroy event to subscribers
+      this.subjectStateObserver.next(new SharedState(null,false));
+  }
 
   getUserSubjects() {
     this.repository.getAllUserSubjectsForUser(this.user.id).subscribe(data => {
@@ -84,8 +95,6 @@ export class SubjectsComponent implements OnInit {
   isAdminUser() {
     return this.keycloak.getUserRoles().includes("ADMIN");
   }
-
-
 
   getWindowInnerWidth():number {
     return window.innerWidth;

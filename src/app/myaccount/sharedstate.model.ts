@@ -13,8 +13,9 @@ export const SHARED_STATE = new InjectionToken("shared_state");
  * Using observer, observable pattern through this problem is solved.
  * Subject component is displayed (<router-outlet>) inside myaccount component. Angular doesn't re-create component unless it
  * is destroyed and therefore clicking Java, JavaScript icons on myacoount component and
- * using somethinglike navigate to url feature (activatedRoute.snapshot.params["subCategory"]) to subject component wouldn't work.
+ * using somethinglike navigate to url feature (activatedRoute.snapshot.params["subCategory"]) to subject component wouldn't work,
+ * ofcourse unless subject component has been destroyed.
  */
 export class SharedState {
-    constructor(public subCategory?: string) { }
+    constructor(public subCategory?: string, public isCreated?: boolean) { }
 }
