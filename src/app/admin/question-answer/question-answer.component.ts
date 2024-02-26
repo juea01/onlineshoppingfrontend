@@ -71,8 +71,7 @@ export class QuestionAnswerComponent implements OnInit, OnDestroy {
         this.subject.category = params.category;
         this.subject.level = params.level;
         this.subject.subCategory = params.subCategory;
-        this.subject.premium = Boolean(params.premium);
-
+        this.subject.premium = params.premium;
         this.userRepository.loadUserForUserDetail().pipe(
           filter(data => data !== null)
           ).subscribe(
