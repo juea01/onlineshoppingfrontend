@@ -35,7 +35,7 @@ export class RestDataSource{
 
   //constructor(private http: HttpClient, private socket: Socket) {
   constructor(private http: HttpClient) {
-  // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
      this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
     //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
   }
@@ -210,6 +210,10 @@ export class RestDataSource{
 
   getAllArticlesByAuthorId(id): Observable<Article[]> {
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/authors/${id}`);
+  }
+
+  getArticlesIdAndTitleByTitle(title: string): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/titles/${title}`);
   }
 
   getArticleDetailById(articleId: number): Observable<Article> {
