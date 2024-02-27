@@ -15,7 +15,9 @@
     </div>
     <div class="col-10">
       <div class="bg-primary p-2 text-white" [class.bg-warning] = "editing" [class.text-dark] = "editing">
-        <h5>{{editing ? "Edit": "Create"}} Article</h5>
+        <h3>{{editing ? "Edit": "Create"}} Article</h3>
+        <h3>Please save your work frequently to ensure data integrity and prevent potential loss
+          caused by unexpected network errors. Consider saving your data locally for backup.</h3>
       </div>
       <form novalidate #form="ngForm" (ngSubmit)="save(form)">
         <div class="form-group">
@@ -50,29 +52,29 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Introduction</label>
-          <textarea class="form-control" name="description" [(ngModel)]="article.introduction" minlength="200" maxlength="245" required #introduction="ngModel"></textarea>
+          <label>Introduction (Maximum allowed words are 600)</label>
+          <textarea class="form-control" name="introduction" [(ngModel)]="article.introduction" maxlength="600"  #introduction="ngModel"></textarea>
           <div *ngIf="introduction.invalid && (introduction.dirty || introduction.touched)" class="alert">
             <div> Introduction should have at least 200 characters and no more than 245 characters</div>
           </div>
         </div>
         <div class="form-group">
-          <label>First Paragraph</label>
-          <textarea class="form-control" name="content" [(ngModel)]="article.firstParagraph"  minlength="200" maxlength="395" required #firstParagraph="ngModel"></textarea>
+          <label>First Paragraph (Maximum allowed words are 600)</label>
+          <textarea class="form-control" name="firstParagraph" [(ngModel)]="article.firstParagraph"  maxlength="600"  #firstParagraph="ngModel"></textarea>
           <div *ngIf="firstParagraph.invalid && (firstParagraph.dirty || firstParagraph.touched)" class="alert">
             <div> First Paragraph should have at least 200 characters and no more than 395 characters</div>
           </div>
         </div>
         <div class="form-group">
-          <label>Second Paragraph</label>
-          <textarea class="form-control" name="content" [(ngModel)]="article.secondParagraph"  minlength="200" maxlength="395" required #secondParagraph="ngModel"></textarea>
+          <label>Second Paragraph (Maximum allowed words are 600)</label>
+          <textarea class="form-control" name="secondParagraph" [(ngModel)]="article.secondParagraph"  maxlength="600"  #secondParagraph="ngModel"></textarea>
           <div *ngIf="secondParagraph.invalid && (secondParagraph.dirty || secondParagraph.touched)" class="alert">
             <div> Second Paragraph should have at least 200 characters and no more than 395 characters</div>
           </div>
         </div>
         <div class="form-group">
-          <label>Conclusion</label>
-          <textarea class="form-control" name="content" [(ngModel)]="article.conclusion" minlength="200" maxlength="395" required #conclusion="ngModel"></textarea>
+          <label>Conclusion (Maximum allowed words are 600)</label>
+          <textarea class="form-control" name="conclusion" [(ngModel)]="article.conclusion" maxlength="600"  #conclusion="ngModel"></textarea>
           <div *ngIf="conclusion.invalid && (conclusion.dirty || conclusion.touched)" class="alert">
             <div> Conclusion should have at least 200 characters and no more than 395 characters</div>
           </div>
@@ -89,6 +91,7 @@
           <input type="file" class="form-control-file" id="images" name="images" (change)="onFileSelected($event)" multiple>
         </div>
         <button type="submit" class="btn btn-primary m-1" [class.btn-warning]="editing">{{editing ? "Save" : "Create" }}</button>
+        <button type="button" class="btn btn-success m-1" (click)="publish(form)">{{article.publish ? "Unpublish" : "Publish" }}</button>
         <button type="reset" class="btn btn-secondary" routerLink="/admin/main/articles"> Cancel </button>
       </form>
     </div>

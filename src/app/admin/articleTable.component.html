@@ -1,7 +1,7 @@
 <table class="table table-sm table-striped">
   <thead>
     <tr>
-      <th>ID</th><th>Title</th><th>Description</th>
+      <th>ID</th><th>Title</th><th>Publish</th>
       <th></th>
     </tr>
   </thead>
@@ -9,7 +9,7 @@
     <tr *ngFor = "let a of getArticles()">
       <td>{{a.id}}</td>
       <td>{{a.title}}</td>
-      <td>{{a.description}}</td>
+      <td>{{a.publish}}</td>
       <td>
         <button class="btn btn-sm btn-warning m-1" [routerLink]="['/admin/main/articles/edit',a.id]">
           Edit

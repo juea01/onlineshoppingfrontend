@@ -12,6 +12,7 @@ export class Article {
     public firstParagraph?: string,
     public secondParagraph?: string,
     public conclusion?: string,
+    public publish?:boolean,
 
     public price?: number,
 
