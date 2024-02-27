@@ -49,7 +49,7 @@ export class NavBarComponent implements OnInit {
   }
 
   search(searchValue?: string ) {
-    console.log(this.selectedOption);
+   // console.log(this.selectedOption);
     if (this.selectedOption == "searchProduct") {
       this.searchString.category = searchValue;
       this.searchInput.nativeElement.value = "";

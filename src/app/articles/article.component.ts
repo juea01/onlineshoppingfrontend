@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Article } from "../model/article.model";
 import { ArticleRepository } from "../model/article.repository";
 import { Router } from "@angular/router";
@@ -10,13 +10,16 @@ import { Search } from '../model/search.model';
   templateUrl: "article.component.html",
   styleUrls: ["article.component.css"]
 })
-export class ArticleComponent {
+export class ArticleComponent implements OnInit{
   public selectedSubCategory = "";
   public articlesPerPage = 4;
   public selectedPage = 1;
   public articlesList: Article[] = [];
 
   constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
+  }
+
+  ngOnInit(): void {
     this.getRemoteArticles();
   }
 
@@ -40,18 +43,18 @@ export class ArticleComponent {
 
     if(this.activatedRoute.snapshot.params["subcategory"]) {
       if (this.selectedSubCategory == this.activatedRoute.snapshot.params["subcategory"] ) {
-        console.log("GetArticles old selectedCat"+this.selectedSubCategory);
+        //console.log("GetArticles old selectedCat"+this.selectedSubCategory);
         return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
       } else {
-        console.log("GetArticles new"+this.selectedSubCategory);
+        //console.log("GetArticles new"+this.selectedSubCategory);
         this.getRemoteArticles();
       }
     } else {
       if (this.selectedSubCategory == this.searchString.category) {
-        console.log("search Articles old selectedCat"+this.selectedSubCategory);
+        //console.log("search Articles old selectedCat"+this.selectedSubCategory);
         return this.articlesList?.slice(pageIndex, pageIndex + this.articlesPerPage);
       } else {
-        console.log("search Articles new selectedCat"+this.selectedSubCategory);
+        //console.log("search Articles new selectedCat"+this.selectedSubCategory);
         this.getRemoteArticles();
       }
     }
