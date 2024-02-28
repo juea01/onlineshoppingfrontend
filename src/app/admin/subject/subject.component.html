@@ -13,7 +13,7 @@
 
     <thead>
       <tr>
-        <th>ID</th><th>Title</th><th>Category</th><th>Sub Category</th><th>Level</th><th>Premium</th>
+        <th>ID</th><th>Title</th><th>Category</th><th>Sub Category</th><th>Level</th><th>Premium</th><th>Publish</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +24,7 @@
         <td>{{subject.subCategory}}</td>
         <td>{{subject.level}}</td>
         <td>{{subject.premium}}</td>
+        <td>{{subject.publish}}</td>
         <td>
           <button class="btn btn-sm btn-warning m-1" [routerLink]="['/admin/main/questionanswereditor',subject.id]">
             Edit

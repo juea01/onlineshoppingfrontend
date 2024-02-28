@@ -1,5 +1,17 @@
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="bg-danger mt-2 p-2 text-center text-white" *ngIf="errorMessage != null">
+        Error: {{errorMessage}}
+      </div>
+      <div class="bg-success mt-2 p-2 text-center text-white" *ngIf="successMessage != null">
+        Great, {{successMessage}}
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
 
 
 <div class="row">
@@ -8,7 +20,7 @@
     <thead>
       <tr><th>Subject/Practice Test</th></tr>
       <tr>
-        <th>ID</th><th>Title</th><th>Category</th><th>Sub Category</th><th>Level</th><th>Premium</th>
+        <th>ID</th><th>Title</th><th>Category</th><th>Sub Category</th><th>Level</th><th>Premium</th><th>Publish</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +31,7 @@
         <td>{{subject.subCategory}}</td>
         <td>{{subject.level}}</td>
         <td>{{subject.premium}}</td>
+        <td>{{subject.publish}}</td>
         <td>
           <button class="btn btn-sm btn-warning m-1" [routerLink]="['/admin/main/subjects/edit',subject.id]">
             Edit
@@ -51,6 +64,10 @@
   </table>
   <button class="btn btn-primary" (click)="addQuestion()">
     Create New Question
+  </button>
+  <p>&nbsp;</p>
+  <button [class.btn-success]="!subject.publish" [class.btn-danger]="subject.publish"  (click)="publish()">
+    {{subject.publish ? "Unpublish" : "Publish" }} Subject/Practice Test
   </button>
 </div>
 </div>

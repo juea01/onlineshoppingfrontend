@@ -9,6 +9,7 @@ export class Subject {
     public level?: number,
     public title?: string,
     public premium?: boolean,
+    public publish?:boolean,
     public questions?: Question[],
     public user?: User
   ){}
