@@ -21,12 +21,14 @@ export class ArticleEditorComponent implements OnInit {
   selectedFiles: FileList = null;
   public errorMessage: string;
   private user: User = new User();
+  public previousArticles: Article[] = [];
+  public previousArticle: Article = new Article();
 
   constructor(
     private repository: ArticleRepository,
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,  private articleRepository: ArticleRepository,
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +39,7 @@ export class ArticleEditorComponent implements OnInit {
         .getArticleDetailById(this.activeRoute.snapshot.params['id'])
         .subscribe((data) => {
           Object.assign(this.article, data);
+          this.previousArticle.id=this.article.previousArticle.id;
           console.log(`Article first ${this.article.firstParagraph} and article second ${this.article.secondParagraph}`);
         });
     }
@@ -64,7 +67,21 @@ export class ArticleEditorComponent implements OnInit {
     }
   }
 
+
+  search(searchValue?: string) {
+    this.articleRepository
+      .getArticlesIdAndTitleByTitle(searchValue)
+      .subscribe((data) => {
+        this.previousArticles = data;
+      });
+  }
+
+  populateId(id: number) {
+    this.previousArticle.id = id;
+  }
+
   publish(form: NgForm) {
+    console.log("publish");
     if (form.valid) {
       this.article.user = this.user;
       if (!this.article.publish) {
@@ -88,6 +105,10 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   saveUpdateArticle() {
+    if(this.previousArticle.id != undefined ){
+      this.article.previousArticle = this.previousArticle;
+    }
+
     this.repository.saveArticle(this.article).subscribe((aId) => {
       const formData = new FormData();
       if (this.article.images) {

@@ -17,7 +17,8 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8 col-sm-12">
-        <h4 style="font-style: italic;">Published Date: {{getTrimmedPublishDate()}},Last Edited Date:{{getTrimmedLastEditedDate()}}</h4>
+        <h4 style="font-style: italic;">Published Date: {{getTrimmedPublishDate()}},Last Edited
+          Date:{{getTrimmedLastEditedDate()}}</h4>
         <h4 style="font-style: italic;">Author: {{article?.user?.username}}</h4>
 
       </div>
@@ -34,16 +35,20 @@
       <div class="col-md-2"></div>
       <div class="col-sm-4 col-md-3">
         <figure>
-          <img src="{{article?.images[0]?.location}}"  />
+          <img src="{{article?.images[0]?.location}}" />
           <figcaption> Image One</figcaption>
         </figure>
       </div>
-      <div class="col-sm-8 col-md-5"> <p class="identText">{{article.firstParagraph}}</p></div>
+      <div class="col-sm-8 col-md-5">
+        <p class="identText">{{article.firstParagraph}}</p>
+      </div>
       <div class="col-md-2"></div>
     </div>
     <div class="row">
       <div class="col-md-2"></div>
-      <div class="col-sm-7 col-md-5"><p class="identText">{{article.secondParagraph}}</p></div>
+      <div class="col-sm-7 col-md-5">
+        <p class="identText">{{article.secondParagraph}}</p>
+      </div>
       <div class="col-sm-4 col-md-3">
         <figure>
           <img src="{{article?.images[1]?.location}}" />
@@ -54,15 +59,29 @@
     </div>
     <div class="row">
       <div class="col-md-2"></div>
-      <div class="col-sm-12 col-md-8"><p class="identText">{{article.conclusion}}</p></div>
+      <div class="col-sm-12 col-md-8">
+        <p class="identText">{{article.conclusion}}</p>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <button *ngIf="article?.previousArticle?.id !== null" type="button" class="btn btn-outline-success" (click)="navigateToPreviousArticle(article?.previousArticle?.id)">Previous
+          Article </button>        <span>&nbsp;</span>
+        <button *ngIf="article?.nextArticle?.id !== null" type="button" class="btn btn-outline-success" (click)="navigateToNextArticle(article?.nextArticle?.id)">Next Article
+        </button>
+      </div>
       <div class="col-md-2"></div>
     </div>
     <br>
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-sm-12 col-md-8">
-        <p style="font-style: italic;">* Please note that the information on this page may not be accurate or uptodate. Also it is important to review the terms and conditions provided by any third parties links included. For more details, please refer to our
-         <a href="#" (click)="openTermsDialog($event)">privacy policy.</a>
+        <p style="font-style: italic;">* Please note that the information on this page may not be accurate or uptodate.
+          Also it is important to review the terms and conditions provided by any third parties links included. For more
+          details, please refer to our
+          <a href="#" (click)="openTermsDialog($event)">privacy policy.</a>
         </p>
       </div>
       <div class="col-md-2"></div>
@@ -76,53 +95,56 @@
           Error: {{errorMessage}}
         </div>
 
-          <div class="container-sm my-3 p-2 bg-success text-white border rounded">
+        <div class="container-sm my-3 p-2 bg-success text-white border rounded">
 
-            <span *ngIf="user.email">
-              <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
-                <div class="form-row">
-                  <div class="form-group col-sm-6">
-                    <label for="comment">You can post your comment here. Please be respectful.</label>
-                    <textarea class="form-control" id="description" name="description" [(ngModel)]="comment.description"
-                      required minlength="10" maxlength="140" required #description="ngModel"></textarea>
-
-                  </div>
-                  <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
-                    <div> Comment is required to have minimum 10 and maximum 140 words. </div>
-                  </div>
+          <span *ngIf="user.email">
+            <form novalidate #form="ngForm" (ngSubmit)="postComment(form)">
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label for="comment">You can post your comment here. Please be respectful.</label>
+                  <textarea class="form-control" id="description" name="description" [(ngModel)]="comment.description"
+                    required minlength="10" maxlength="140" required #description="ngModel"></textarea>
 
                 </div>
-
-                <div class="text-center">
-                  <button class="btn btn-primary m-1" type="submit">Post</button>
+                <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
+                  <div> Comment is required to have minimum 10 and maximum 140 words. </div>
                 </div>
-              </form>
-            </span>
 
-            <span *ngIf="!user.email">
-              <div class="row">
-                <div class="col-sm-12">
-                  <p>If you have account with us, you can post comments and also practise exercises on these topics.</p>
-                </div>
               </div>
-              <div class="row">
-                <div class="col-sm-1">
-                  <a class="nav-link"  style="cursor: pointer; color: blue;" (click)="navigateToMyAccountLogin()">MyAccount</a>
-                </div>
-                <div class="col-sm-1">
-                  <a class="nav-link" style="cursor: pointer; color: blue;"  routerLink="/registration">Registration</a>
-                </div>
-                <div class="col-sm-10">
-                </div>
-              </div>
-            </span>
 
-          </div>
+              <div class="text-center">
+                <button class="btn btn-primary m-1" type="submit">Post</button>
+              </div>
+            </form>
+          </span>
+
+          <span *ngIf="!user.email">
+            <div class="row">
+              <div class="col-sm-12">
+                <p>If you have account with us, you can post comments and also practise exercises on these topics.</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-1">
+                <a class="nav-link" style="cursor: pointer; color: blue;"
+                  (click)="navigateToMyAccountLogin()">MyAccount</a>
+              </div>
+              <div class="col-sm-1">
+                <a class="nav-link" style="cursor: pointer; color: blue;" routerLink="/registration">Registration</a>
+              </div>
+              <div class="col-sm-10">
+              </div>
+            </div>
+          </span>
+
+        </div>
 
         <table class="table table-sm">
           <thead>
             <tr>
-              <th><p style="font-size: 24px;">Comments</p></th>
+              <th>
+                <p style="font-size: 24px;">Comments</p>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -137,33 +159,40 @@
                 <span *ngIf="user.email">
                   <td>
                     <span *ngIf="user.id == c.user.id">
-                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, 0,'edit', c.description)"></i> |
+                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true"
+                        (click)="openDialog(c.id, 0,'edit', c.description)"></i> |
                     </span>
                     <i class="fas fa-reply hover-pointer" aria-hidden="true" (click)="openDialog(c.id, 0,'reply')"></i>
                   </td>
                 </span>
                 <td>
-                  <i class="fas fa-plus hover-pointer" aria-hidden="true" (click)="getRepliesByArticleAndCommentId(article.id,c.id)"> Replies... </i>
+                  <i class="fas fa-plus hover-pointer" aria-hidden="true"
+                    (click)="getRepliesByArticleAndCommentId(article.id,c.id)"> Replies... </i>
                 </td>
               </tr>
               <span *ngIf="showRepliesOfComment == c.id && replyExist">
-               <ng-template ngFor let-r [ngForOf]="replies">
-                <tr>
-                  <td><p class="text-primary"> {{r.description}} --{{r.user?.username}}
-                    <span *ngIf="user.id == r.user.id">
-                      <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true" (click)="openDialog(c.id, r.id, 'edit', r.description)"></i>
-                   </span> </p>
-                </td>
-                </tr>
-              </ng-template>
+                <ng-template ngFor let-r [ngForOf]="replies">
+                  <tr>
+                    <td>
+                      <p class="text-primary"> {{r.description}} --{{r.user?.username}}
+                        <span *ngIf="user.id == r.user.id">
+                          <i class="fas fa-pencil-alt hover-pointer" aria-hidden="true"
+                            (click)="openDialog(c.id, r.id, 'edit', r.description)"></i>
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                </ng-template>
               </span>
               <span *ngIf="showRepliesOfComment == c.id && !replyExist">
 
-                 <tr>
-                   <td>  <p class="text-primary"> There is no reply for this comment yet. </td>
-                 </tr>
+                <tr>
+                  <td>
+                    <p class="text-primary"> There is no reply for this comment yet.
+                  </td>
+                </tr>
 
-               </span>
+              </span>
               <!-- <tr *ngFor="let line of o.cart.lines">
               <td></td>
               <td></td>

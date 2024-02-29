@@ -13,6 +13,8 @@ export class Article {
     public secondParagraph?: string,
     public conclusion?: string,
     public publish?:boolean,
+    public previousArticle?: Article,
+    public nextArticle?: Article,
 
     public price?: number,
 

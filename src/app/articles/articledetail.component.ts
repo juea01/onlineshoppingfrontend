@@ -34,10 +34,11 @@ export class ArticleDetailComponent implements OnInit {
   replies: Reply[] = [];
   showRepliesOfComment: number = 0;
   replyExist: boolean = false;
+  private hasInitiated: boolean = false;
 
   constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute,
     private userRepository: UserRepository, private dialog: MatDialog, private datePipe: DatePipe) {
-
+      console.log("Article Detail constructor");
   }
 
   ngOnInit(): void {
@@ -51,9 +52,24 @@ export class ArticleDetailComponent implements OnInit {
       console.log("Success");
       this.user = user;
       }, error => {
-
         console.log(error);
       });
+
+    /**
+     * This is for navigating through next and previous article buttons.
+     * This is needed as Angular is not recreating same component if navigating from same component.
+     */
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (this.hasInitiated) {
+        this.repository.getArticleDetailById(this.activatedRoute.snapshot.params["id"]).subscribe( article => {
+          this.article = article;
+        });
+      } else {
+        this.hasInitiated = true;
+      }
+    })
+
+
   }
 
   postComment(form: NgForm) {
@@ -103,6 +119,14 @@ export class ArticleDetailComponent implements OnInit {
       }
 
     });
+  }
+
+  navigateToPreviousArticle(previousArticleId: number){
+    this.router.navigate(['articleDetail', previousArticleId]);
+  }
+
+  navigateToNextArticle(nextArticleId: number) {
+    this.router.navigate(['articleDetail', nextArticleId]);
   }
 
   // postRepliesByCommentId(id: number) {

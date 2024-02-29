@@ -14,7 +14,7 @@
 
     </div>
     <div class="col-10">
-      <div class="bg-primary p-2 text-white" [class.bg-warning] = "editing" [class.text-dark] = "editing">
+      <div class="bg-primary p-2 text-white" [class.bg-warning]="editing" [class.text-dark]="editing">
         <h3>{{editing ? "Edit": "Create"}} Article</h3>
         <h3>Please save your work frequently to ensure data integrity and prevent potential loss
           caused by unexpected network errors. Consider saving your data locally for backup.</h3>
@@ -22,25 +22,28 @@
       <form novalidate #form="ngForm" (ngSubmit)="save(form)">
         <div class="form-group">
           <label>Title</label>
-          <input class="form-control" name="title" [(ngModel)]="article.title"  minlength="2" maxlength="35" required #title="ngModel"/>
+          <input class="form-control" name="title" [(ngModel)]="article.title" minlength="2" maxlength="35" required
+            #title="ngModel" />
           <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
             <div> Title should have at least two characters and no more than 35 characters </div>
           </div>
         </div>
         <div class="form-group">
           <label>Category</label>
-          <select id="category" class="form-control" name="category" [(ngModel)]="article.category"  required #category="ngModel">
+          <select id="category" class="form-control" name="category" [(ngModel)]="article.category" required
+            #category="ngModel">
             <option value=""> Select a category</option>
             <option value="Backend Development"> Backend Development</option>
             <option value="Front-End Development"> Front-End Development</option>
           </select>
           <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert">
-            <div> Allowed values are - Backend Development,  Front-End Development </div>
+            <div> Allowed values are - Backend Development, Front-End Development </div>
           </div>
         </div>
         <div class="form-group">
           <label>Sub Category</label>
-          <select id="subcategory" class="form-control" name="subcategory" [(ngModel)]="article.subcategory"   required #subcategory="ngModel">
+          <select id="subcategory" class="form-control" name="subcategory" [(ngModel)]="article.subcategory" required
+            #subcategory="ngModel">
             <option value=""> Select a subcategory</option>
             <option value="Java"> Java</option>
             <option value="JavaScript"> JavaScript</option>
@@ -51,30 +54,87 @@
             <div> Allowed values are - Java, JavaScript, HTML or ML </div>
           </div>
         </div>
+
+
+          <div class="row">
+            <div class="col-sm-6">
+                <label>Previous Article Id (Leave it empty if there is no previous Article)</label>
+                <input class="form-control" id="preArticle" name="preArticle" [(ngModel)]="previousArticle.id"
+                 #preArticle="ngModel" pattern="[0-9]*"/>
+                <div *ngIf="preArticle.invalid && (preArticle.dirty || preArticle.touched)" class="alert">
+                  <div> Only numbers are allowed in Previous Article Id column</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+
+                <label>Published Article Search here</label>
+                <input #searchValue class="form-control me-2" type="search" placeholder="search by article title"
+                  aria-label="Search">
+                <button type="button" class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
+
+              <div class="row">
+                <h3>Leave Previous Article Id field empty if this article doesn't have previous Article to relate to.
+                </h3>
+                <table class="table table-sm table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Sub Category</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let previousArticle of previousArticles">
+                      <td>{{previousArticle.id}}</td>
+                      <td>{{previousArticle.title}}</td>
+                      <td>{{previousArticle.category}}</td>
+                      <td>{{previousArticle.subcategory}}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-outline-success m-1" (click)="populateId(previousArticle.id)">
+                          Populate Id
+                        </button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <h3 *ngIf="previousArticles.length > 0">Please click Populate Id button to populate Previous Article Id
+                  field.</h3>
+              </div>
+            </div>
+
+          </div>
+
+
         <div class="form-group">
           <label>Introduction (Maximum allowed words are 600)</label>
-          <textarea class="form-control" name="introduction" [(ngModel)]="article.introduction" maxlength="600"  #introduction="ngModel"></textarea>
+          <textarea class="form-control" name="introduction" [(ngModel)]="article.introduction" maxlength="600"
+            #introduction="ngModel"></textarea>
           <div *ngIf="introduction.invalid && (introduction.dirty || introduction.touched)" class="alert">
             <div> Introduction should have at least 200 characters and no more than 245 characters</div>
           </div>
         </div>
         <div class="form-group">
           <label>First Paragraph (Maximum allowed words are 600)</label>
-          <textarea class="form-control" name="firstParagraph" [(ngModel)]="article.firstParagraph"  maxlength="600"  #firstParagraph="ngModel"></textarea>
+          <textarea class="form-control" name="firstParagraph" [(ngModel)]="article.firstParagraph" maxlength="600"
+            #firstParagraph="ngModel"></textarea>
           <div *ngIf="firstParagraph.invalid && (firstParagraph.dirty || firstParagraph.touched)" class="alert">
             <div> First Paragraph should have at least 200 characters and no more than 395 characters</div>
           </div>
         </div>
         <div class="form-group">
           <label>Second Paragraph (Maximum allowed words are 600)</label>
-          <textarea class="form-control" name="secondParagraph" [(ngModel)]="article.secondParagraph"  maxlength="600"  #secondParagraph="ngModel"></textarea>
+          <textarea class="form-control" name="secondParagraph" [(ngModel)]="article.secondParagraph" maxlength="600"
+            #secondParagraph="ngModel"></textarea>
           <div *ngIf="secondParagraph.invalid && (secondParagraph.dirty || secondParagraph.touched)" class="alert">
             <div> Second Paragraph should have at least 200 characters and no more than 395 characters</div>
           </div>
         </div>
         <div class="form-group">
           <label>Conclusion (Maximum allowed words are 600)</label>
-          <textarea class="form-control" name="conclusion" [(ngModel)]="article.conclusion" maxlength="600"  #conclusion="ngModel"></textarea>
+          <textarea class="form-control" name="conclusion" [(ngModel)]="article.conclusion" maxlength="600"
+            #conclusion="ngModel"></textarea>
           <div *ngIf="conclusion.invalid && (conclusion.dirty || conclusion.touched)" class="alert">
             <div> Conclusion should have at least 200 characters and no more than 395 characters</div>
           </div>
@@ -85,13 +145,19 @@
         </ng-template>
 
 
+
+
         <div class="form-group">
-          <label *ngIf="article.images">Images (Can upload up to {{maxAllowedImages - article?.images.length}} images)</label>
+          <label *ngIf="article.images">Images (Can upload up to {{maxAllowedImages - article?.images.length}}
+            images)</label>
           <label *ngIf="!article.images">Images (Can upload up to {{maxAllowedImages}} images)</label>
-          <input type="file" class="form-control-file" id="images" name="images" (change)="onFileSelected($event)" multiple>
+          <input type="file" class="form-control-file" id="images" name="images" (change)="onFileSelected($event)"
+            multiple>
         </div>
-        <button type="submit" class="btn btn-primary m-1" [class.btn-warning]="editing">{{editing ? "Save" : "Create" }}</button>
-        <button type="button" class="btn btn-success m-1" (click)="publish(form)">{{article.publish ? "Unpublish" : "Publish" }}</button>
+        <button type="submit" class="btn btn-primary m-1" [class.btn-warning]="editing">{{editing ? "Save" : "Create"
+          }}</button>
+        <button type="button" class="btn btn-success m-1" (click)="publish(form)">{{article.publish ? "Unpublish" :
+          "Publish" }}</button>
         <button type="reset" class="btn btn-secondary" routerLink="/admin/main/articles"> Cancel </button>
       </form>
     </div>
@@ -100,4 +166,3 @@
     </div>
   </div>
 </div>
-
