@@ -14,7 +14,10 @@ import { UserRepository } from "src/app/model/user.repository";
 import { CompletedQuestion } from "./completedQuestion.model";
 
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class SubjectRepository {
   private questions: Question[] = [];
   private subjects: Subject[] = [];

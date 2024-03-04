@@ -3,7 +3,10 @@ import {RestDataSource} from "./rest.datasource";
 import { Observable} from "rxjs";
 import { RedirectApiResponse } from '../model/redirectapiResponse.model';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class SubscriptionRepository {
 
   constructor(private dataSource: RestDataSource){

@@ -2,7 +2,10 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Prediction} from "./prediction.model";
  import {RestDataSource} from "./rest.datasource";
-@Injectable()
+
+ @Injectable({
+  providedIn: 'root'
+})
 export class PredictionRepository {
 
   private prediction: Prediction;

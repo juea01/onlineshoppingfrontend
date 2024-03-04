@@ -26,7 +26,10 @@ const PROTOCOL = environment.urlProtocol;
 const PORT = environment.urlPort;
 const MLPORT = 5000;
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class RestDataSource{
   baseUrl: string;
   auth_token: string;

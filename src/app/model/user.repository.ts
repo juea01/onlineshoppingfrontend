@@ -9,7 +9,9 @@ import { KeycloakService } from 'keycloak-angular';
 
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserRepository {
   private loaded: boolean = false;
   private hasError: boolean = false;

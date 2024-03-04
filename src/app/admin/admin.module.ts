@@ -11,6 +11,7 @@ import { AuthKeyCloakGuard } from "./authkeycloak.guard";
 
 import { ArticleTableComponent } from "./articleTable.component";
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import {ModelModule} from "../model/model.module";
 import { QuestionAnswerComponent } from './question-answer/question-answer.component';
 import { SubjectComponent } from './subject/subject.component';
 import { ServiceModule } from '../service/service.module';
@@ -40,7 +41,7 @@ let routing = RouterModule.forChild([
 ]);
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, routing, NavBarModule, ServiceModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, routing, NavBarModule, ServiceModule, ModelModule],
   providers: [],
   declarations: [AuthComponent, AdminComponent, ProductTableComponent, ProductEditorComponent, ArticleTableComponent, ArticleEditorComponent, QuestionAnswerComponent, SubjectComponent, SubjectEditorComponent, QuestionAnswerEditorComponent]
 })

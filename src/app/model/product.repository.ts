@@ -5,7 +5,10 @@ import {RestDataSource} from "./rest.datasource";
 import { Observable } from "rxjs";
 
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductRepository {
   private products: Product[] = [];
   private categories: string[] = [];

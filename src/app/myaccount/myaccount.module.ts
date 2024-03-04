@@ -10,6 +10,9 @@ import { UserDetailEditorComponent } from "./userDetailEditor.component";
 import { AuthKeyCloakGuard } from "./authkeycloak.guard";
 
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import {ModelModule} from "../model/model.module";
+import { ServiceModule } from '../service/service.module';
+
 import { SubjectsComponent } from "./subjects/subjects.component";
 import { QuestiondetailComponent } from './questiondetail/questiondetail.component';
 
@@ -43,7 +46,7 @@ let routing = RouterModule.forChild([
 ]);
 
 @NgModule({
-  imports: [CommonModule, FormsModule, routing, NavBarModule, MatProgressBarModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, FormsModule, routing, NavBarModule, ModelModule, ServiceModule, MatProgressBarModule, MatCardModule, MatIconModule],
   providers: [AuthGuard,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>()}
   ],

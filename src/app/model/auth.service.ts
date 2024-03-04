@@ -3,7 +3,10 @@ import { Observable} from "rxjs";
 import { RestDataSource } from "./rest.datasource";
 import { User } from "./user.model";
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
   constructor(private datasource: RestDataSource) {}

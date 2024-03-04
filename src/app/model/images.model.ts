@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Image } from "./image.model";
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class Images {
 
   public images: Image[] = [];

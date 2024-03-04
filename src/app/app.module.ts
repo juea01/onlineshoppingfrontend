@@ -36,6 +36,7 @@ import { MatDialogModule} from "@angular/material/dialog";
 import { MatProgressBarModule} from "@angular/material/progress-bar";
 
 import { ServiceModule } from './service/service.module';
+import {ModelModule} from "./model/model.module";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 
 
@@ -79,6 +80,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatDialogModule,
     MatProgressBarModule,
     ServiceModule,
+    ModelModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',

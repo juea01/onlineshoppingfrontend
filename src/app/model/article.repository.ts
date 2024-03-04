@@ -8,7 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ArticleRepository {
   private articles: Article[] = [];
   private subcategories: string[] = [];
