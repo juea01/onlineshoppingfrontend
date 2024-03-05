@@ -31,3 +31,8 @@ img {
 .alert div {
   color: #c3d317;
 }
+
+button{
+  margin-top: 2px;
+  margin-left: 1px;
+}

@@ -224,6 +224,10 @@ export class RestDataSource{
     return this.sendRequest<Article>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}`);
   }
 
+  getRelatedArticlesById(articleId: number): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/${articleId}/related`);
+  }
+
 
   getArticleBySubcategory(subcategory: string): Observable<Article[]> {
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/subcategory/${subcategory}`);

@@ -227,6 +227,15 @@ export class ArticleRepository {
     return this.dataSource.getArticleDetailById(articleId);
   }
 
+  /**
+   * This method is used to fetch Previous and Next articles of given article id.
+   * @param articleId Article id of which related articles are interested in.
+   * @returns List of Articles that are made of previous and next articles of given article id.
+   */
+  getRelatedArticlesById(articleId: number): Observable<Article[]> {
+    return this.dataSource.getRelatedArticlesById(articleId);
+  }
+
   getSubCategories(): string[] {
     return this.subcategories;
   }
