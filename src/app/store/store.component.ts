@@ -7,6 +7,7 @@ import { Search } from '../model/search.model';
 import { WindowSizeServiceService } from "../service/window-size-service.service";
 import { ArticleRepository } from "../model/article.repository";
 import { Article } from "../model/article.model";
+import {ValueStoreService}  from "../service/value-store.service";
 
 @Component({
   selector: "store",
@@ -23,13 +24,23 @@ export class StoreComponent implements OnInit{
 
   constructor(private repository: ProductRepository, private cart: Cart, private router: Router,
     private searchString: Search, private windowSizeService: WindowSizeServiceService,
-    private articleRepository: ArticleRepository) {}
+    private articleRepository: ArticleRepository, private valueStoreService: ValueStoreService) {}
 
     ngOnInit(): void {
       this.articleRepository.getAllArticles().subscribe(articles=> {
         this.articles = articles;
+        if(this.valueStoreService.getArticlePagination()>0){
+          this.articleSelectedPage = this.valueStoreService.getArticlePagination();
+          this.valueStoreService.setArticlePagination(0);
+        }
         this.populateArticlesPerPage();
       })
+
+      if (this.valueStoreService.getProductPagination() >0){
+        this.selectedPage = this.valueStoreService.getProductPagination();
+        this.valueStoreService.setProductPagination(0);
+      }
+
     }
 
   get products(): Product[] {
@@ -86,6 +97,16 @@ export class StoreComponent implements OnInit{
     return Array(Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.productsPerPage)).fill(0).map((x,i) => i + 1);
   }
   */
+
+  navigateToProduct(productId: number) {
+    this.valueStoreService.setProductPagination(this.selectedPage);
+    this.router.navigate(['productDetail', productId]);
+  }
+
+  navigateToArticle(articleId: number) {
+    this.valueStoreService.setArticlePagination(this.articleSelectedPage);
+    this.router.navigate(['articleDetail', articleId]);
+  }
 
   addProductToCart(product: Product) {
     this.cart.addLine(product);

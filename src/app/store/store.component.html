@@ -64,7 +64,7 @@
                   </div>
                   <p class="card-text">{{article?.introduction?.slice(0,65)}}...</p>
                 <div class="row">
-                  <div class="col-md-6"><a [routerLink]="['/articleDetail',article.id]" class="btn btn-primary">More Details</a> </div>
+                  <div class="col-md-6"><a class="btn btn-primary" (click)="navigateToArticle(article?.id)">More Details</a> </div>
                 </div>
                 </div>
 
@@ -108,7 +108,7 @@
                     </span></div>
                   </div>
                 <div class="row">
-                  <div class="col-md-6"><a [routerLink]="['/productDetail',product.id]" class="btn btn-primary">More Details</a> </div>
+                  <div class="col-md-6"><a  class="btn btn-primary" (click)="navigateToProduct(product.id)">More Details</a> </div>
                 </div>
                 </div>
 
