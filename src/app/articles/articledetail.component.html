@@ -12,23 +12,24 @@
         <!-- If there are next and previous articles then display navigation buttons  -->
         <ng-template ngFor let-navArticle [ngForOf]="navArticleList">
           <button *ngIf="navArticle?.id !== null && navArticleList.length > 1" type="button" class="btn-block"
-            [class.btn-success]="navArticle?.id == article.id"
-            [class.btn-secondary]="navArticle?.id !== article.id"
+            [class.btn-success]="navArticle?.id == article.id" [class.btn-secondary]="navArticle?.id !== article.id"
             (click)="navigateToNextArticle(navArticle?.id)">{{navArticle?.title?.slice(0,35)}}...
             <i *ngIf="navArticle?.premium  && (!isAdminUser()&&!isPremiumUser())" class="fa fa-lock"></i>
-            <i  *ngIf="navArticle?.premium && (isAdminUser() || isPremiumUser())" class="fa fa-lock-open"></i>
+            <i *ngIf="navArticle?.premium && (isAdminUser() || isPremiumUser())" class="fa fa-lock-open"></i>
           </button>
 
         </ng-template>
       </div>
-      <div id="main-container" *ngIf="(article?.publish && !article?.premium) || (article?.publish && article?.premium && (isAdminUser() || isPremiumUser()) )" class="col-md-8 col-sm-12">
+      <div id="main-container"
+        *ngIf="(article?.publish && !article?.premium) || (article?.publish && article?.premium && (isAdminUser() || isPremiumUser()) )"
+        class="col-md-8 col-sm-12">
         <div class="row">
           <h1>{{article.title}}</h1>
         </div>
         <div class="row">
-          <h4 style="font-style: italic;">Published Date: {{getTrimmedPublishDate()}},Last Edited
-            Date:{{getTrimmedLastEditedDate()}}</h4>
-          <h4 style="font-style: italic;">Author: {{article?.user?.username}}</h4>
+          <h4 style="font-style: italic;">Published Date: {{getTrimmedPublishDate()}},&nbsp;Last Edited
+            Date:{{getTrimmedLastEditedDate()}},</h4>
+          <h4 style="font-style: italic;">&nbsp; Author: {{article?.user?.username}}</h4>
         </div>
         <div class="row">
           <p class="identText">{{article.introduction}}</p>
@@ -63,17 +64,26 @@
         </div>
 
       </div>
-      <div id="main-container" *ngIf="(article?.publish && article?.premium && !(isAdminUser() || isPremiumUser()) )" class="col-md-8 col-sm-12">
+      <div id="main-container" *ngIf="(article?.publish && article?.premium && !(isAdminUser() || isPremiumUser()) )"
+        class="col-md-8 col-sm-12">
         <div class="row">
-          <div class="col-sm-3 col-md-2">
-          </div>
-          <div class="col-sm-9 col-md-10">
-            <h3 *ngIf="user.id == null"> Please <a routerLink="/myaccount">login</a> or subscribe to access this Premium article </h3>
-            <h3 *ngIf="user.id != null"> Please <a routerLink="/myaccount/main/payment">subscribe</a> to access this Premium article </h3>
-          </div>
+          <h1>{{article.title}}</h1>
         </div>
         <div class="row">
+          <h4 style="font-style: italic;">Published Date: {{getTrimmedPublishDate()}},&nbsp;Last Edited
+            Date:{{getTrimmedLastEditedDate()}},</h4>
+          <h4 style="font-style: italic;">&nbsp;Author: {{article?.user?.username}}</h4>
+        </div>
+        <div class="row">
+          <h3 class="identText" *ngIf="user.id == null">{{article?.introduction?.slice(0,65)}}....... Please <a
+              routerLink="/myaccount">login</a> or subscribe to access remaining content of this article  </h3>
+          <h3 class="identText" *ngIf="user.id != null"> {{article?.introduction?.slice(0,65)}}....... Please <a
+              routerLink="/myaccount/main/payment">subscribe</a> to access remaining content of this article </h3>
+        </div>
+        <br/>
+        <div class="row">
           <div class="col-sm-5 col-md-4">
+            &nbsp;
           </div>
           <div class="col-sm-7 col-md-8">
             <i class="fa fa-lock fa-5x"></i>
