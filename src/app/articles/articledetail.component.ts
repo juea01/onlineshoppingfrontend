@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Comment } from '../model/comment.model';
-import { catchError, map } from 'rxjs/operators';
+import {  KeycloakService } from 'keycloak-angular';
 import { User } from '../model/user.model';
 import { Reply } from '../model/reply.model';
 import { UserRepository } from '../model/user.repository';
@@ -42,6 +42,7 @@ export class ArticleDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userRepository: UserRepository,
     private dialog: MatDialog,
+    private keycloak: KeycloakService,
     private datePipe: DatePipe
   ) {}
 
@@ -123,6 +124,29 @@ export class ArticleDetailComponent implements OnInit {
 
   getTrimmedLastEditedDate(): string {
     return this.datePipe.transform(this.article.lastEditDate, 'yyyy-MM-dd');
+  }
+
+  isPremiumUser() {
+    if (this.keycloak.isLoggedIn()) {
+      return this.keycloak.getUserRoles().includes("PREMIUM");
+    } else {
+      return false;
+    }
+  }
+
+  isAdminUser() {
+    if (this.keycloak.isLoggedIn()) {
+      return this.keycloak.getUserRoles().includes("ADMIN");
+    } else {
+      return false;
+    }
+  }
+
+  isLoggedIn() {
+    if (this.keycloak.isLoggedIn()) {
+      return true;
+    }
+    return false;
   }
 
   getRepliesByArticleAndCommentId(articleId: number, commentId: number) {

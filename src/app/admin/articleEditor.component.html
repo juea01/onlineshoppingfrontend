@@ -133,10 +133,21 @@
         </div>
         <div class="form-group">
           <label>Conclusion (Maximum allowed words are 600)</label>
-          <textarea class="form-control" name="conclusion" [(ngModel)]="article.conclusion" maxlength="600"
+          <textarea class="form-control" name="conclusion" id="conclusion" [(ngModel)]="article.conclusion" maxlength="600"
             #conclusion="ngModel"></textarea>
           <div *ngIf="conclusion.invalid && (conclusion.dirty || conclusion.touched)" class="alert">
             <div> Conclusion should have at least 200 characters and no more than 395 characters</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Premium</label>
+         <select id="premium" class="form-control" name="premium"  [(ngModel)]="article.premium"   required #premium="ngModel">
+            <option value=""> Select Premium</option>
+            <option value=true>  Premium</option>
+            <option value=false> Not Premium</option>
+          </select>
+           <div *ngIf="premium.invalid && (premium.dirty || premium.touched)" class="alert">
+            <div> Allowed values are - Premium or Not Premium </div>
           </div>
         </div>
         <ng-template ngFor let-image [ngForOf]="article.images">
