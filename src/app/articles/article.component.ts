@@ -31,7 +31,7 @@ export class ArticleComponent implements OnInit{
 
       });
     } else {
-      this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
+      this.repository.searchArticles(this.selectedSubCategory).subscribe(data => {
         this.articlesList = data;
 
       });

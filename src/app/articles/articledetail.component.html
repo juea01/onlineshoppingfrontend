@@ -37,7 +37,8 @@
         <div class="row">
           <div class="col-sm-5 col-md-4">
             <figure>
-              <img src="{{article?.images[0]?.location}}" />
+              <img *ngIf="article.images[0] != null" src="{{article?.images[0]?.location}}" />
+              <img *ngIf="article.images[0] == null" src="{{getRandomQuote()}}" />
               <figcaption> Image One</figcaption>
             </figure>
           </div>
@@ -51,7 +52,8 @@
           </div>
           <div class="col-sm-5 col-md-4">
             <figure>
-              <img src="{{article?.images[1]?.location}}" />
+              <img *ngIf="article.images[1] != null" src="{{article?.images[1]?.location}}" />
+              <img *ngIf="article.images[1] == null" src="{{getRandomQuote()}}" />
               <figcaption>Image Two</figcaption>
             </figure>
           </div>

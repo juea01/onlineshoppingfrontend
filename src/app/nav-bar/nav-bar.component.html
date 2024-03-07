@@ -40,7 +40,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="d-flex">
-          <input #searchValue class="form-control me-2" type="search" placeholder="Search Articles here" aria-label="Search">
+          <input #searchValue class="form-control me-2" type="search" data-toggle="tooltip" title="Enter Article title or Article type here" placeholder="Search Articles here" aria-label="Search">
           <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
         </div>
 

@@ -132,7 +132,24 @@ export class ArticleRepository {
   }
 
   getAllArticles(): Observable<Article[]> {
-    return this.dataSource.getArticles();
+    return new Observable((observer) => {
+      //check if articles are already hrere
+
+      if (!_.isEmpty(this.articles)) {
+        observer.next(this.articles);
+        observer.complete();
+      } else {
+        this.dataSource
+          .getArticles()
+          .subscribe((data) => {
+            //since it is get all articles, empty current list and replace till pagination is introduced
+            this.articles = null;
+            this.articles = data;
+            observer.next(this.articles);
+            observer.complete();
+          });
+      }
+    });
   }
 
   getAllArticlesByAuthorId(id: number): Observable<Article[]> {
@@ -179,10 +196,13 @@ export class ArticleRepository {
 
   searchArticles(searchCategory: string): Observable<Article[]> {
     return new Observable((observer) => {
-      //check if articles are already hrere
+      //check if articles are already here
       const result = this.articles.filter((a) => {
         const article_category = a.category.toLocaleLowerCase().split(/[ -]/);
         const article_subcategory = a.subcategory
+          .toLocaleLowerCase()
+          .split(/[ -]/);
+        const article_title = a.title
           .toLocaleLowerCase()
           .split(/[ -]/);
         const search_category = searchCategory
@@ -195,6 +215,12 @@ export class ArticleRepository {
         //if search word is not found in article existing category then search in sub category
         if (!hasCommonWord) {
           hasCommonWord = article_subcategory.some((word) =>
+            search_category.includes(word)
+          );
+        }
+         //if search word is not found in article existing sub category then search in sub category
+         if (!hasCommonWord) {
+          hasCommonWord = article_title.some((word) =>
             search_category.includes(word)
           );
         }

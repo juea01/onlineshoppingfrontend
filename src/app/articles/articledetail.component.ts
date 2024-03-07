@@ -166,6 +166,11 @@ export class ArticleDetailComponent implements OnInit {
     this.router.navigate(['articleDetail', nextArticleId]);
   }
 
+  getRandomQuote(): string {
+   const quoteNum =  Math.floor( Math.random()*3)+1;
+    return "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Quote"+quoteNum+".jpg";
+  }
+
   // postRepliesByCommentId(id: number) {
   //   this.showRepliesOfComment = id;
   //   this.repository.postRepliesByCommentId(id).subscribe(result=>{
