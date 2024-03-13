@@ -20,13 +20,14 @@ import { DialogComponent } from "./dialog.component";
 import { ServiceModule } from "../service/service.module";
 
 import { EmailConfirmationComponent } from "./emailConfirmation.component";
+import { SubscriptionComponent } from './subscription/subscription/subscription.component';
 
 @NgModule({
   imports: [ModelModule, BrowserModule, FormsModule, RouterModule, NavBarModule, ServiceModule],
   providers: [
     ],
   declarations: [StoreComponent, CounterDirective,
-  PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, EmailConfirmationComponent ],
+  PredictionComponent, ProductDetailComponent, GalleryComponent, GalleryDirective, AboutUsComponent, DialogComponent, EmailConfirmationComponent, SubscriptionComponent ],
   exports: [StoreComponent, ProductDetailComponent, EmailConfirmationComponent]
 })
 export class StoreModule {}

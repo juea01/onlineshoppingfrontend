@@ -17,3 +17,28 @@
 .centered-button {
   margin-left: 5px; /* Adjust spacing between itself and element from the left */
 }
+
+.largeScreenOnly {
+  display: none; /* Hide the element by default */
+}
+
+
+.smallScreenOnly {
+  display: none; /* Hide the element by default */
+}
+
+/* Media query for large screens (greater than or equal to 992px width) */
+@media screen and (min-width: 992px) {
+  .largeScreenOnly {
+    display: block; /* Display the element on large screens */
+  }
+}
+
+
+/* Media query for large screens (greater than or equal to 992px width) */
+@media screen and (max-width: 991px) {
+  .smallScreenOnly {
+    display: block; /* Display the element on large screens */
+  }
+}
+

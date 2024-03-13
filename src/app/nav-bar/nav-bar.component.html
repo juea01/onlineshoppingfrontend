@@ -1,67 +1,98 @@
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand">Tech District</a>
-      <button class="navbar-toggler" type="button" (click)="toogleNavbar()">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-      <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-           <a class="nav-link active" style="cursor: pointer;" aria-current="page" (click)="navigateToHome()">Home</a>
-          </li>
+    <a class="navbar-brand">Tech District</a>
+    <button class="navbar-toggler" type="button" (click)="toogleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-          <li class="nav-item dropdown">
-             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Article</a>
-             <div class="dropdown-menu">
-              <a class="dropdown-item" (click)="navigateToArticle('HTML')"> HTML</a>
-              <a class="dropdown-item" (click)="navigateToArticle('JavaScript')"> JavaScript</a>
-              <a class="dropdown-item" (click)="navigateToArticle('Java')"> Java</a>
-              <a class="dropdown-item" (click)="navigateToArticle('ML')"> Machine Learning</a>
+    <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" style="cursor: pointer;" aria-current="page" (click)="navigateToHome()">Home</a>
+        </li>
 
-             </div>
-          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Article</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" (click)="navigateToArticle('HTML')"> HTML</a>
+            <a class="dropdown-item" (click)="navigateToArticle('JavaScript')"> JavaScript</a>
+            <a class="dropdown-item" (click)="navigateToArticle('Java')"> Java</a>
+            <a class="dropdown-item" (click)="navigateToArticle('ML')"> Machine Learning</a>
 
-        </ul>
-        <div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </li>
+
+      </ul>
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <div class="d-flex">
+        <input #searchValue class="form-control me-2" type="search" data-toggle="tooltip"
+          title="Enter Article title or Article type here" placeholder="Search Articles here" aria-label="Search">
+        <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
+      </div>
+
+      <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/subscription">Subscribe</a>
+        </li>
+      </ul>
+
+      <div class="smallScreenOnly">
+        <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}">
+
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/myaccount"><i class="far fa-user"></i> MyAccount</a>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-success" (click)="navigateToRegistration">Register</button>
+            </li>
+            <br/>
+            <li *ngIf="getUserDetail().email" class="nav-item">
+              <button style="margin-top: 2px;" class="btn btn-success" (click)="logout()">Logout</button>
+            </li>
+          </ul>
         </div>
-        <!-- <div *ngFor="let option of options">
-          <label style="color:white">
-            {{ option.label }}
-            <input  type="radio"
-                   name="option"
-                   [value]="option.value"
-                   [(ngModel)]="selectedOption">
-          </label>
-
-        </div> -->
-        <div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div class="d-flex">
-          <input #searchValue class="form-control me-2" type="search" data-toggle="tooltip" title="Enter Article title or Article type here" placeholder="Search Articles here" aria-label="Search">
-          <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
-        </div>
-
-        <div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-
-
-
-        <div>
-         <a class="nav-link" routerLink="/myaccount">MyAccount</a>
-        </div>
-
-        <div *ngIf="getUserDetail().email" class="button-container">
-            <p style="color:white" class="centered-text">{{getUserDetail().username}} </p>
-            <button class="btn btn-outline-success btn-block centered-button" (click)="logout()">Logout</button>
-        </div>
-
-
-
       </div>
     </div>
 
-  </nav>
+    <div class="largeScreenOnly">
+      <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}">
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/myaccount"><i class="far fa-user"></i> MyAccount</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-success btn-block" (click)="navigateToRegistration"> Register</button>
+          </li>
+          <li>
+            <div *ngIf="getUserDetail().email" class="button-container">
+              <button class="btn btn-success btn-block centered-button" (click)="logout()">Logout</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<div class="row bg-dark">
+  <div class="col-sm-4 col-md-4">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="col-sm-4 col-md-4">
+    <div *ngIf="getUserDetail().email">
+      <p style="color:white">Hi &nbsp;{{getUserDetail().username}} </p>
+    </div>
+  </div>
+  <div class="col-sm-4 col-md-4">
+  </div>
+</div>

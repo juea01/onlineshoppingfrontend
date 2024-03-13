@@ -32,20 +32,20 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
-    console.log(`Authenticated ${this.authenticated} and Token Expired ${this.keycloak.isTokenExpired()}`);
+    //console.log(`Authenticated ${this.authenticated} and Token Expired ${this.keycloak.isTokenExpired()}`);
     // Force the user to log in if currently unauthenticated.
     if (!this.authenticated && !this.keycloak.isTokenExpired()) {
-      console.log("Not authenticated");
-      console.log("Rdirection after login"+docker_env_config.keycloakRedirectUrl +"state"+ state.url),
+     // console.log("Not authenticated");
+     // console.log("Rdirection after login"+docker_env_config.keycloakRedirectUrl +"state"+ state.url),
       await this.keycloak.login({
 
         redirectUri: docker_env_config.keycloakRedirectUrl + state.url,
       });
     }else{
-        console.log(`Storing logged in user infor into session variable`);
+      //  console.log(`Storing logged in user infor into session variable`);
         this.userProfile = await this.keycloak.loadUserProfile();
         this.user.authStatus = 'AUTH';
-        console.log(`user name ${this.userProfile.username}`);
+       // console.log(`user name ${this.userProfile.username}`);
         this.user.username = this.userProfile.username;
         this.user.email = this.userProfile.email;
         this.userRepository.storeLoggedInUserToSession(this.user);
@@ -59,8 +59,8 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
 
     // Get the roles required from the route.
     const requiredRoles = route.data.roles;
-    console.log("Required roles",requiredRoles);
-    console.log("Roles user has"+this.roles);
+   // console.log("Required roles",requiredRoles);
+   // console.log("Roles user has"+this.roles);
 
 
 
@@ -68,7 +68,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
 
     // Allow the user to to proceed if no additional roles are required to access the route.
     if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
-      console.log("No additional roles are required");
+      //console.log("No additional roles are required");
       return true;
     }
 
@@ -78,7 +78,7 @@ export class AuthKeyCloakGuard extends KeycloakAuthGuard {
     if (requiredRoles.includes("PREMIUM")) {
       //console.log(`Is item premium ${this.isItemPremium}  ${this.activatedRoute.snapshot.params["isPremium"]} ${this.activatedRoute.snapshot.params["id"]}`);
       this.isItemPremium = this.valueStoreService.getItemPremium();
-      console.log(`Is item premium ${this.isItemPremium}`);
+      //console.log(`Is item premium ${this.isItemPremium}`);
       if (this.isItemPremium) {
         return requiredRoles.some((role)=> this.roles.includes(role));
       } else {

@@ -6,11 +6,11 @@ import { UserRepository } from '../model/user.repository';
 import { SubscriptionRepository } from '../model/Subscription.repository';
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 import { SubCategory } from "../service/constants";
-
+import { SubscriptionService } from "../service/subscription.service";
 
 import { SharedState, SHARED_STATE } from "./sharedstate.model";
 import { Observer, Observable } from "rxjs";
-
+import * as _ from "lodash";
 
 @Component({
   templateUrl: "myaccount.component.html",
@@ -28,13 +28,17 @@ export class MyaccountComponent implements OnInit {
   constructor(private keycloak: KeycloakService, private router: Router,
     private userRepository: UserRepository, private subscriptionRepo: SubscriptionRepository,
     @Inject(SHARED_STATE) public observer: Observer<SharedState>,
-    @Inject(SHARED_STATE) public subjectStateEvent: Observable<SharedState>) {}
+    @Inject(SHARED_STATE) public subjectStateEvent: Observable<SharedState>, public subscriptionService: SubscriptionService) {}
 
   ngOnInit(): void {
     this.userRepository.loadUserForUserDetail().subscribe(
       user => {
-      console.log("Success loading user");
       this.userDetail = user;
+      //user has selected Subscription plan before login, so navigate to payment component
+      if(!_.isEmpty(this.subscriptionService.getSelectedPriceId())) {
+       this.router.navigate(['/myaccount/main/payment']);
+      }
+
       }, error => {
        console.log(`Error loading user ${error}`);
       });

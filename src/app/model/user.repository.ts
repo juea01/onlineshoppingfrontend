@@ -89,7 +89,6 @@ export class UserRepository {
           observer.error("Error- no logged in user yet.");
         } else {
           this.keyCloakService.loadUserProfile().then((profile)=> {
-            console.log(`keycloak user id ${profile.id}`);
              observer.next(profile.id);
              observer.complete();
            })

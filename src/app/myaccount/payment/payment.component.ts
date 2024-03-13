@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionRepository} from '../../model/Subscription.repository';
 import { UserRepository } from '../../model/user.repository';
 import { User } from "../../model/user.model";
-
+import { SubscriptionService } from '../../service/subscription.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-payment',
@@ -16,20 +17,33 @@ export class PaymentComponent implements OnInit {
     userDetail = new User();
     keycloakUserId: string = '';
 
-  constructor(private subscriptionRepo: SubscriptionRepository, private userRepository: UserRepository) { }
+  constructor(private subscriptionRepo: SubscriptionRepository, private userRepository: UserRepository,
+    private subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
+
     this.userRepository.loadUserForUserDetail().subscribe(
       user => {
-      console.log("Success loading user");
       this.userDetail = user;
+
+      /** TODO: Rewrite this nested subscribe code block with something like forkJoin from rxjs */
+      this.userRepository.getKeycloakUserId().subscribe(userId=> {
+        this.keycloakUserId = userId;
+
+        //user has selected Subscription plan before login, so call subscribe() with selected plan/price id
+        if(!_.isEmpty(this.subscriptionService.getSelectedPriceId())) {
+          var priceId = this.subscriptionService.getSelectedPriceId();
+          this.subscriptionService.resetSelectedPriceId();
+          this.subscribe(priceId);
+        }
+
+      })
+
       }, error => {
        console.log(`Error loading user ${error}`);
       });
 
-      this.userRepository.getKeycloakUserId().subscribe(userId=> {
-        this.keycloakUserId = userId;
-      })
+
   }
 
   subscribe(priceId: string){

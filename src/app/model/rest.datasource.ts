@@ -38,7 +38,7 @@ export class RestDataSource{
 
   //constructor(private http: HttpClient, private socket: Socket) {
   constructor(private http: HttpClient) {
-    // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+   //  this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
      this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
     //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
   }

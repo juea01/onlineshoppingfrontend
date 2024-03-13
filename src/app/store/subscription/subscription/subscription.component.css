@@ -1,0 +1,18 @@
+
+#main-container {
+  min-height: 500px;
+}
+
+
+.main-content .card:hover {
+  box-shadow: .25em .25em .5em .5em rgba(8, 46, 233, 0.3);
+  cursor: pointer;
+}
+
+.box-shadow {
+  box-shadow: .35em .35em .5em .5em rgba(8, 46, 233, 0.3);
+}
+
+.bg-blue {
+  background-color: rgb(79, 120, 224);
+}

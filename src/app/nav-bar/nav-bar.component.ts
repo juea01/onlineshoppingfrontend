@@ -69,9 +69,13 @@ export class NavBarComponent implements OnInit {
   }
 
   navigateToArticle(subCategory: string) {
-    console.log("Nav to article"+this.router.url);
     this.router.navigate(['article', subCategory]);
   }
+
+  navigateToRegistration(subCategory: string) {
+    this.router.navigate(['registration']);
+  }
+
 
    /**
   * To use logout functionality provided by library (keycloak 8.3.0) compatible with Angular 9

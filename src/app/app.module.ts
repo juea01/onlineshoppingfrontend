@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angu
 import {StoreModule} from "./store/store.module";
 import {StoreComponent } from "./store/store.component";
 import {AboutUsComponent } from "./store/aboutUs.component";
+import { SubscriptionComponent } from './store/subscription/subscription/subscription.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ProductDetailComponent } from './store/productDetail.component';
 import { EmailConfirmationComponent } from './store/emailConfirmation.component';
@@ -99,6 +100,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "articleDetail/:id", component: ArticleDetailComponent},
       {path: "articleDetail", component: ArticleDetailComponent},
 
+      {path: "subscription", component: SubscriptionComponent},
       {path: "registration", component: RegistrationComponent},
       {path: "admin", loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule)},
       {path: "myaccount", loadChildren: () => import("./myaccount/myaccount.module").then(m => m.MyaccountModule)},
