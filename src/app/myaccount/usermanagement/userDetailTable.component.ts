@@ -1,7 +1,7 @@
 import { AfterViewInit, Component } from "@angular/core";
-import { User } from "../model/user.model";
-import { UserRepository } from "../model/user.repository";
-import { WindowSizeServiceService } from "../service/window-size-service.service";
+import { User } from "../../model/user.model";
+import { UserRepository } from "../../model/user.repository";
+import { WindowSizeServiceService } from "../../service/window-size-service.service";
 
 @Component({
   templateUrl: "userDetailTable.component.html"

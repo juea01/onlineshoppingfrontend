@@ -6,9 +6,9 @@ import {
   ActivatedRoute
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
-import { User } from '../model/user.model';
+import { User } from '../../../model/user.model';
 import { KeycloakProfile } from 'keycloak-js';
-import { UserRepository } from '../model/user.repository';
+import { UserRepository } from '../../../model/user.repository';
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 import { ValueStoreService } from 'src/app/service/value-store.service';
 

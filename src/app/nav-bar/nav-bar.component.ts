@@ -72,7 +72,7 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['article', subCategory]);
   }
 
-  navigateToRegistration(subCategory: string) {
+  navigateToRegistration() {
     this.router.navigate(['registration']);
   }
 

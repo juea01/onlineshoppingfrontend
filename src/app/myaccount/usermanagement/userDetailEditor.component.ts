@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { User } from "../model/user.model";
-import { UserRepository } from "../model/user.repository";
-import { WindowSizeServiceService } from "../service/window-size-service.service";
+import { User } from "../../model/user.model";
+import { UserRepository } from "../../model/user.repository";
+import { WindowSizeServiceService } from "../../service/window-size-service.service";
 
 @Component({
   templateUrl: "userDetailEditor.component.html",

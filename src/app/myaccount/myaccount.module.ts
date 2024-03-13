@@ -2,12 +2,12 @@ import {APP_INITIALIZER, NgModule} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { AuthComponent } from "./auth.component";
+import { AuthComponent } from "./guards/auth/auth.component";
 import { MyaccountComponent } from "./myaccount.component";
-import { AuthGuard} from "./auth.guard";
-import { UserDetailTableComponent } from "./userDetailTable.component";
-import { UserDetailEditorComponent } from "./userDetailEditor.component";
-import { AuthKeyCloakGuard } from "./authkeycloak.guard";
+import { UserDetailTableComponent } from "./usermanagement/userDetailTable.component";
+import { UserDetailEditorComponent } from "./usermanagement/userDetailEditor.component";
+import { AuthKeyCloakGuard } from "./guards/auth/authkeycloak.guard";
+import { UnsavedGuardService } from "./guards/unsaved-guard.service";
 
 import { NavBarModule } from '../nav-bar/nav-bar.module';
 import {ModelModule} from "../model/model.module";
@@ -38,6 +38,7 @@ let routing = RouterModule.forChild([
    {path: "practicetests/:subCategory", component: SubjectsComponent},
    {path: "practicetests", component: SubjectsComponent},
    {path: "subjectdetail/:id/:level/:isPremium", component: QuestiondetailComponent, canActivate: [AuthKeyCloakGuard],data: {roles: ['PREMIUM', 'ADMIN']}},
+   //{path: "subjectdetail/:id/:level/:isPremium", component: QuestiondetailComponent, canActivate: [AuthKeyCloakGuard],data: {roles: ['PREMIUM', 'ADMIN']}, canDeactivate: [UnsavedGuardService]},
    {path: "subjectdetail/:id", component: QuestiondetailComponent},
    {path: "payment", component: PaymentComponent},
    {path: "**", redirectTo: "practicetests"}
@@ -47,7 +48,7 @@ let routing = RouterModule.forChild([
 
 @NgModule({
   imports: [CommonModule, FormsModule, routing, NavBarModule, ModelModule, ServiceModule, MatProgressBarModule, MatCardModule, MatIconModule],
-  providers: [AuthGuard,
+  providers: [UnsavedGuardService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>()}
   ],
   declarations: [AuthComponent, MyaccountComponent, UserDetailTableComponent, UserDetailEditorComponent, SubjectsComponent, QuestiondetailComponent, PaymentComponent, SuccessComponent]

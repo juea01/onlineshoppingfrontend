@@ -4,7 +4,7 @@ import { User } from 'src/app/model/user.model';
 import { KeycloakService } from "keycloak-angular";
 import Keycloak, { KeycloakProfile } from "keycloak-js";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
-import { WindowSizeServiceService } from "../service/window-size-service.service";
+import { WindowSizeServiceService } from "../../../service/window-size-service.service";
 
 
 @Component({
