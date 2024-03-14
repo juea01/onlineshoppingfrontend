@@ -14,6 +14,8 @@ export class ArticleComponent implements OnInit{
   public selectedSubCategory = "";
   public articlesPerPage = 4;
   public selectedPage = 1;
+  public intermediateSelectedPage = 1;
+  public advancedSelectedPage = 1;
   public articlesList: Article[] = [];
 
   constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
@@ -58,6 +60,24 @@ export class ArticleComponent implements OnInit{
         this.getRemoteArticles();
       }
     }
+
+  }
+
+  /**
+   * ToDO: THis method is working in progress
+   */
+  getIntermediateLevelArticles(): Article[] {
+    let interArtList: Article[] = [];
+    return interArtList;
+
+  }
+
+   /**
+   * ToDO: THis method is working in progress
+   */
+   getAdvancedLevelArticles(): Article[] {
+    let advArtList: Article[] = [];
+    return advArtList;
 
   }
 

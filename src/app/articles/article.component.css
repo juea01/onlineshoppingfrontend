@@ -26,6 +26,16 @@ ul li::before {
   box-shadow: .25em .25em .5em .5em rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
+
+#main-container {
+  min-height: 700px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+
 /*
   @media only screen and  (max-height: 700px){
     #main-container {

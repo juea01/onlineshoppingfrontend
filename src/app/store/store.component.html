@@ -91,7 +91,11 @@
       </div>
 
       <div class="row secondary-content">
-        <div class="row">
+          <!-- Since title is only taking small part of the row, whenever second row has only one article that can
+        fit the remaining available space of first row then content from second row is jumping up a bit. fullWidth is
+        helping to mitigate the problem-->
+        <div id="bookViewLocation"></div>
+        <div class="row fullWidth">
           <h1 style="text-decoration: underline; font-family: 'Courier New', Courier, monospace;">Our Book Reviews</h1>
         </div>
         <div class="row">

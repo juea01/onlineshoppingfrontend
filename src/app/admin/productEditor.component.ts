@@ -22,7 +22,9 @@ export class ProductEditorComponent {
   constructor(private repository: ProductRepository, private router: Router, private activeRoute: ActivatedRoute) {
     this.editing = activeRoute.snapshot.params["mode"] == "edit";
     if (this.editing) {
-      Object.assign(this.product, repository.getProduct(activeRoute.snapshot.params["id"]));
+      repository.getProduct(activeRoute.snapshot.params["id"]).subscribe(product => {
+        Object.assign(this.product, product);
+      });
     }
   }
 

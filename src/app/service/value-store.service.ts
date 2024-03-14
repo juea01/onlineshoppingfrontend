@@ -10,6 +10,8 @@ export class ValueStoreService {
   private articlePagination: number = 0;
   private productPagination: number = 0;
 
+  private isSetScrollToBookListView = false;
+
   constructor() { }
 
   public setItemPremium(isPremium: boolean):void {
@@ -34,6 +36,14 @@ export class ValueStoreService {
 
   public getProductPagination(){
     return this.productPagination;
+  }
+
+  public setScrollToBookListView(isSetScrollToBookList: boolean){
+    this.isSetScrollToBookListView = isSetScrollToBookList;
+  }
+
+  public isScrollToBookListView():boolean {
+    return this.isSetScrollToBookListView;
   }
 
 }

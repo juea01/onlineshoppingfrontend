@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Article } from '../model/article.model';
 import { ArticleRepository } from '../model/article.repository';
 import { Router } from '@angular/router';
@@ -43,7 +43,8 @@ export class ArticleDetailComponent implements OnInit {
     private userRepository: UserRepository,
     private dialog: MatDialog,
     private keycloak: KeycloakService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +52,8 @@ export class ArticleDetailComponent implements OnInit {
       .getArticleDetailById(this.activatedRoute.snapshot.params['id'])
       .subscribe((article) => {
         this.article = article;
+        //Scroll to top of the page when the component initializes
+        this.elementRef.nativeElement.ownerDocument.defaultView.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
       this.repository.getRelatedArticlesById(this.activatedRoute.snapshot.params['id']).subscribe((articleList) => {
@@ -80,11 +83,15 @@ export class ArticleDetailComponent implements OnInit {
           .getArticleDetailById(this.activatedRoute.snapshot.params['id'])
           .subscribe((article) => {
             this.article = article;
+             //Scroll to top of the page when the component initializes
+            this.elementRef.nativeElement.ownerDocument.defaultView.scrollTo({ top: 0, behavior: 'smooth' });
           });
       } else {
         this.hasInitiated = true;
       }
     });
+
+
   }
 
   postComment(form: NgForm) {

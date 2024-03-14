@@ -35,8 +35,12 @@ export class ProductRepository {
 
   }
 
-  getProduct(id: number): Product{
-    return this.products.find(p => p.id == id);
+  getProduct(id: number): Observable<Product>{
+    return new Observable(observer => {
+      let product =  this.products.find(p => p.id == id);
+      observer.next(product);
+      observer.complete();
+    });
   }
 
   getCategories(): string[]{

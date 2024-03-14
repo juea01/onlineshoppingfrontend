@@ -8,6 +8,7 @@
 
   <div class="container-fluid bg-white">
     <div class="row">
+       <div id="scrollhere"></div>
       <div class="col-sm-5">
        <app-gallery></app-gallery>
       </div>
@@ -72,14 +73,14 @@
           <div class="col-sm-4 col-md-3 text-right">
           </div>
           <div class="col-sm-8 col-md-9">
-            <a routerLink="/store" class="btn btn-primary">Go Back</a>
+            <a class="btn btn-primary" (click)="goBackToStorePage()">Go Back</a>
           </div>
         </div>
         <div *ngIf="getWindowInnerWidth() < 780px" class="row">
           <div class="col-sm-4 text-right">
           </div>
           <div class="col-sm-8">
-            <a routerLink="/store" class="btn btn-primary">Go Back</a>
+            <a class="btn btn-primary" (click)="goBackToStorePage()">Go Back</a>
           </div>
         </div>
         <div class="row">
