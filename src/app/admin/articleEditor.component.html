@@ -33,25 +33,33 @@
           <select id="category" class="form-control" name="category" [(ngModel)]="article.category" required
             #category="ngModel">
             <option value=""> Select a category</option>
-            <option value="Backend Development"> Backend Development</option>
-            <option value="Front-End Development"> Front-End Development</option>
+            <option value={{this.LocalCategory.BackendDevelopment}}> Backend Development</option>
+            <option value={{this.LocalCategory.FrontEndDevelopment}}> Front-End Development</option>
+            <option value={{this.LocalCategory.CaseStudy}}>Case Study</option>}
           </select>
           <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert">
-            <div> Allowed values are - Backend Development, Front-End Development </div>
+            <div> Please select valid category.</div>
           </div>
         </div>
         <div class="form-group">
-          <label>Sub Category</label>
+          <label>Sub Category </label>
           <select id="subcategory" class="form-control" name="subcategory" [(ngModel)]="article.subcategory" required
             #subcategory="ngModel">
             <option value=""> Select a subcategory</option>
-            <option value="Java"> Java</option>
-            <option value="JavaScript"> JavaScript</option>
-            <option value="HTML"> HTML</option>
-            <option value="ML"> ML</option>
+            <option *ngIf="article.category != this.LocalCategory.CaseStudy" value={{LocalSubCategory.Java}}> Java</option>
+            <option *ngIf="article.category != this.LocalCategory.CaseStudy" value={{LocalSubCategory.JavaScript}}> JavaScript</option>
+            <option *ngIf="article.category != this.LocalCategory.CaseStudy" value={{LocalSubCategory.HTML_CSS}}> HTML</option>
+            <option *ngIf="article.category != this.LocalCategory.CaseStudy" value={{LocalSubCategory.Machine_Learning}}> ML</option>
+
+            <option *ngIf="article.category == this.LocalCategory.CaseStudy" value={{LocalSubCategory.Security}}> Security</option>
+            <option *ngIf="article.category == this.LocalCategory.CaseStudy" value={{LocalSubCategory.Security}}> Performance</option>
+            <option  *ngIf="article.category == this.LocalCategory.CaseStudy" value={{LocalSubCategory.ArtificialIntelligence}}> Artificial Intelligence/ML</option>
+            <option *ngIf="article.category == this.LocalCategory.CaseStudy" value={{LocalSubCategory.GeneralKnowledge}}> General Knowledge</option>
+
+
           </select>
           <div *ngIf="subcategory.invalid && (subcategory.dirty || subcategory.touched)" class="alert">
-            <div> Allowed values are - Java, JavaScript, HTML or ML </div>
+            <div> Please select valid sub category.</div>
           </div>
         </div>
 

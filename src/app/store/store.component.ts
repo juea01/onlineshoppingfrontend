@@ -16,11 +16,14 @@ import { ValueStoreService } from '../service/value-store.service';
 })
 export class StoreComponent implements OnInit {
   public selectedCategory = null;
-  public productsPerPage = 3;
+  public itemsPerPage = 3;
   public selectedPage = 1;
   public articleSelectedPage = 1;
+  public caseStudiesSelectedPage = 1;
   public articles: Article[] = [];
   public articlesPerPage: Article[] = [];
+  public caseStudies: Article[] = [];
+  public caseStudiesPerPage: Article[] = [];
 
   constructor(
     private repository: ProductRepository,
@@ -43,10 +46,20 @@ export class StoreComponent implements OnInit {
       this.populateArticlesPerPage();
     });
 
+    this.articleRepository.getAllArticles(false, true).subscribe((caseStudies) => {
+      this.caseStudies = caseStudies;
+      if (this.valueStoreService.getCasestudyPagination() > 0) {
+          this.caseStudiesSelectedPage = this.valueStoreService.getCasestudyPagination();
+        this.valueStoreService.setCasestudyPagination(0);
+      }
+      this.populateCaseStudiesPerPage();
+    });
+
     if (this.valueStoreService.getProductPagination() > 0) {
       this.selectedPage = this.valueStoreService.getProductPagination();
       this.valueStoreService.setProductPagination(0);
     }
+
 
     if (this.valueStoreService.isScrollToBookListView()) {
       var bookView = document.getElementById('bookViewLocation');
@@ -56,15 +69,23 @@ export class StoreComponent implements OnInit {
         // Scroll to the top of the "middle" div with smooth animation
         bookView.scrollIntoView({ behavior: 'smooth' });
       }
+    } else if(this.valueStoreService.isScrollToCaseStudyListView()){
+      var caseStudyView = document.getElementById('caseStudyViewLocation');
+      this.valueStoreService.setScrollToCaseStudyListView(false);
+      // Check if the element exists
+      if (caseStudyView) {
+        // Scroll to the top of the "middle" div with smooth animation
+        caseStudyView.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 
   get products(): Product[] {
-    let pageIndex = (this.selectedPage - 1) * this.productsPerPage;
+    let pageIndex = (this.selectedPage - 1) * this.itemsPerPage;
     this.selectedCategory = this.searchString.category;
     return this.repository
       .getProducts(this.selectedCategory)
-      .slice(pageIndex, pageIndex + this.productsPerPage);
+      .slice(pageIndex, pageIndex + this.itemsPerPage);
   }
 
   getProductSize(): number {
@@ -88,50 +109,82 @@ export class StoreComponent implements OnInit {
     this.populateArticlesPerPage();
   }
 
+
+  changeCaseStudyPage(newPage: number) {
+    this.caseStudiesSelectedPage = newPage;
+    this.populateCaseStudiesPerPage();
+  }
+
   populateArticlesPerPage(): void {
     this.articlesPerPage = [];
     //ignore first items as it is already displayed as main article
     let startingIndex =
-      this.articleSelectedPage * this.productsPerPage -
-      this.productsPerPage +
+      this.articleSelectedPage * this.itemsPerPage -
+      this.itemsPerPage +
       1;
     let endingIndex =
-      startingIndex + this.productsPerPage < this.articles.length
-        ? startingIndex + this.productsPerPage
+      startingIndex + this.itemsPerPage < this.articles.length
+        ? startingIndex + this.itemsPerPage
         : this.articles.length;
     for (let i = startingIndex; i < endingIndex; i++) {
       this.articlesPerPage.push(this.articles[i]);
     }
   }
 
+
+  populateCaseStudiesPerPage(): void {
+    this.caseStudiesPerPage = [];
+    let startingIndex = (this.caseStudiesSelectedPage * this.itemsPerPage) - this.itemsPerPage;
+    let endingIndex =
+      startingIndex + this.itemsPerPage < this.caseStudies.length
+        ? startingIndex + this.itemsPerPage
+        : this.caseStudies.length;
+    for (let i = startingIndex; i < endingIndex; i++) {
+      this.caseStudiesPerPage.push(this.caseStudies[i]);
+    }
+  }
+
   changePageSize(newSize: number) {
-    this.productsPerPage = Number(newSize);
+    this.itemsPerPage = Number(newSize);
     this.changePage(1);
   }
 
   get pageCount(): number {
     return Math.ceil(
       this.repository.getProducts(this.selectedCategory).length /
-        this.productsPerPage
+        this.itemsPerPage
     );
   }
 
   get pageArticleCount(): number {
-    return Math.ceil(this.articles.length / this.productsPerPage);
+    return Math.ceil(this.articles.length / this.itemsPerPage);
   }
+
+  get pageCaseStudyCount(): number {
+    return Math.ceil(this.caseStudies.length / this.itemsPerPage);
+  }
+
   /*
   get pageNumbers(): number[] {
-    return Array(Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.productsPerPage)).fill(0).map((x,i) => i + 1);
+    return Array(Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.itemsPerPage)).fill(0).map((x,i) => i + 1);
   }
   */
 
   navigateToProduct(productId: number) {
     this.valueStoreService.setProductPagination(this.selectedPage);
+    this.valueStoreService.setScrollToBookListView(true);
     this.router.navigate(['productDetail', productId]);
   }
 
   navigateToArticle(articleId: number) {
     this.valueStoreService.setArticlePagination(this.articleSelectedPage);
+    this.router.navigate(['articleDetail', articleId]);
+  }
+
+
+  navigateToCaseStudy(articleId: number) {
+    this.valueStoreService.setCasestudyPagination(this.caseStudiesSelectedPage);
+    this.valueStoreService.setScrollToCaseStudyListView(true);
     this.router.navigate(['articleDetail', articleId]);
   }
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import * as _ from 'lodash';
-
+import { Category, SubCategory } from '../service/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -131,16 +131,24 @@ export class ArticleRepository {
     );
   }
 
-  getAllArticles(): Observable<Article[]> {
+  getAllArticles(excludeCaseStudyArticles: boolean= true, excludeLearningArticles: boolean= false): Observable<Article[]> {
     return new Observable((observer) => {
       //check if articles are already hrere
+      let articleList = [];
+      if (excludeCaseStudyArticles) {
+        articleList = this.articles.filter((a) => a.category != Category.CaseStudy);
+      } else if (!excludeCaseStudyArticles && excludeLearningArticles) {
+        articleList = this.articles.filter((a) => a.category == Category.CaseStudy);
+      } else {
+        articleList = this.articles;
+      }
 
-      if (!_.isEmpty(this.articles)) {
-        observer.next(this.articles);
+      if (!_.isEmpty(articleList)) {
+        observer.next(articleList);
         observer.complete();
       } else {
         this.dataSource
-          .getArticles()
+          .getArticles(excludeCaseStudyArticles, excludeLearningArticles)
           .subscribe((data) => {
             //since it is get all articles, empty current list and replace till pagination is introduced
             this.articles = null;
@@ -161,7 +169,7 @@ export class ArticleRepository {
     return this.dataSource.getArticlesIdAndTitleByTitle(title);
   }
 
-  getArticles(subcategory: string): Observable<Article[]> {
+  getArticlesBySubCategory(subcategory: string): Observable<Article[]> {
     return new Observable((observer) => {
       //check if articles are already hrere
       const result = this.articles?.filter((a) => {
@@ -175,7 +183,40 @@ export class ArticleRepository {
         observer.complete();
       } else {
         this.dataSource
-          .getArticleBySubcategory(subcategory ? subcategory : 'HTML')
+          .getArticleBySubcategory(subcategory ? subcategory : SubCategory.HTML_CSS)
+          .subscribe((data) => {
+            if (!_.isEmpty(data)) {
+              if (!_.isEmpty(this.articles)) {
+                for (const art of data) {
+                  this.articles.push(art);
+                }
+              } else {
+                this.articles = data;
+              }
+            }
+
+            observer.next(data);
+            observer.complete();
+          });
+      }
+    });
+  }
+
+  getArticlesByCategory(category: string): Observable<Article[]> {
+    return new Observable((observer) => {
+      //check if articles are already hrere
+      const result = this.articles?.filter((a) => {
+        return (
+          a.category.toLocaleLowerCase() === category.toLocaleLowerCase()
+        );
+      });
+
+      if (!_.isEmpty(result)) {
+        observer.next(result);
+        observer.complete();
+      } else {
+        this.dataSource
+          .getArticleByCategory(category ? category : Category.BackendDevelopment)
           .subscribe((data) => {
             if (!_.isEmpty(data)) {
               if (!_.isEmpty(this.articles)) {

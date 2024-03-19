@@ -28,7 +28,7 @@ export class ArticleComponent implements OnInit{
   getRemoteArticles() {
     this.selectedSubCategory = this.activatedRoute.snapshot.params["subcategory"] ? this.activatedRoute.snapshot.params["subcategory"] : this.searchString.category;
     if(this.activatedRoute.snapshot.params["subcategory"]) {
-      this.repository.getArticles(this.selectedSubCategory).subscribe(data => {
+      this.repository.getArticlesBySubCategory(this.selectedSubCategory).subscribe(data => {
         this.articlesList = data;
 
       });

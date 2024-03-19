@@ -20,7 +20,18 @@ export enum SubCategory{
   Java = 'Java',
   Machine_Learning = 'ML',
   JavaScript = 'JavaScript',
-  HTML_CSS = 'HTML_CSS'
+  HTML_CSS = 'HTML_CSS',
+  Security = 'Security',
+  Performance = 'Performance',
+  ArtificialIntelligence = 'AI',
+  GeneralKnowledge = 'GI'
+
+}
+
+export enum Category{
+  BackendDevelopment = 'BackendDevelopment',
+  FrontEndDevelopment = 'FrontEndDevelopment',
+  CaseStudy  = 'CaseStudy'
 
 }
 

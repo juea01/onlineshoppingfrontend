@@ -72,6 +72,11 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['article', subCategory]);
   }
 
+
+  navigateToCaseStudy() {
+    this.router.navigate(['casestudy']);
+  }
+
   navigateToRegistration() {
     this.router.navigate(['registration']);
   }

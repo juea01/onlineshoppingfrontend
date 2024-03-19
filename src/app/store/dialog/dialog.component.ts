@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from "@angular/forms";
-import {UserRepository} from "../model/user.repository";
-import { Subscription } from '../model/subscription.model';
-import { TermsDialogComponent } from '../service/terms-dialog.component';
+import {UserRepository} from "../../model/user.repository";
+import { Subscription } from '../../model/subscription.model';
+import { TermsDialogComponent } from '../../service/terms-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

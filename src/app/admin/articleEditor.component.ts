@@ -7,6 +7,7 @@ import { UserRepository } from '../model/user.repository';
 
 import { filter } from 'rxjs/operators';
 import { User } from '../model/user.model';
+import {SubCategory, Category} from '../service/constants';
 
 import * as _ from 'lodash';
 
@@ -23,6 +24,8 @@ export class ArticleEditorComponent implements OnInit {
   private user: User = new User();
   public previousArticles: Article[] = [];
   public previousArticle: Article = new Article();
+  public LocalSubCategory;
+  public LocalCategory;
 
   constructor(
     private repository: ArticleRepository,
@@ -32,6 +35,8 @@ export class ArticleEditorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.LocalSubCategory = SubCategory;
+    this.LocalCategory = Category;
     this.editing = this.activeRoute.snapshot.params['mode'] == 'edit';
 
     if (this.editing) {

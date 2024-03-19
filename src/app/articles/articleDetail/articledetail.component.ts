@@ -1,20 +1,20 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { Article } from '../model/article.model';
-import { ArticleRepository } from '../model/article.repository';
+import { Article } from '../../model/article.model';
+import { ArticleRepository } from '../../model/article.repository';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Comment } from '../model/comment.model';
+import { Comment } from '../../model/comment.model';
 import {  KeycloakService } from 'keycloak-angular';
-import { User } from '../model/user.model';
-import { Reply } from '../model/reply.model';
-import { UserRepository } from '../model/user.repository';
+import { User } from '../../model/user.model';
+import { Reply } from '../../model/reply.model';
+import { UserRepository } from '../../model/user.repository';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog.component';
 
 import { filter } from 'rxjs/operators';
-import { TermsDialogComponent } from '../service/terms-dialog.component';
+import { TermsDialogComponent } from '../../service/terms-dialog.component';
 
 import { DatePipe } from '@angular/common';
 

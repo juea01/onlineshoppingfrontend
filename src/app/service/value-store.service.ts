@@ -9,8 +9,10 @@ export class ValueStoreService {
 
   private articlePagination: number = 0;
   private productPagination: number = 0;
+  private casestudyPagination: number = 0;
 
   private isSetScrollToBookListView = false;
+  private isSetScrollToCaseStudyListView = false;
 
   constructor() { }
 
@@ -30,6 +32,15 @@ export class ValueStoreService {
     return this.articlePagination;
   }
 
+
+  public setCasestudyPagination(paginationNum: number){
+    this.casestudyPagination = paginationNum;
+  }
+
+  public getCasestudyPagination(){
+    return this.casestudyPagination;
+  }
+
   public setProductPagination(paginationNum: number){
     this.productPagination = paginationNum;
   }
@@ -44,6 +55,14 @@ export class ValueStoreService {
 
   public isScrollToBookListView():boolean {
     return this.isSetScrollToBookListView;
+  }
+
+  public setScrollToCaseStudyListView(isSetScrollToCaseStudyListView: boolean){
+    this.isSetScrollToCaseStudyListView = isSetScrollToCaseStudyListView;
+  }
+
+  public isScrollToCaseStudyListView():boolean {
+    return this.isSetScrollToCaseStudyListView;
   }
 
 }

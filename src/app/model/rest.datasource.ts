@@ -38,7 +38,7 @@ export class RestDataSource{
 
   //constructor(private http: HttpClient, private socket: Socket) {
   constructor(private http: HttpClient) {
-   //  this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
+    // this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/api/`;
      this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
     //  this.mlPredictionUrl = `${PROTOCOL}://${location.hostname}:${MLPORT}/`;
   }
@@ -207,8 +207,8 @@ export class RestDataSource{
      return this.sendRequest<Object>("DELETE", `${this.baseUrl}product-listing-service/articles/images/${id}`);
     }
 
-  getArticles(): Observable<Article[]> {
-    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/`);
+  getArticles(excludeCaseStudyArticles: boolean, excludeLearningArticles: boolean): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/${excludeCaseStudyArticles}/${excludeLearningArticles}`);
   }
 
   getAllArticlesByAuthorId(id): Observable<Article[]> {
@@ -231,6 +231,10 @@ export class RestDataSource{
 
   getArticleBySubcategory(subcategory: string): Observable<Article[]> {
     return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/subcategory/${subcategory}`);
+  }
+
+  getArticleByCategory(category: string): Observable<Article[]> {
+    return this.sendRequest<Article[]>("GET",`${this.baseUrl}product-listing-service/articles/category/${category}`);
   }
 
   searchArticle(searchCategory: string): Observable<Article[]> {

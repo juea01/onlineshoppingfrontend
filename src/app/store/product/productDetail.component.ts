@@ -1,14 +1,14 @@
 import {Component, OnInit, ElementRef} from "@angular/core";
-import { Product } from "../model/product.model";
-import {ProductRepository} from "../model/product.repository";
-import { Cart } from "../model/cart.model";
+import { Product } from "../../model/product.model";
+import {ProductRepository} from "../../model/product.repository";
+import { Cart } from "../../model/cart.model";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Search } from '../model/search.model';
-import { Images } from '../model/images.model';
-import { TermsDialogComponent } from "../service/terms-dialog.component";
+import { Search } from '../../model/search.model';
+import { Images } from '../../model/images.model';
+import { TermsDialogComponent } from "../../service/terms-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { DatePipe } from "@angular/common";
-import { ValueStoreService } from "../service/value-store.service";
+import { ValueStoreService } from "../../service/value-store.service";
 
 
 @Component({
@@ -80,7 +80,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   goBackToStorePage(): void {
-    this.valueStoreService.setScrollToBookListView(true);
     this.router.navigate(['store']);
   }
 

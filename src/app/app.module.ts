@@ -10,17 +10,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angu
 
 import {StoreModule} from "./store/store.module";
 import {StoreComponent } from "./store/store.component";
-import {AboutUsComponent } from "./store/aboutUs.component";
+import {AboutUsComponent } from "./store/aboutUs/aboutUs.component";
 import { SubscriptionComponent } from './store/subscription/subscription/subscription.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { ProductDetailComponent } from './store/productDetail.component';
-import { EmailConfirmationComponent } from './store/emailConfirmation.component';
+import { ProductDetailComponent } from './store/product/productDetail.component';
+import { EmailConfirmationComponent } from './store/emai/emailConfirmation.component';
 
 
 
 import {ArticleComponent} from "./articles/article.component";
-import {ArticleDetailComponent} from "./articles/articledetail.component";
-import {DialogComponent} from "./articles/dialog.component";
+import {ArticleDetailComponent} from "./articles/articleDetail/articledetail.component";
+import {DialogComponent} from "./articles/articleDetail/dialog.component";
 
 
 
@@ -39,6 +39,7 @@ import { MatProgressBarModule} from "@angular/material/progress-bar";
 import { ServiceModule } from './service/service.module';
 import {ModelModule} from "./model/model.module";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
+import { CaseStudyComponent } from './articles/case-study/case-study.component';
 
 
 /**
@@ -68,7 +69,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     RegistrationComponent,
     ArticleComponent,
     ArticleDetailComponent,
-    DialogComponent
+    DialogComponent,
+    CaseStudyComponent
 
   ],
   imports: [
@@ -94,6 +96,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "productDetail/:id", component: ProductDetailComponent},
       {path: "productDetail", component: ProductDetailComponent},
       {path: 'emailConfirmation/:code', component: EmailConfirmationComponent},
+
+      {path: "casestudy", component: CaseStudyComponent},
 
       {path: "article/:subcategory", component: ArticleComponent},
       {path: "article", component: ArticleComponent},

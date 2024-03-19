@@ -1,13 +1,13 @@
 import {Component} from "@angular/core";
-import { User } from "../model/user.model";
+import { User } from "../../model/user.model";
 import { NgForm } from "@angular/forms";
-import { UserRepository } from "../model/user.repository";
+import { UserRepository } from "../../model/user.repository";
 import { ActivatedRoute } from "@angular/router";
 
-import { PATH_USER_CODE_URL } from "../service/constants";
-import { PATH_SUBSCRIPTION_CODE_URL } from "../service/constants";
-import { PATH_PASSWORD_RESET_CODE_URL } from "../service/constants";
-import { Subscription } from "../model/subscription.model";
+import { PATH_USER_CODE_URL } from "../../service/constants";
+import { PATH_SUBSCRIPTION_CODE_URL } from "../../service/constants";
+import { PATH_PASSWORD_RESET_CODE_URL } from "../../service/constants";
+import { Subscription } from "../../model/subscription.model";
 
 
 
