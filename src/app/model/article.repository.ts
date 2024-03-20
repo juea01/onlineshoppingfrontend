@@ -131,17 +131,11 @@ export class ArticleRepository {
     );
   }
 
-  getAllArticles(excludeCaseStudyArticles: boolean= true, excludeLearningArticles: boolean= false): Observable<Article[]> {
+  getLearningArticles(excludeCaseStudyArticles: boolean= true, excludeLearningArticles: boolean= false): Observable<Article[]> {
     return new Observable((observer) => {
       //check if articles are already hrere
       let articleList = [];
-      if (excludeCaseStudyArticles) {
-        articleList = this.articles.filter((a) => a.category != Category.CaseStudy);
-      } else if (!excludeCaseStudyArticles && excludeLearningArticles) {
-        articleList = this.articles.filter((a) => a.category == Category.CaseStudy);
-      } else {
-        articleList = this.articles;
-      }
+      articleList = this.articles.filter((a) => a.category != Category.CaseStudy);
 
       if (!_.isEmpty(articleList)) {
         observer.next(articleList);
@@ -150,10 +144,41 @@ export class ArticleRepository {
         this.dataSource
           .getArticles(excludeCaseStudyArticles, excludeLearningArticles)
           .subscribe((data) => {
-            //since it is get all articles, empty current list and replace till pagination is introduced
+            //since it is get all learning articles, empty current list and replace till pagination is introduced
             this.articles = null;
             this.articles = data;
             observer.next(this.articles);
+            observer.complete();
+          });
+      }
+    });
+  }
+
+  getCaseStudyArticles(excludeCaseStudyArticles: boolean= false, excludeLearningArticles: boolean= true): Observable<Article[]> {
+    return new Observable((observer) => {
+      //check if articles are already hrere
+      let articleList = [];
+      articleList = this.articles.filter((a) => a.category == Category.CaseStudy);
+
+      if (!_.isEmpty(articleList)) {
+        observer.next(articleList);
+        observer.complete();
+      } else {
+        this.dataSource
+          .getArticles(excludeCaseStudyArticles, excludeLearningArticles)
+          .subscribe((data) => {
+            //TODO: more likely this.articles alread have learning articles so append case stuy articles to the list till pagination is introduced
+            if (!_.isEmpty(data)) {
+              if (!_.isEmpty(this.articles)) {
+                for (const art of data) {
+                  this.articles.push(art);
+                }
+              } else {
+                this.articles = data;
+              }
+            }
+            articleList = this.articles.filter((a) => a.category == Category.CaseStudy);
+            observer.next(articleList);
             observer.complete();
           });
       }

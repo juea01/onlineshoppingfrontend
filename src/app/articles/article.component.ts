@@ -4,6 +4,8 @@ import { ArticleRepository } from "../model/article.repository";
 import { Router } from "@angular/router";
 import { ActivatedRoute} from "@angular/router";
 import { Search } from '../model/search.model';
+import { ValueStoreService } from '../service/value-store.service';
+import { ComponentLiteralNavName } from "../service/constants";
 
 @Component({
   selector: "app-article",
@@ -18,7 +20,8 @@ export class ArticleComponent implements OnInit{
   public advancedSelectedPage = 1;
   public articlesList: Article[] = [];
 
-  constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
+  constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute,
+    private searchString: Search, private valueStoreService: ValueStoreService) {
   }
 
   ngOnInit(): void {
@@ -138,5 +141,12 @@ export class ArticleComponent implements OnInit{
       let pixel = (this.getWindowInnerHeight() - (200+this.getMainContainerHeight())) +this.getMainContainerHeight();
       return this.getWindowInnerHeight()+200+"px";
     }
+  }
+
+
+  navigateToArticleDetail(articleId: number) {
+   // this.valueStoreService.setArticlePagination(this.articleSelectedPage);
+   this.valueStoreService.setPreviousPage(ComponentLiteralNavName.CompArticle);
+    this.router.navigate([ComponentLiteralNavName.CompArticleDetail, articleId]);
   }
 }

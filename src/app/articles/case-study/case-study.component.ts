@@ -5,6 +5,9 @@ import { Router } from "@angular/router";
 import { ActivatedRoute} from "@angular/router";
 import { Search } from '../../model/search.model';
 import { Category, SubCategory } from '../../service/constants';
+import { ValueStoreService } from '../../service/value-store.service';
+import { ComponentLiteralNavName } from "../../service/constants";
+
 
 @Component({
   selector: 'app-case-study',
@@ -20,7 +23,9 @@ export class CaseStudyComponent implements OnInit {
   public advancedSelectedPage = 1;
   public articlesList: Article[] = [];
 
-  constructor(private repository: ArticleRepository, private router: Router, private activatedRoute: ActivatedRoute, private searchString: Search) {
+  constructor(private repository: ArticleRepository, private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private searchString: Search, private valueStoreService: ValueStoreService) {
   }
 
   ngOnInit(): void {
@@ -83,6 +88,12 @@ export class CaseStudyComponent implements OnInit {
   changePage(newPage: number){
     this.selectedPage = newPage;
   }
+
+  navigateToArticleDetail(articleId: number) {
+    // this.valueStoreService.setArticlePagination(this.articleSelectedPage);
+    this.valueStoreService.setPreviousPage(ComponentLiteralNavName.CompCaseStudy);
+     this.router.navigate([ComponentLiteralNavName.CompArticleDetail, articleId]);
+   }
 
 
 }

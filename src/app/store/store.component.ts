@@ -36,7 +36,7 @@ export class StoreComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.articleRepository.getAllArticles().subscribe((articles) => {
+    this.articleRepository.getLearningArticles().subscribe((articles) => {
       this.articles = articles;
       if (this.valueStoreService.getArticlePagination() > 0) {
         this.articleSelectedPage =
@@ -46,7 +46,7 @@ export class StoreComponent implements OnInit {
       this.populateArticlesPerPage();
     });
 
-    this.articleRepository.getAllArticles(false, true).subscribe((caseStudies) => {
+    this.articleRepository.getCaseStudyArticles().subscribe((caseStudies) => {
       this.caseStudies = caseStudies;
       if (this.valueStoreService.getCasestudyPagination() > 0) {
           this.caseStudiesSelectedPage = this.valueStoreService.getCasestudyPagination();

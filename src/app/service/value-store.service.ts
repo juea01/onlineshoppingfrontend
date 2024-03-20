@@ -14,6 +14,8 @@ export class ValueStoreService {
   private isSetScrollToBookListView = false;
   private isSetScrollToCaseStudyListView = false;
 
+  private previousPage: string = null;
+
   constructor() { }
 
   public setItemPremium(isPremium: boolean):void {
@@ -63,6 +65,14 @@ export class ValueStoreService {
 
   public isScrollToCaseStudyListView():boolean {
     return this.isSetScrollToCaseStudyListView;
+  }
+
+  public getPreviousPage():string {
+    return this.previousPage;
+  }
+
+  public setPreviousPage(previousPage:string):void {
+    this.previousPage =  previousPage;
   }
 
 }

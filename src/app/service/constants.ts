@@ -28,6 +28,17 @@ export enum SubCategory{
 
 }
 
+/**
+ * This can be used to navigate to particluar component with this.router.navigate().
+ * TODO: Need to get all navigation literal here
+ */
+export enum ComponentLiteralNavName{
+  CompArticle = 'article',
+  CompArticleDetail = 'articleDetail',
+  CompStore = 'store',
+  CompCaseStudy = 'casestudy'
+}
+
 export enum Category{
   BackendDevelopment = 'BackendDevelopment',
   FrontEndDevelopment = 'FrontEndDevelopment',

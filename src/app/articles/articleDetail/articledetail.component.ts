@@ -9,6 +9,8 @@ import {  KeycloakService } from 'keycloak-angular';
 import { User } from '../../model/user.model';
 import { Reply } from '../../model/reply.model';
 import { UserRepository } from '../../model/user.repository';
+import { ValueStoreService } from '../../service/value-store.service';
+import { ComponentLiteralNavName } from '../../service/constants';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog.component';
@@ -17,6 +19,7 @@ import { filter } from 'rxjs/operators';
 import { TermsDialogComponent } from '../../service/terms-dialog.component';
 
 import { DatePipe } from '@angular/common';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-articledetail',
@@ -44,7 +47,8 @@ export class ArticleDetailComponent implements OnInit {
     private dialog: MatDialog,
     private keycloak: KeycloakService,
     private datePipe: DatePipe,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private valueStoreService: ValueStoreService
   ) {}
 
   ngOnInit(): void {
@@ -171,6 +175,26 @@ export class ArticleDetailComponent implements OnInit {
 
   navigateToNextArticle(nextArticleId: number) {
     this.router.navigate(['articleDetail', nextArticleId]);
+  }
+
+  /**
+   * Check if getPreviousPage() is not empty then navigate back to article or Case study component otherwise to /store page
+   */
+  navigateToPreviousPage() {
+    if (_.isEmpty( this.valueStoreService.getPreviousPage())) {
+      this.router.navigate([ComponentLiteralNavName.CompStore]);
+    } else {
+      let previousPage: string = this.valueStoreService.getPreviousPage();
+      console.log(`Previous page ${previousPage}`);
+      this.valueStoreService.setPreviousPage(null);
+      if (previousPage.match(ComponentLiteralNavName.CompArticle)) {
+        this.router.navigate([previousPage, this.article?.subcategory]);
+      } else if (previousPage.match(ComponentLiteralNavName.CompCaseStudy)){
+        this.router.navigate([previousPage]);
+      } else {
+        this.router.navigate([ComponentLiteralNavName.CompStore]);
+      }
+    }
   }
 
   getRandomQuote(): string {
