@@ -29,6 +29,7 @@ export class SubjectsComponent implements OnInit, OnDestroy {
   public subCategory: string;
   public localSkillLevel;
   public errorMessage: string;
+  public level: number = 0;
 
   constructor(private repository: SubjectRepository, private userRepository: UserRepository,
     private router: Router, private activatedRoute:ActivatedRoute, private valueStoreService: ValueStoreService,
@@ -50,11 +51,18 @@ export class SubjectsComponent implements OnInit, OnDestroy {
 
       });
 
-      //default skill level and sub category
-      this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
-      this.subCategory = SubCategory.Java;
+      if(_.isEmpty(this.activatedRoute.snapshot.params["level"])){
+        this.skillLevel = getSkillLevelValue(SkillLevel.Beginner);
+      }  else {
+        console.log(`Setting level  ${this.activatedRoute.snapshot.params["level"]}`)
+        this.skillLevel = this.activatedRoute.snapshot.params["level"];
+      }
 
-      if(this.activatedRoute.snapshot.params["subCategory"]){
+      if (_.isEmpty(this.activatedRoute.snapshot.params["subCategory"]) ) {
+        console.log(`Setting sub category java`)
+        this.subCategory = SubCategory.Java;
+      } else {
+        console.log(`Setting sub category ${this.activatedRoute.snapshot.params["subCategory"]}`)
         this.subCategory = this.activatedRoute.snapshot.params["subCategory"];
       }
 
@@ -66,7 +74,9 @@ export class SubjectsComponent implements OnInit, OnDestroy {
           this.subCategory = update.subCategory;
           this.getSubjectBySubCaterogyLevel(this.skillLevel, this.subCategory);
         } else {
-          this.subCategory = SubCategory.Java;
+          if(_.isEmpty(this.subCategory)){
+            this.subCategory = SubCategory.Java;
+          }
         }
       })
 
@@ -138,7 +148,7 @@ export class SubjectsComponent implements OnInit, OnDestroy {
 
   navigateToQuestionDetail(id: string, level: string, isPremium: boolean) {
     this.valueStoreService.setItemPremium(isPremium);
-    this.router.navigate(['/myaccount/main/subjectdetail', id, level, isPremium]);
+    this.router.navigate(['/myaccount/main/subjectdetail', id, level, this.subCategory, isPremium]);
   }
 
   navigateToPayment() {

@@ -30,10 +30,12 @@ export class QuestiondetailComponent implements OnInit {
   userSubject: UserSubject;
   user = new User();
   level = 0;
+  public subCategory: string;
 
 
   constructor(private repository: SubjectRepository, private userRepository: UserRepository, private router: Router, private activatedRoute: ActivatedRoute) {
     this.level = this.activatedRoute.snapshot.params["level"];
+    this.subCategory = this.activatedRoute.snapshot.params["subCategory"];
     this.userRepository.loadUserForUserDetail().pipe(
       filter(data => data !== null)
       ).subscribe(
@@ -270,7 +272,7 @@ export class QuestiondetailComponent implements OnInit {
    }
 
    exit():void {
-    this.router.navigate(['/myaccount/main/practicetests',this.level]);
+    this.router.navigate(['/myaccount/main/practicetests',this.level, this.subCategory]);
    }
 
    saveAndExit():void {
