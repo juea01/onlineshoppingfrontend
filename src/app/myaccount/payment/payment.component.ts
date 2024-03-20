@@ -46,16 +46,33 @@ export class PaymentComponent implements OnInit {
 
   }
 
+  /**
+   * Subscribe function frist check if user already has account through manageBilling() and if not continue with subscribe().
+   * Some users could already have account but suspended due to payment failure in second month for example.
+   * @param priceId Price id of stripe product
+   */
   subscribe(priceId: string){
-    this.subscriptionRepo.subscribe(priceId, this.userDetail.username, this.keycloakUserId).subscribe((result)=> {
-      if(result.redirectView){
-        console.log(result.url);
+    this.subscriptionRepo
+    .manageBilling(this.userDetail.username)
+    .subscribe((result) => {
+      if (result.redirectView) {
         if (result.url) {
-          console.log(`Redirecting user to  ${result.url} `);
           window.location.href = result.url;
         }
+      } else {
+        //TODO:this need to handle properly including working with backend for response message
+        this.subscriptionRepo.subscribe(priceId, this.userDetail.username, this.keycloakUserId).subscribe((result)=> {
+          if(result.redirectView){
+            console.log(result.url);
+            if (result.url) {
+              console.log(`Redirecting user to  ${result.url} `);
+              window.location.href = result.url;
+            }
+          }
+        });
       }
     });
+
   }
 
 }
