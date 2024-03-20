@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
+  <div class="container-fluid">
     <a class="navbar-brand">Tech District</a>
     <button class="navbar-toggler" type="button" (click)="toogleNavbar()">
       <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,8 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" style="cursor: pointer;" aria-current="page" (click)="navigateToCaseStudy()">Case Studies</a>
+          <a class="nav-link" style="cursor: pointer;" aria-current="page" (click)="navigateToCaseStudy()">Case
+            Studies</a>
         </li>
 
         <li class="nav-item">
@@ -32,21 +33,15 @@
         </li>
 
       </ul>
-      <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>
-      <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>
+
+
       <div class="d-flex">
         <input #searchValue class="form-control me-2" type="search" data-toggle="tooltip"
           title="Enter Article title or Article type here" placeholder="Search Articles here" aria-label="Search">
         <button class="btn btn-outline-success" (click)="search(searchValue.value)">Search</button>
       </div>
 
-      <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>
+
 
 
 
@@ -57,11 +52,11 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="/myaccount"><i class="far fa-user"></i> MyAccount</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="!isUserEmailExist()"  class="nav-item">
               <button class="btn btn-success" (click)="navigateToRegistration()">Register</button>
             </li>
-            <br/>
-            <li *ngIf="getUserDetail().email" class="nav-item">
+            <br />
+            <li *ngIf="isUserEmailExist()" class="nav-item">
               <button style="margin-top: 2px;" class="btn btn-success" (click)="logout()">Logout</button>
             </li>
           </ul>
@@ -76,17 +71,18 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/myaccount"><i class="far fa-user"></i> MyAccount</a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="!isUserEmailExist()" class="nav-item">
             <button class="btn btn-success btn-block" (click)="navigateToRegistration()"> Register</button>
           </li>
           <li>
-            <div *ngIf="getUserDetail().email" class="button-container">
+            <div *ngIf="isUserEmailExist()" class="button-container">
               <button class="btn btn-success btn-block centered-button" (click)="logout()">Logout</button>
             </div>
           </li>
         </ul>
       </div>
     </div>
+  </div>
 </nav>
 
 <div class="row bg-dark">
@@ -94,7 +90,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;
   </div>
   <div class="col-sm-4 col-md-4">
-    <div *ngIf="getUserDetail().email">
+    <div *ngIf="isUserEmailExist()">
       <p style="color:white">Hi &nbsp;{{getUserDetail().username}} </p>
     </div>
   </div>

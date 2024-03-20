@@ -5,6 +5,7 @@ import { KeycloakService } from "keycloak-angular";
 import { UserRepository } from '../model/user.repository';
 import {User} from "../model/user.model";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-nav-bar',
@@ -102,6 +103,13 @@ export class NavBarComponent implements OnInit {
 
   getUserDetail(): User {
     return this.userRepository.getUser();
+  }
+
+  isUserEmailExist(): boolean {
+    if (_.isEmpty(this.userRepository.getUser().email)) {
+      return false;
+    }
+    return true;
   }
 
 }

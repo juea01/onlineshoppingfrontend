@@ -7,7 +7,7 @@
 
   <div class="row">
     <div class="col bg-dard text-white">
-      <a class="navbar-brand"> JEWELLERY STORE</a>
+      <a class="navbar-brand"> Tech District</a>
     </div>
 
   </div>
@@ -18,6 +18,8 @@
 
     <div class="col-md-3 bg-warning">
       <div class="container-fluid">
+        <p id="menu-button"  (click)="toogleCareerPanel()">Close MyAccount Menu...X</p>
+        <div id="myaccount-menu">
         <div class="row mb-2">
           <div class="col-md-12">
             <mat-card>
@@ -48,17 +50,23 @@
                   </div>
                 </div>
 
-                <button class="btn btn-outline-info btn-block" routerLink="/myaccount/main/userdetails"
-                  routerLinkActive="active">My Details</button>
-                <button disabled class="btn btn-outline-info btn-block">Notifications and Privacy Settings-Will be available in next
-                  release:)</button>
+                <div >
+                  <button class="btn btn-outline-info btn-block" (click)="navigateToUserDetail()" routerLinkActive="active">My Details</button>
 
-                <button class="btn btn-outline-info btn-block" (click)="manageBilling()">Manage Billing</button>
+                  <button disabled class="btn btn-outline-info btn-block">Notifications and Privacy Settings-Will be
+                    available in next
+                    release:)</button>
+
+                  <button class="btn btn-outline-info btn-block" (click)="manageBilling()">Manage Billing</button>
+                </div>
+
+
               </mat-card-content>
 
             </mat-card>
           </div>
         </div>
+      </div>
       </div>
 
     </div>
@@ -68,7 +76,8 @@
         <div class="row">
           <div class="col-md-12">
             <div class="flex-container">
-              <a (click)="setSubCategory(subCategoryEnum.Java)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.Java}">
+              <a (click)="setSubCategory(subCategoryEnum.Java)"
+                [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.Java}">
                 <mat-card class="subject-card">
                   <mat-icon>exposure</mat-icon>
                   <mat-card-content>
@@ -76,7 +85,8 @@
                   </mat-card-content>
                 </mat-card>
               </a>
-              <a (click)="setSubCategory(subCategoryEnum.JavaScript)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.JavaScript}">
+              <a (click)="setSubCategory(subCategoryEnum.JavaScript)"
+                [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.JavaScript}">
                 <mat-card class="subject-card">
                   <mat-icon>exposure</mat-icon>
                   <mat-card-content>
@@ -84,7 +94,8 @@
                   </mat-card-content>
                 </mat-card>
               </a>
-           <a (click)="setSubCategory(subCategoryEnum.HTML_CSS)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.HTML_CSS}">
+              <a (click)="setSubCategory(subCategoryEnum.HTML_CSS)"
+                [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.HTML_CSS}">
                 <mat-card class="subject-card">
                   <mat-icon>exposure</mat-icon>
                   <mat-card-content>
@@ -92,7 +103,8 @@
                   </mat-card-content>
                 </mat-card>
               </a>
-              <a (click)="setSubCategory(subCategoryEnum.Machine_Learning)" [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.Machine_Learning}">
+              <a (click)="setSubCategory(subCategoryEnum.Machine_Learning)"
+                [ngClass]="{'selected': selectedSubCategory === subCategoryEnum.Machine_Learning}">
                 <mat-card class="subject-card">
                   <mat-icon>exposure</mat-icon>
                   <mat-card-content>

@@ -38,3 +38,15 @@
   background-color: blue;
   box-shadow: .25em .25em .5em .5em rgba( 0.3, 0, 0, 0.3);
 }
+
+/* Media query for large screens (greater than or equal to 992px width) */
+@media screen and (max-width: 991px) {
+  #smallScreenOnly {
+    display: block; /* Display the element on large screens */
+  }
+}
+
+#menu-button {
+  color: blue;
+  cursor: pointer;
+}
