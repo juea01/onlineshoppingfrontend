@@ -38,6 +38,7 @@ export class ArticleDetailComponent implements OnInit {
   showRepliesOfComment: number = 0;
   replyExist: boolean = false;
   private hasInitiated: boolean = false;
+  private randomQuoteNum: number = 0;
 
   constructor(
     private repository: ArticleRepository,
@@ -95,6 +96,9 @@ export class ArticleDetailComponent implements OnInit {
       }
     });
 
+    //since getRandomQuotes() method is used in template, Angular evaluate it very often and as a result random number is
+    //changing and so do quotes on UI display
+    this.randomQuoteNum =  Math.floor( Math.random()*3)+1;
 
   }
 
@@ -198,8 +202,7 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   getRandomQuote(): string {
-   const quoteNum =  Math.floor( Math.random()*3)+1;
-    return "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Quote"+quoteNum+".jpg";
+     return "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Quote"+this.randomQuoteNum+".jpg";
   }
 
   // postRepliesByCommentId(id: number) {
