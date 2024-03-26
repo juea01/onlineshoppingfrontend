@@ -90,13 +90,13 @@
         fit the remaining available space of first row then content from second row is jumping up a bit. fullWidth is
         helping to mitigate the problem-->
         <div class="row fullWidth">
-          <h1 style="text-decoration: underline; font-family: 'Courier New', Courier, monospace;">Security Related Case Studies</h1>
+          <h1 style="text-decoration: underline; font-family: 'Courier New', Courier, monospace;">Networking and Database Related Case Studies</h1>
         </div>
         <div class="row">
-          <div *ngIf="getSecurityRelatedArticles() == null || getSecurityRelatedArticles().length == 0">
+          <div *ngIf="getNetworkingDbRelatedArticles() == null || getNetworkingDbRelatedArticles().length == 0">
             <p>We don't have Security related case studies at this moment. Please come back later.</p>
           </div>
-          <ng-template ngFor let-article [ngForOf]="getSecurityRelatedArticles()">
+          <ng-template ngFor let-article [ngForOf]="getNetworkingDbRelatedArticles()">
             <div class="col-sm-6 col-md-4 p-2">
               <div class="card m-1 p-1 bg-light">
                 <!--  <img class="card-img-top" src="{{article.images[0].location}}{{article.images[0].name}}" alt="Card image cap">-->
@@ -143,13 +143,13 @@
         fit the remaining available space of first row then content from second row is jumping up a bit. fullWidth is
         helping to mitigate the problem-->
         <div class="row fullWidth">
-          <h1 style="text-decoration: underline; font-family: 'Courier New', Courier, monospace;">Performance Related Case Studies</h1>
+          <h1 style="text-decoration: underline; font-family: 'Courier New', Courier, monospace;">Security and Performance Related Case Studies</h1>
         </div>
         <div class="row">
-          <div *ngIf="getPerformanceRelatedArticles() == null || getPerformanceRelatedArticles().length == 0">
+          <div *ngIf="getSecurityPerformanceRelatedArticles() == null || getSecurityPerformanceRelatedArticles().length == 0">
             <p>We don't have Performance related case studies at this moment. Please come back later.</p>
           </div>
-          <ng-template ngFor let-article [ngForOf]="getPerformanceRelatedArticles()">
+          <ng-template ngFor let-article [ngForOf]="getSecurityPerformanceRelatedArticles()">
             <div class="col-sm-6 col-md-4 p-2">
               <div class="card m-1 p-1 bg-light">
                 <!--  <img class="card-img-top" src="{{article.images[0].location}}{{article.images[0].name}}" alt="Card image cap">-->

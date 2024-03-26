@@ -21,8 +21,8 @@ export enum SubCategory{
   Machine_Learning = 'ML',
   JavaScript = 'JavaScript',
   HTML_CSS = 'HTML_CSS',
-  Security = 'Security',
-  Performance = 'Performance',
+  Security_Performance = 'SecurityPerformance',
+  Networking_Database = 'NetworkingDb',
   ArtificialIntelligence = 'AI',
   GeneralKnowledge = 'GI'
 

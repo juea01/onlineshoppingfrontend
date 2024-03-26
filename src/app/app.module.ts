@@ -40,6 +40,7 @@ import { ServiceModule } from './service/service.module';
 import {ModelModule} from "./model/model.module";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 import { CaseStudyComponent } from './articles/case-study/case-study.component';
+import { SearchComponent } from './articles/search/search.component';
 
 
 /**
@@ -70,7 +71,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ArticleComponent,
     ArticleDetailComponent,
     DialogComponent,
-    CaseStudyComponent
+    CaseStudyComponent,
+    SearchComponent
 
   ],
   imports: [
