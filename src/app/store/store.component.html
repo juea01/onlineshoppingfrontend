@@ -140,6 +140,70 @@
       </div>
       <div style="clear: both;"></div>
 
+
+      <div>
+        <hr/>
+      </div>
+
+      <div class="row secondary-content">
+          <!-- Since title is only taking small part of the row, whenever second row has only one article that can
+        fit the remaining available space of first row then content from second row is jumping up a bit. fullWidth is
+        helping to mitigate the problem-->
+        <div id="featuresPromoViewLocation"></div>
+        <div class="row fullWidth">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10 col-md-12"> <h1 style="text-decoration: underline; font-family: 'Courier New', Courier, monospace;">Our Features</h1></div>
+          <div class="col-sm-1"></div>
+
+
+        </div>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10 col-md-12"><h3> You don't need credit card to register with us. If you have an account with us:</h3></div>
+          <div class="col-sm-1"></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10 col-md-12">
+            <ul>
+              <li>You can post comments on our platform</li>
+              <li>You can practise non-premium Multiple-Choic Tests for free</li>
+            </ul>
+            <h3>Practising multiple-choice tests not only help you understand the main points of articles you have read but also
+              allows you to quickly refresh your memory about concepts.
+            </h3>
+          </div>
+          <div class="col-sm-1"></div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2 col-md-2">
+            <!-- Having issue aligning  <button  class="control previous" (click)="onPreviousClick()">
+              <span class="arrow left"></span>
+            </button> -->
+          </div>
+          <div class="col-sm-8 col-md-8">
+            <div class="animationcontainer">
+              <div class="carousel">
+                <ng-container *ngFor="let featureImage of featureImages; let i = index">
+                  <p  *ngIf="i === currentSlide" @roateImage  class="slide">
+                    <img class="animationImage" src="{{featureImage.url}}" alt="Card image cap" />
+                    <span class="slide-after"></span><br><strong>-{{ featureImage.caption}}-</strong>
+                  </p>
+                </ng-container>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2 col-md-2">
+             <!-- Having issue aligning <button class="control next" (click)="onNextClick()">
+            <span class="arrow right"></span>
+          </button> -->
+        </div>
+        </div>
+     </div>
+
       <div>
         <hr/>
       </div>

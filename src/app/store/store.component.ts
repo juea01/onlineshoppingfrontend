@@ -8,11 +8,13 @@ import { WindowSizeServiceService } from '../service/window-size-service.service
 import { ArticleRepository } from '../model/article.repository';
 import { Article } from '../model/article.model';
 import { ValueStoreService } from '../service/value-store.service';
+import {RoateImageTrigger} from './animation/animation.component';
 
 @Component({
   selector: 'store',
   templateUrl: 'store.component.html',
   styleUrls: ['store.component.css'],
+  animations: [RoateImageTrigger]
 })
 export class StoreComponent implements OnInit {
   public selectedCategory = null;
@@ -24,6 +26,15 @@ export class StoreComponent implements OnInit {
   public articlesPerPage: Article[] = [];
   public caseStudies: Article[] = [];
   public caseStudiesPerPage: Article[] = [];
+
+  //for image animation
+  imageId: string = "";
+  currentSlide = 0;
+  public featureImages = [
+    {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/PostComment.JPG", caption: "Post Comment"},
+    {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Test_ByLevel.JPG", caption: "Multiple Choice Test By Subject and Level"},
+    {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Test_WithFeedBack.JPG", caption: "Multiple Choice Test with Feedback"}
+  ]
 
   constructor(
     private repository: ProductRepository,
@@ -78,6 +89,10 @@ export class StoreComponent implements OnInit {
         caseStudyView.scrollIntoView({ behavior: 'smooth' });
       }
     }
+
+    setInterval(()=>{
+      this.onNextClick();
+    }, 3000)
   }
 
   get products(): Product[] {
@@ -199,5 +214,16 @@ export class StoreComponent implements OnInit {
 
   getOptimalMainContainerHeight(): string {
     return this.windowSizeService.getOptimalMainContainerHeight();
+  }
+
+
+  onPreviousClick() {
+    const previous = this.currentSlide - 1;
+    this.currentSlide = previous < 0 ? this.featureImages.length - 1 : previous;
+  }
+
+  onNextClick() {
+    const next = this.currentSlide + 1;
+    this.currentSlide = next === this.featureImages.length ? 0 : next;
   }
 }
