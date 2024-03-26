@@ -138,6 +138,10 @@ ul li::before {
 
 }
 
+.maxWidth200{
+  max-width: 200px;
+}
+
 @media screen and (min-width: 677px) {
   .animationcontainer {
     display: block;
