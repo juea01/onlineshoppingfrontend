@@ -15,6 +15,7 @@ export class ValueStoreService {
   private isSetScrollToCaseStudyListView = false;
 
   private previousPage: string = null;
+  private paramValue: string = null;
 
   constructor() { }
 
@@ -73,6 +74,14 @@ export class ValueStoreService {
 
   public setPreviousPage(previousPage:string):void {
     this.previousPage =  previousPage;
+  }
+
+  public getParamValue():string {
+    return this.paramValue;
+  }
+
+  public setParamValue(paramValue:string): void {
+    this.paramValue = paramValue;
   }
 
 }

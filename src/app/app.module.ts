@@ -42,6 +42,7 @@ import { environment as docker_env_config } from 'src/environments/environment.d
 import { CaseStudyComponent } from './articles/case-study/case-study.component';
 import { SearchComponent } from './articles/search/search.component';
 
+import { ComponentLiteralNavName} from "./service/constants";
 
 /**
  *
@@ -105,6 +106,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
       {path: "article", component: ArticleComponent},
       {path: "articleDetail/:id", component: ArticleDetailComponent},
       {path: "articleDetail", component: ArticleDetailComponent},
+
+      {path: ComponentLiteralNavName.CompSearchAndParamSearchString, component: SearchComponent},
+      {path: ComponentLiteralNavName.CompSearch, component: SearchComponent},
 
       {path: "subscription", component: SubscriptionComponent},
       {path: "registration", component: RegistrationComponent},

@@ -146,6 +146,7 @@ export class ArticleComponent implements OnInit{
 
   navigateToArticleDetail(articleId: number) {
    // this.valueStoreService.setArticlePagination(this.articleSelectedPage);
+   this.valueStoreService.setParamValue(this.selectedSubCategory);
    this.valueStoreService.setPreviousPage(ComponentLiteralNavName.CompArticle);
     this.router.navigate([ComponentLiteralNavName.CompArticleDetail, articleId]);
   }

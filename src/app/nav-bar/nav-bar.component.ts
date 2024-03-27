@@ -6,6 +6,7 @@ import { UserRepository } from '../model/user.repository';
 import {User} from "../model/user.model";
 import { environment as docker_env_config } from 'src/environments/environment.docker';
 import * as _ from 'lodash';
+import { ComponentLiteralNavName} from "../service/constants";
 
 @Component({
   selector: 'app-nav-bar',
@@ -54,11 +55,10 @@ export class NavBarComponent implements OnInit {
     if (this.selectedOption == "searchProduct") {
       this.searchString.category = searchValue;
       this.searchInput.nativeElement.value = "";
-      this.router.navigate(['store']);
+      this.router.navigate([ComponentLiteralNavName.CompStore]);
     } else {
-      this.searchString.category = searchValue;
       this.searchInput.nativeElement.value = "";
-      this.router.navigate(['article']);
+      this.router.navigate([ComponentLiteralNavName.CompSearch,searchValue]);
     }
 
 

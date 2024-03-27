@@ -36,7 +36,9 @@ export enum ComponentLiteralNavName{
   CompArticle = 'article',
   CompArticleDetail = 'articleDetail',
   CompStore = 'store',
-  CompCaseStudy = 'casestudy'
+  CompCaseStudy = 'casestudy',
+  CompSearch = 'search',
+  CompSearchAndParamSearchString = 'search/:searchString',
 }
 
 export enum Category{

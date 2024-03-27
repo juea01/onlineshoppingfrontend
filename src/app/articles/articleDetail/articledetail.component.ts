@@ -189,14 +189,13 @@ export class ArticleDetailComponent implements OnInit {
       this.router.navigate([ComponentLiteralNavName.CompStore]);
     } else {
       let previousPage: string = this.valueStoreService.getPreviousPage();
-      console.log(`Previous page ${previousPage}`);
       this.valueStoreService.setPreviousPage(null);
-      if (previousPage.match(ComponentLiteralNavName.CompArticle)) {
-        this.router.navigate([previousPage, this.article?.subcategory]);
-      } else if (previousPage.match(ComponentLiteralNavName.CompCaseStudy)){
+      if (_.isEmpty(this.valueStoreService.getParamValue())){
         this.router.navigate([previousPage]);
       } else {
-        this.router.navigate([ComponentLiteralNavName.CompStore]);
+        let paramValue = this.valueStoreService.getParamValue();
+        this.valueStoreService.setParamValue(null);
+        this.router.navigate([previousPage, paramValue]);
       }
     }
   }
