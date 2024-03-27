@@ -38,7 +38,7 @@ export class StoreComponent implements OnInit {
   ]
 
   constructor(
-    private repository: ProductRepository,
+    //private repository: ProductRepository,
     private cart: Cart,
     private router: Router,
     private searchString: Search,
@@ -96,21 +96,22 @@ export class StoreComponent implements OnInit {
     }, 3000)
   }
 
-  get products(): Product[] {
-    let pageIndex = (this.selectedPage - 1) * this.itemsPerPage;
-    this.selectedCategory = this.searchString.category;
-    return this.repository
-      .getProducts(this.selectedCategory)
-      .slice(pageIndex, pageIndex + this.itemsPerPage);
-  }
+  // Product Review might be removed in future version.
+  // get products(): Product[] {
+  //   let pageIndex = (this.selectedPage - 1) * this.itemsPerPage;
+  //   this.selectedCategory = this.searchString.category;
+  //   return this.repository
+  //     .getProducts(this.selectedCategory)
+  //     .slice(pageIndex, pageIndex + this.itemsPerPage);
+  // }
 
-  getProductSize(): number {
-    return this.repository.getProductSize();
-  }
+  // getProductSize(): number {
+  //   return this.repository.getProductSize();
+  // }
 
-  get categories(): string[] {
-    return this.repository.getCategories();
-  }
+  // get categories(): string[] {
+  //   return this.repository.getCategories();
+  // }
 
   changeCategory(newCategory?: string) {
     this.selectedCategory = newCategory;
@@ -165,12 +166,12 @@ export class StoreComponent implements OnInit {
     this.changePage(1);
   }
 
-  get pageCount(): number {
-    return Math.ceil(
-      this.repository.getProducts(this.selectedCategory).length /
-        this.itemsPerPage
-    );
-  }
+  // get pageCount(): number {
+  //   return Math.ceil(
+  //     this.repository.getProducts(this.selectedCategory).length /
+  //       this.itemsPerPage
+  //   );
+  // }
 
   get pageArticleCount(): number {
     return Math.ceil(this.articles.length / this.itemsPerPage);
