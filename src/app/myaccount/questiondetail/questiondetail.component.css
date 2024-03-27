@@ -10,3 +10,8 @@
 .text-warn {
   color:  rgb(224, 231, 23);
 }
+
+
+.fullWidth {
+  width: 100%;
+}

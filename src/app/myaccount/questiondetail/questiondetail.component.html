@@ -84,8 +84,28 @@
 
                 </div>
               </div>
-              <div *ngIf="!complete">
+              <div *ngIf="!complete" class="fullWidth">
                 <p> <i class="fa fa-bullhorn"></i> Please save your progress before exiting from this exercise.</p>
+              </div>
+              <div>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <p><i class="fa fa-info-circle"></i> Suggested Articles To Read</p>
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>Reading following articles can help you answer some of the questions from this exercise.</p>
+                  <ul>
+                    <li *ngFor="let article of articles">
+                      <a (click)="navigateToArticleDetail(article.id)" class="text-purple">{{ article.title }}</a>
+                    </li>
+                  </ul>
+                  <p *ngIf="articles.length <= 0">Sorry there is no suggested articles for this exercise.</p>
+
+                </mat-expansion-panel>
               </div>
 
 

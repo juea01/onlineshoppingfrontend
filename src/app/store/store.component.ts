@@ -33,7 +33,8 @@ export class StoreComponent implements OnInit {
   public featureImages = [
     {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/PostComment.JPG", caption: "Post Comment"},
     {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Test_ByLevel.JPG", caption: "Multiple Choice Test By Subject and Level"},
-    {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Test_WithFeedBack.JPG", caption: "Multiple Choice Test with Feedback"}
+    {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Test_WithFeedBack.JPG", caption: "Multiple Choice Test with Feedback"},
+    {url: "https://tech-district-nanobit.s3.ap-southeast-2.amazonaws.com/Suggested_Article.JPG", caption: "Articles To Read for Exercise"}
   ]
 
   constructor(

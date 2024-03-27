@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubjectRepository } from 'src/app/model/subject.repository';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/model/question.model';
+import { Article } from 'src/app/model/article.model';
 import { UserRepository } from "src/app/model/user.repository";
 import { filter } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -10,6 +11,7 @@ import { UserSubject } from 'src/app/model/userSubject.model';
 import { CompletedQuestion } from 'src/app/model/completedQuestion.model';
 import { Subject } from 'src/app/model/subject.model';
 import { User } from 'src/app/model/user.model';
+import { ComponentLiteralNavName } from "../../service/constants";
 
 @Component({
   selector: 'app-questiondetail',
@@ -20,6 +22,7 @@ export class QuestiondetailComponent implements OnInit {
   questions: Question[] = [];
   questionNum: number = 0;
   selectedOption="";
+  articles: Article[] = [];
 
   public errorMessage: string;
   public successMessage: string;
@@ -50,6 +53,15 @@ export class QuestiondetailComponent implements OnInit {
   getQuestionsBySubjectId(subjectId: number) {
     this.repository.getQuestionsBySubjectId(subjectId).subscribe( data => {
       this.questions = data;
+
+      if (!_.isEmpty(this.questions)) {
+        for (let i = 0; i < this.questions.length; i++){
+          if (!this.articles.some(existingArt => existingArt.id === this.questions[i].article.id)) {
+            this.articles.push(this.questions[i].article);
+          }
+        }
+      }
+
       this.getUserSubjectByUserIdAndSubjectId(this.user.id, this.activatedRoute.snapshot.params["id"]);
     });
   }
@@ -274,6 +286,10 @@ export class QuestiondetailComponent implements OnInit {
    exit():void {
     this.router.navigate(['/myaccount/main/practicetests',this.level, this.subCategory]);
    }
+
+   navigateToArticleDetail(articleId: number) {
+     this.router.navigate([ComponentLiteralNavName.CompArticleDetail, articleId]);
+ }
 
    saveAndExit():void {
     this.saveProgress(true);

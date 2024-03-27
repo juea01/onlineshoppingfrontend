@@ -35,6 +35,7 @@ import { XhrInterceptor } from './interceptors/app.request.interceptor';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { MatDialogModule} from "@angular/material/dialog";
 import { MatProgressBarModule} from "@angular/material/progress-bar";
+import { MatExpansionModule} from "@angular/material/expansion";
 
 import { ServiceModule } from './service/service.module';
 import {ModelModule} from "./model/model.module";
@@ -85,6 +86,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     NavBarModule,
     MatDialogModule,
     MatProgressBarModule,
+    MatExpansionModule,
     ServiceModule,
     ModelModule,
     HttpClientXsrfModule.withOptions({

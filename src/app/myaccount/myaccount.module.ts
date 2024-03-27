@@ -17,6 +17,7 @@ import { SubjectsComponent } from "./subjects/subjects.component";
 import { QuestiondetailComponent } from './questiondetail/questiondetail.component';
 
 import { MatProgressBarModule} from "@angular/material/progress-bar";
+import { MatExpansionModule} from "@angular/material/expansion";
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import { PaymentComponent } from './payment/payment.component';
@@ -49,7 +50,7 @@ let routing = RouterModule.forChild([
 ]);
 
 @NgModule({
-  imports: [CommonModule, FormsModule, routing, NavBarModule, ModelModule, ServiceModule, MatProgressBarModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, FormsModule, routing, NavBarModule, ModelModule, ServiceModule, MatProgressBarModule, MatCardModule, MatIconModule, MatExpansionModule],
   providers: [UnsavedGuardService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>()}
   ],
